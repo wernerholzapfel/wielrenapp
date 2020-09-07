@@ -1,0 +1,7 @@
+{
+  "name": "wielrenapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
