@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Uitslagen
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-header>
+    <ion-toolbar>
+        <swiper [config]="config" [(index)]="etappeIndex">
+            <div *ngFor="let etappe of etappes; let index = index">
+                <ion-grid>
+                    <ion-row class="ion-justify-content-center">
+                        <ion-col class="ion-text-center">
+                            <ion-badge [ngClass]="{'wr-badge' : etappe.id === activeEtappe.id}"
+                                       (click)="setEtappe(etappe, index)">
+                                {{etappe.etappeNumber}}
+                            </ion-badge>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </swiper>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+    <ion-row class="ion-align-items-center">
+        <ion-col>
+            <h3>{{activeEtappe?.etappeName}}</h3>
+        </ion-col>
+        <ion-col size="2" class="ion-text-center ion-justify-content-center">
+            <ion-icon (click)="openSettings()" size="large" name="settings-sharp"></ion-icon>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <h5 class="ion-no-margin" *ngIf="uitslag?.length > 0">Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</h5>
+        </ion-col>
+    </ion-row>
+    <ion-segment mode="md" value="uitslag" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="uitslag">
+            <ion-label>Renners</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="stand">
+            <ion-label>Deelnemers</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <ng-container *ngIf="activeSegment === 'uitslag'">
+        <ion-list>
+            <ion-item *ngFor="let line of uitslag">
+                {{line.tourrider.rider.firstName}}
+                {{line.tourrider.rider.surName}}
+            </ion-item>
+        </ion-list>
+    </ng-container>
+    <ng-container *ngIf="activeSegment === 'stand'">
+        <ion-list>
+            <ion-item *ngFor="let line of stand">
+                {{line.position}} {{line.displayName}} {{line.totalStagePoints}}
+            </ion-item>
+        </ion-list>
+    </ng-container>
+
+</ion-content>

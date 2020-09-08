@@ -1,0 +1,12 @@
+export const ETAPPECLASSIFICATION = 'ETAPPECLASSIFICATION';
+export const TOURCLASSIFICATION = 'TOURCLASSIFICATION';
+export const YOUTHCLASSIFICATION = 'YOUTHCLASSIFICATION';
+export const MOUNTAINCLASSIFICATION = 'MOUNTAINCLASSIFICATION';
+export const POINTSCLASSIFICATION = 'POINTSCLASSIFICATION';
+export const BERGKLASSEMENT = 'Bergklassement';
+export const ALGEMEENKLASSEMENT = 'Algemeen klassement';
+export const PUNTENKLASSEMENT = 'Puntenklassement';
+export const JONGERENKLASSEMENT = 'Jongerenklassement';
+export const UITSLAGEN = 'Uitslagen';
+export const ETAPPE = 'Etappe';
+export const KLASSEMENT = 'Klassement';
