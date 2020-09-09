@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { StandPageRoutingModule } from './stand-routing.module';
 
 import { StandPage } from './stand.page';
+import {CustomComponentModule} from '../../components/custom-components.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    StandPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        StandPageRoutingModule,
+        CustomComponentModule,
+    ],
   declarations: [StandPage]
 })
 export class StandPageModule {}

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {IonRouterOutlet, Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
@@ -21,7 +21,7 @@ import * as fromParticipanttable from './store/participanttable/participanttable
         // animation triggers go here
     ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     constructor(
         private platform: Platform,
         private splashScreen: SplashScreen,
@@ -47,6 +47,10 @@ export class AppComponent implements OnInit {
                 this.store.dispatch(new fromParticipanttable.FetchLastUpdated(tour.id));
             }
         });
+    }
+    ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     initializeApp() {

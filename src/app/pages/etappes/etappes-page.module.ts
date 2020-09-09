@@ -7,6 +7,7 @@ import {EtappesPage} from './etappes-page.component';
 import {EtappesPagePageRoutingModule} from './etappes-page-routing.module';
 import {SwiperModule} from 'ngx-swiper-wrapper';
 import {TableSettingsComponent} from '../../components/table-settings/table-settings.component';
+import {CustomComponentModule} from '../../components/custom-components.module';
 
 @NgModule({
     imports: [
@@ -15,13 +16,13 @@ import {TableSettingsComponent} from '../../components/table-settings/table-sett
         FormsModule,
         EtappesPagePageRoutingModule,
         SwiperModule,
+        CustomComponentModule,
     ],
     entryComponents: [
         TableSettingsComponent,
     ],
     declarations: [
-        EtappesPage,
-        TableSettingsComponent,
+        EtappesPage
     ]
 })
 export class EtappesPageModule {
