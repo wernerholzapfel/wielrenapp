@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: 'menu',
         loadChildren: () => import('../pages/menu/menu.module').then(m => m.MenuPageModule),
-        data: {animation: 'MenuPage'}
+        data: {animation: 'menuPage'}
       },
       {
         path: '',

@@ -34,7 +34,8 @@
     </ion-row>
     <ion-row>
         <ion-col>
-            <h5 class="ion-no-margin" *ngIf="uitslag?.length > 0">Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</h5>
+            <h5 class="ion-no-margin" *ngIf="uitslag?.length > 0">
+                Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</h5>
         </ion-col>
     </ion-row>
     <ion-segment mode="md" value="uitslag" (ionChange)="segmentChanged($event)">
@@ -48,15 +49,40 @@
     <ng-container *ngIf="activeSegment === 'uitslag'">
         <ion-list>
             <ion-item *ngFor="let line of uitslag">
-                {{line.tourrider.rider.firstName}}
-                {{line.tourrider.rider.surName}}
+                <ion-grid class="ion-no-padding">
+                    <ion-row class="ion-no-padding">
+                        <ion-col size="2" class="ion-align-self-center">
+                            {{line.position}}
+                        </ion-col>
+                        <ion-col class="ion-align-self-center">
+                            {{line.tourrider.rider.firstName}}
+                            {{line.tourrider.rider.surName}}
+                        </ion-col>
+                        <ion-col size="2" class="ion-align-self-center">
+                            <ion-chip>{{line.punten}}</ion-chip>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-item>
         </ion-list>
     </ng-container>
     <ng-container *ngIf="activeSegment === 'stand'">
         <ion-list>
             <ion-item *ngFor="let line of stand">
-                {{line.position}} {{line.displayName}} {{line.totalStagePoints}}
+                <ion-grid class="ion-no-padding">
+                    <ion-row class="ion-no-padding">
+                        <ion-col size="2" class="ion-align-self-center">
+                            {{line.position}}
+                        </ion-col>
+                        <ion-col class="ion-align-self-center">
+                            {{line.displayName}}
+                        </ion-col>
+                        <ion-col size="2" class="ion-align-self-center">
+                            <ion-chip>  {{line.totalStagePoints}}</ion-chip>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-item>
         </ion-list>
     </ng-container>

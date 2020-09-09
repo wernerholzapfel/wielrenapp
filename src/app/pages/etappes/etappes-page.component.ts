@@ -12,7 +12,7 @@ import {IAppState} from '../../store/store';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '@capacitor/core';
 import {getEtappes, getLatestEtappe} from '../../store/etappe/etappe.reducer';
-import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {distinctUntilChanged, mergeMap, takeUntil} from 'rxjs/operators';
 import {IEtappe, IStageClassification} from '../../models/etappe.model';
 import {Subject} from 'rxjs';
 import {ClassificationsService} from '../../services/stageclassifications.service';
@@ -79,7 +79,6 @@ export class EtappesPage implements OnInit, OnDestroy {
             });
 
         this.store.pipe(select(getTour))
-            .pipe(distinctUntilChanged())
             .pipe(distinctUntilChanged(),
                 takeUntil(this.unsubscribe))
             .subscribe(tour => {
@@ -100,7 +99,12 @@ export class EtappesPage implements OnInit, OnDestroy {
         this.etappeIndex = index;
         this.classificationsService.getStageClassifications(etappe.id)
             .subscribe(response => {
-                this.uitslag = response;
+                this.uitslag = response.map(item => {
+                    return {
+                        ...item,
+                        punten: this.calculatePoints(item.position)
+                    };
+                });
             });
 
         this.tourService.getEtappeStand(this.tourId, this.activeEtappe.id)
@@ -124,4 +128,32 @@ export class EtappesPage implements OnInit, OnDestroy {
             return modal.present();
         });
     }
+
+    calculatePoints(position: number) {
+            return eval('etappe' + position);
+    }
 }
+
+
+const etappe1 = 60;
+const etappe2 = 52;
+const etappe3 = 44;
+const etappe4 = 38;
+const etappe5 = 34;
+const etappe6 = 30;
+const etappe7 = 28;
+const etappe8 = 26;
+const etappe9 = 24;
+const etappe10 = 22;
+const etappe11 = 20;
+const etappe12 = 18;
+const etappe13 = 16;
+const etappe14 = 14;
+const etappe15 = 12;
+const etappe16 = 10;
+const etappe17 = 8;
+const etappe18 = 6;
+const etappe19 = 4;
+const etappe20 = 2;
+const etappeUit = -20;
+const etappeWD = 0;

@@ -1,3 +1,4 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <div [@routeAnimation]="prepareRoute(outlet)"></div>
+  <ion-router-outlet #outlet="outlet"></ion-router-outlet>
 </ion-app>

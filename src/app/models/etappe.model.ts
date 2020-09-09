@@ -18,6 +18,7 @@ export interface IStageClassification {
   tour: ITour;
   etappe: IEtappe;
   tourrider: ITourrider;
+  punten?: number;
 }
 
 export interface ITourClassification {
