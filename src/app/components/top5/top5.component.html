@@ -1,0 +1,32 @@
+<div>
+  <app-deelnemertop5
+                     [stand$]="stand$"
+                     [lastUpdated]="lastUpdated"
+                     [isRegistrationOpen$]="isRegistrationOpen$"
+                     [participantPrediction]="latestParticipantTotalScore"
+                     [top]="top"
+                     [title]="'Totaalstand'">
+
+  </app-deelnemertop5>
+  <div></div>
+  <app-deelnemertop5
+                     [stand$]="etappeStand$"
+                     [lastUpdated]="lastUpdated"
+                     [isRegistrationOpen$]="isRegistrationOpen$"
+                     [participantPrediction]="latestEtappeParticipantScore"
+                     [top]="top"
+                     [title]="'Dagklassement'">
+  </app-deelnemertop5>
+  <app-ridertop5
+                 [riderTop]="riderTop"
+                 [lastUpdated]="lastUpdated"
+                 [isRegistrationOpen$]="isRegistrationOpen$"
+                 [title]="'Beste renners'">
+  </app-ridertop5>
+  <app-ridertop5
+                 [riderTop]="waterdragerTop"
+                 [lastUpdated]="lastUpdated"
+                 [isRegistrationOpen$]="isRegistrationOpen$"
+                 [title]="'Beste waterdragers'">
+  </app-ridertop5>
+</div>

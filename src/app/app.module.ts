@@ -29,9 +29,14 @@ import {EtappeService} from './services/etappe.service';
 import {ClassificationsService} from './services/stageclassifications.service';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Deelnemertop5Component} from './components/top5/deelnemertop5/deelnemertop5.component';
+import {Top5Component} from './components/top5/top5.component';
+import {Ridertop5Component} from './components/top5/ridertop5/ridertop5.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent,
+    ],
     entryComponents: [],
     imports: [
         BrowserModule,

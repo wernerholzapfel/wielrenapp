@@ -1,9 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Het Wielerspel</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<app-headlines></app-headlines>
+    <app-headlines></app-headlines>
+    <app-top5 [lastUpdated]="lastUpdated" [isRegistrationOpen$]="isRegistrationOpen$"></app-top5>
 </ion-content>

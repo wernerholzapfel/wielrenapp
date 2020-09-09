@@ -1,0 +1,19 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{title}}</ion-card-title>
+    <ion-card-subtitle><span *ngIf="lastUpdated">Laatst bijgewerkt: {{lastUpdated}}</span> &nbsp;</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ng-container *ngIf="!(isRegistrationOpen$ | async) && riderTop?.length > 1">
+      <div *ngFor="let rider of riderTop; let i = index">
+        {{i+1}} {{rider.rider.firstNameShort}} {{rider.rider.surNameShort}} met {{rider.top5punten}} punten.
+      </div>
+    </ng-container>
+    <span *ngIf="(isRegistrationOpen$ | async)">
+          Wie wordt de beste?
+          </span>
+    <span *ngIf="!(isRegistrationOpen$ | async) && riderTop?.length <= 1">
+          Aan het laden...
+          </span>
+  </ion-card-content>
+</ion-card>
