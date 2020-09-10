@@ -1,30 +1,43 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>Stand</ion-title>
+        <ion-buttons slot="end">
+            <ion-button class="ion-no-padding"
+                        fill="clear"
+                        (click)="showDetail = !showDetail">
+                <ion-icon slot="icon-only"
+                          name="eye-outline"
+                          [color]="showDetail ? 'secondary' : 'light'">
+                </ion-icon>
+            </ion-button>
+            <ion-button class="ion-no-padding"
+                        fill="clear"
+                        (click)="openSelectSort()">
+                <ion-icon size="medium"
+                          name="filter-outline"
+                          color="light"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-grid>
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <h5>{{activeStand}}</h5>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-note color="dark" class="ion-no-margin">Bijgewerkt: {{lastUpdated}}</ion-note>
+            </ion-col>
+        </ion-row>
         <ion-row class="ion-justify-content-between">
-            <ion-col class="ion-align-self-center">Bijgewerkt: {{lastUpdated}}
+            <ion-col class="ion-align-self-center">
             </ion-col>
             <ion-col size="3" class="ion-align-items-end ion-text-end">
-                <ion-button class="ion-no-padding"
-                            fill="clear"
-                            (click)="showDetail = !showDetail">
-                    <ion-icon slot="icon-only"
-                              name="eye-outline"
-                              [color]="showDetail ? 'primary' : 'medium'">
-                    </ion-icon>
-                </ion-button>
-                <ion-button class="ion-no-padding"
-                            fill="clear"
-                            (click)="openSelectSort()">
-                    <ion-icon size="medium"
-                              name="filter-outline"
-                              color="medium"></ion-icon>
-                </ion-button>
+
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -41,11 +54,11 @@
         <ion-label>Sorteren</ion-label>
         <ion-select [value]="selectedSort" okText="Ok" cancelText="Annuleren" interface="popover" #selectsort
                     (ionChange)="sortTable($event)">
-            <ion-select-option value="totalPoints">Totaalpunten</ion-select-option>
-            <ion-select-option value="totalMountainPoints">Bergpunten</ion-select-option>
-            <ion-select-option value="totalPointsPoints">Sprintpunten</ion-select-option>
-            <ion-select-option value="totalYouthPoints">Jongerenpunten</ion-select-option>
-            <ion-select-option value="totalStagePoints">Etappepunten</ion-select-option>
+            <ion-select-option value="totalPoints">Totaalstand</ion-select-option>
+            <ion-select-option value="totalMountainPoints">Bergstand</ion-select-option>
+            <ion-select-option value="totalPointsPoints">Puntenstand</ion-select-option>
+            <ion-select-option value="totalYouthPoints">Jongerenstand</ion-select-option>
+            <ion-select-option value="totalStagePoints">Etappestand</ion-select-option>
             <ion-select-option value="deltaTotalStagePoints">Delta</ion-select-option>
         </ion-select>
     </ion-item>

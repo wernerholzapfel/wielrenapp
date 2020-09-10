@@ -25,7 +25,17 @@ export class StandPage implements OnInit, OnDestroy {
     lastUpdated$: Observable<any>;
     lastUpdated: string;
     selectedSort = 'totalPoints';
+    activeStand = 'Totaalstand';
     unsubscribe = new Subject<void>();
+
+    standOmschrijving = {
+        totalPoints: 'Totaalstand',
+        totalMountainPoints: 'Bergstand',
+        totalPointsPoints: 'Puntenstand',
+        totalYouthPoints: 'Jongerenstand',
+        totalStagePoints: 'Etappestand',
+        deltaTotalStagePoints: 'Delta'
+    };
 
     ngOnInit() {
         this.store.pipe(select(getParticipanttable)).subscribe(participantTable => {
@@ -51,6 +61,7 @@ export class StandPage implements OnInit, OnDestroy {
 
     sortTable(event: any) {
         this.selectedSort = event.detail.value;
+        this.activeStand = this.standOmschrijving[this.selectedSort];
 
         this.participantstable = this.participantstable.slice().sort((a, b) => {
             return b[this.selectedSort] - a[this.selectedSort];
