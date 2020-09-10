@@ -1,42 +1,60 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IAppState} from '../../store/store';
 import {select, Store} from '@ngrx/store';
 import {getLastUpdated, getParticipanttable} from '../../store/participanttable/participanttable.reducer';
 import {takeUntil} from 'rxjs/operators';
 import * as dayjs from 'dayjs';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
-import * as localeNL from 'dayjs/locale/nl';
 import {Observable, Subject} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
+import {IonSelect} from '@ionic/angular';
 
 @Component({
-  selector: 'app-stand',
-  templateUrl: './stand.page.html',
-  styleUrls: ['./stand.page.scss'],
+    selector: 'app-stand',
+    templateUrl: './stand.page.html',
+    styleUrls: ['./stand.page.scss'],
 })
 export class StandPage implements OnInit, OnDestroy {
 
-  constructor(private store: Store<IAppState>) { }
+    constructor(private store: Store<IAppState>) {
+    }
 
-  participantstable$: Observable<IParticipanttable[]>;
-  lastUpdated$: Observable<any>;
-  lastUpdated: string;
-  unsubscribe = new Subject<void>();
+    @ViewChild('selectsort') selectsortRef: IonSelect;
 
-  ngOnInit() {
-    this.participantstable$ = this.store.pipe(select(getParticipanttable));
-    this.lastUpdated$ = this.store.pipe(select(getLastUpdated));
+    showDetail = false;
+    participantstable: IParticipanttable[];
+    lastUpdated$: Observable<any>;
+    lastUpdated: string;
+    selectedSort = 'totalPoints';
+    unsubscribe = new Subject<void>();
 
-    this.lastUpdated$.pipe(takeUntil(this.unsubscribe)).subscribe(lastupdated => {
-      if (lastupdated) {
-        this.lastUpdated = dayjs(lastupdated.lastUpdated).fromNow();
-      }
-    });
-  }
+    ngOnInit() {
+        this.store.pipe(select(getParticipanttable)).subscribe(participantTable => {
+            this.participantstable = participantTable;
+        });
+        this.lastUpdated$ = this.store.pipe(select(getLastUpdated));
 
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-  }
+        this.lastUpdated$.pipe(takeUntil(this.unsubscribe)).subscribe(lastupdated => {
+            if (lastupdated) {
+                this.lastUpdated = dayjs(lastupdated.lastUpdated).fromNow();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+
+    openSelectSort() {
+        this.selectsortRef.open();
+    }
+
+    sortTable(event: any) {
+        this.selectedSort = event.detail.value;
+
+        this.participantstable = this.participantstable.slice().sort((a, b) => {
+            return b[this.selectedSort] - a[this.selectedSort];
+        });
+    }
 
 }

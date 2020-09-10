@@ -8,5 +8,8 @@ export interface ITourriders {
   rider: IRider;
   tour?: ITour;
   team?: ITeam;
+  waterdragerTotalPoints?: number;
+  waterdragerEtappePoints?: number;
+  totalStagePoints?: number;
 }
 

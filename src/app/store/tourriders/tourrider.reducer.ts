@@ -1,9 +1,9 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as tourrider from './tourrider.actions';
-import {IRider} from '../../models/rider.model';
+import {ITourriders} from '../../models/tourriders.model';
 
 export interface TourriderState {
-    tourriders: IRider[];
+    tourriders: ITourriders[];
     inProgress: boolean;
     error: any;
 }

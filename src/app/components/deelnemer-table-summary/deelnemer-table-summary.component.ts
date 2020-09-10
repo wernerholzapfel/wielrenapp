@@ -8,6 +8,8 @@ import {Component, Input, OnInit} from '@angular/core';
 export class DeelnemerTableSummaryComponent implements OnInit {
 
   @Input() line: any;
+  @Input() showDetail: any;
+  @Input() mainValue: string;
 
   constructor() { }
 

@@ -1,14 +1,67 @@
 <ion-item>
     <ion-grid class="ion-no-padding">
-        <ion-row class="ion-no-padding">
+        <ion-row class="ion-no-padding ion-padding-top">
             <ion-col size="2" class="ion-align-self-center">
-                {{line.position}}
+                {{line.position}} <span
+                    *ngIf="line.previousPosition && (line.previousPosition - line.position) != 0">({{line.previousPosition - line.position}})
+            </span>
             </ion-col>
             <ion-col class="ion-align-self-center">
-                {{line.displayName}}
+                <ion-row>
+                    {{line.teamName}}
+                </ion-row>
+                <ion-row>
+                    <ion-text color="medium">
+                        {{line.displayName}}
+                    </ion-text>
+                </ion-row>
             </ion-col>
-            <ion-col size="2" class="ion-align-self-center">
-                <ion-chip>  {{line.totalStagePoints}}</ion-chip>
+            <ion-col size="3" class="ion-align-self-center ion-text-end">
+                <ion-chip *ngIf="mainValue === 'totalPoints'" color="primary">
+                    TP:{{line.totalPoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'totalTourPoints'" color="primary">
+                    AK: {{line.totalTourPoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'totalMountainPoints'" color="primary">
+                    BK: {{line.totalMountainPoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'totalPointsPoints'" color="primary">
+                    PK: {{line.totalPointsPoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'totalYouthPoints'" color="primary">
+                    JK: {{line.totalYouthPoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'totalStagePoints'" color="primary">
+                    EP: {{line.totalStagePoints}}</ion-chip>
+                <ion-chip *ngIf="mainValue === 'deltaTotalStagePoints'" color="primary">
+                    ∆: {{line.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.deltaTotalStagePoints}}</ion-chip>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-padding ion-padding-top ion-wrap" *ngIf="showDetail">
+            <ion-col *ngIf="mainValue !== 'totalPoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline>TP:{{line.totalPoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'totalTourPoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline> AK: {{line.totalTourPoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'totalMountainPoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline> BK: {{line.totalMountainPoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'totalPointsPoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline> PK: {{line.totalPointsPoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'totalYouthPoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline> JK: {{line.totalYouthPoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'totalStagePoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline> EP: {{line.totalStagePoints}}</ion-chip>
+            </ion-col>
+            <ion-col *ngIf="mainValue !== 'deltaTotalStagePoints'"
+                     size="3" class="ion-align-self-center">
+                <ion-chip outline>
+                    ∆: {{line.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.deltaTotalStagePoints}}</ion-chip>
             </ion-col>
         </ion-row>
     </ion-grid>

@@ -1,0 +1,10 @@
+ion-list {
+  background: transparent;
+
+  ion-item {
+    --background: inherit;
+  }
+}
+ion-toggle {
+  height: 24px;
+}

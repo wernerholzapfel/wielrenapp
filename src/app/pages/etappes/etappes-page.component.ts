@@ -14,7 +14,7 @@ import {AppState} from '@capacitor/core';
 import {getEtappes, getLatestEtappe} from '../../store/etappe/etappe.reducer';
 import {distinctUntilChanged, mergeMap, takeUntil} from 'rxjs/operators';
 import {IEtappe, IStageClassification} from '../../models/etappe.model';
-import {Subject} from 'rxjs';
+import {Subject, zip} from 'rxjs';
 import {ClassificationsService} from '../../services/stageclassifications.service';
 import {getTour} from '../../store/tour/tour.reducer';
 import {TourService} from '../../services/tour.service';
@@ -67,23 +67,17 @@ export class EtappesPage implements OnInit, OnDestroy {
     };
 
     ngOnInit() {
-        this.store.select(getEtappes)
+
+        zip(this.store.pipe(select(getTour)),
+            this.store.select(getEtappes))
             .pipe(takeUntil(this.unsubscribe))
-            .subscribe(etappes => {
+            .subscribe(([tour, etappes]) => {
                 if (etappes && etappes.length > 0) {
+                    this.tourId = tour.id;
                     this.etappes = etappes;
                     this.etappeIndex = etappes.filter(etappe => etappe.isDriven).length - 1;
 
                     this.setEtappe(etappes[this.etappeIndex], this.etappeIndex);
-                }
-            });
-
-        this.store.pipe(select(getTour))
-            .pipe(distinctUntilChanged(),
-                takeUntil(this.unsubscribe))
-            .subscribe(tour => {
-                if (tour && tour.id) {
-                    this.tourId = tour.id;
                 }
             });
 
@@ -130,7 +124,7 @@ export class EtappesPage implements OnInit, OnDestroy {
     }
 
     calculatePoints(position: number) {
-            return eval('etappe' + position);
+        return eval('etappe' + position);
     }
 }
 

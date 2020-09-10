@@ -1,9 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Wielrenners</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Renners</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+<ion-list>
+  <ion-item *ngFor="let line of riders">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="ion-no-padding">
+        <ion-col class="ion-align-self-center">
+          <img style="height: 16px;"
+               src="/assets/flag/{{line?.rider?.nationality}}.png">
+          {{line?.rider?.firstName}} {{line?.rider?.surName}}
+        </ion-col>
+        <ion-col size="2" class="ion-align-self-center">
+          <ion-chip>{{line.totalStagePoints}}</ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-list>
 </ion-content>

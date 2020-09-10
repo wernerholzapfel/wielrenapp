@@ -6,6 +6,13 @@ export interface IParticipanttable {
     teamName: string;
     predictions: Prediction[];
     totalStagePoints: number;
+    previousPosition: number;
+    previousTotalPoints: number;
+    totalMountainPoints: number;
+    totalPoints: number;
+    totalPointsPoints: number;
+    totalTourPoints: number;
+    totalYouthPoints: number;
     position: number;
 }
 

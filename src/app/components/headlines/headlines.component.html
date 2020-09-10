@@ -1,7 +1,7 @@
 <ion-card *ngIf="headlines?.length > 0">
     <ion-card-header>
-        <ion-card-title>{{headline.title}}</ion-card-title>
-        <ion-card-subtitle>{{headline.schrijver}}: {{lastUpdated}}
+        <ion-card-title color="secondary">{{headline.title}}</ion-card-title>
+        <ion-card-subtitle color="medium" >{{headline.schrijver}}: {{lastUpdated}}
         </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
@@ -9,11 +9,11 @@
         </p>
     </ion-card-content>
     <ion-footer>
-        <ion-button fill="outline" color="light" [disabled]="headlineIndex === 0" (click)="previousHeadline()">
+        <ion-button fill="clear" color="light" [disabled]="headlineIndex === 0" (click)="previousHeadline()">
             <ion-icon color="dark" slot="icon-only" name="chevron-back-sharp"></ion-icon>
         </ion-button>
         {{headlineIndex + 1 }} van {{headlines?.length}}
-        <ion-button fill="outline" color="light" [disabled]="headlineIndex + 1 === headlines?.length"
+        <ion-button fill="clear" color="light" [disabled]="headlineIndex + 1 === headlines?.length"
                     (click)="nextHeadline()">
             <ion-icon slot="icon-only" color="dark" name="chevron-forward-sharp"></ion-icon>
         </ion-button>
