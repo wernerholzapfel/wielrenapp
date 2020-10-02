@@ -1,9 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>menu</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>menu</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-button
+            *ngIf="(authService.user$ | async)"
+            color="secondary"
+            expand="full"
+            (click)="logout()">
+        Logout
+    </ion-button>
 </ion-content>

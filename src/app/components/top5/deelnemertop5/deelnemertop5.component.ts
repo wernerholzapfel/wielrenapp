@@ -1,6 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IParticipanttable} from '../../../models/participanttable.model';
+import {IAppState} from '../../../store/store';
+import {select, Store} from '@ngrx/store';
+import {getLastUpdated} from '../../../store/participanttable/participanttable.reducer';
+import {getParticipant} from '../../../store/participant/participant.reducer';
 
 @Component({
   selector: 'app-deelnemertop5',
@@ -9,7 +13,7 @@ import {IParticipanttable} from '../../../models/participanttable.model';
 })
 export class Deelnemertop5Component implements OnInit {
 
-  constructor() {
+  constructor(private store: Store<IAppState>) {
   }
 
   @Input() top: number;
@@ -19,7 +23,14 @@ export class Deelnemertop5Component implements OnInit {
   @Input() title: string;
   @Input() participantPrediction: IParticipanttable;
 
+  participantId: string;
+
   ngOnInit() {
+    this.store.pipe(select(getParticipant)).subscribe(participant => {
+      if (participant) {
+        this.participantId = participant.id;
+      }
+    });
   }
 
 }

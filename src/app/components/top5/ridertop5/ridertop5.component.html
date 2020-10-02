@@ -6,7 +6,9 @@
   <ion-card-content>
     <ng-container *ngIf="!(isRegistrationOpen$ | async) && riderTop?.length > 1">
       <div *ngFor="let rider of riderTop; let i = index">
+          <ion-text>
         {{i+1}} {{rider.rider.firstNameShort}} {{rider.rider.surNameShort}} met {{rider.top5punten}} punten.
+          </ion-text>
       </div>
     </ng-container>
     <span *ngIf="(isRegistrationOpen$ | async)">

@@ -11,6 +11,15 @@ import {takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {ITour} from './models/tour.model';
 import * as fromParticipanttable from './store/participanttable/participanttable.actions';
+import {
+    Plugins,
+    PushNotification,
+    PushNotificationToken,
+    PushNotificationActionPerformed
+} from '@capacitor/core';
+import {Router} from '@angular/router';
+
+const {PushNotifications} = Plugins;
 
 @Component({
     selector: 'app-root',
@@ -26,7 +35,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private store: Store
+        private store: Store,
+        private router: Router,
     ) {
         this.initializeApp();
     }
@@ -47,7 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.store.dispatch(new fromParticipanttable.FetchLastUpdated(tour.id));
             }
         });
+        this.store.dispatch(new fromTour.FetchTourById('58a049a7-f788-4b08-83cc-ffa2da36701f'));
+
     }
+
     ngOnDestroy() {
         this.unsubscribe.next();
         this.unsubscribe.complete();
@@ -57,11 +70,59 @@ export class AppComponent implements OnInit, OnDestroy {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
+
+            if (this.platform.is('cordova')) {
+                this.setupPush();
+            }
         });
     }
 
     prepareRoute(outlet: IonRouterOutlet) {
         return outlet?.isActivated && outlet.activatedRouteData.animation
             || '';
+    }
+
+    setupPush() {
+        // Request permission to use push notifications
+        // iOS will prompt user and return if they granted permission or not
+        // Android will just grant without prompting
+        PushNotifications.requestPermission().then(result => {
+            if (result.granted) {
+                // Register with Apple / Google to receive push via APNS/FCM
+                PushNotifications.register();
+            } else {
+                // Show some error
+            }
+        });
+
+        // On success, we should be able to receive notifications
+        PushNotifications.addListener('registration',
+            (token: PushNotificationToken) => {
+                // todo send token to backend
+                // alert('Push registration success, token: ' + token.value);
+            }
+        );
+
+        // Some issue with our setup and push will not work
+        // PushNotifications.addListener('registrationError',
+        //     (error: any) => {
+        // alert('Error on registration: ' + JSON.stringify(error));
+        // }
+        // );
+
+        // Show us the notification payload if the app is open on our device
+        // PushNotifications.addListener('pushNotificationReceived',
+        //     (notification: PushNotification) => {
+        // alert('Push received: ' + JSON.stringify(notification));
+        // }
+        // );
+
+        // Method called when tapping on a notification
+        PushNotifications.addListener('pushNotificationActionPerformed',
+            (notification: PushNotificationActionPerformed) => {
+                this.router.navigate(['tabs/stand']);
+            }
+        );
+
     }
 }

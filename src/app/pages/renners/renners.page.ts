@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ITourriders} from '../../models/tourriders.model';
 import {IRider} from '../../models/rider.model';
@@ -8,6 +8,7 @@ import {Store} from '@ngrx/store';
 import {FetchRiders} from '../../store/rider/rider.actions';
 import {getTourriders} from '../../store/tourriders/tourrider.reducer';
 import {takeUntil} from 'rxjs/operators';
+import {IonSelect} from '@ionic/angular';
 
 @Component({
     selector: 'app-renners',
@@ -16,11 +17,15 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class RennersPage implements OnInit, OnDestroy {
 
+    @ViewChild('selectsort') selectsortRef: IonSelect;
+
+    @Output() addPositionEvent: EventEmitter<IRider> = new EventEmitter<IRider>();
+
+    selectedSort = 'totalPoints';
+    showDetail = false;
     searchTerm: string;
     riders: ITourriders[];
     unsubscribe = new Subject<void>();
-
-    @Output() addPositionEvent: EventEmitter<IRider> = new EventEmitter<IRider>();
 
     constructor(private riderService: RiderService, private store: Store<IAppState>) {
     }
@@ -48,6 +53,17 @@ export class RennersPage implements OnInit, OnDestroy {
         this.unsubscribe.complete();
     }
 
+    openSelectSort() {
+        this.selectsortRef.open();
+    }
+
+    sortRenners($event) {
+        console.log($event.detail.value);
+    }
+
+    segmentChanged($event) {
+        console.log($event.detail.value);
+    }
     // addPosition(element: any) {
     //   if (element.type === 'cellValueChanged' && element.colDef.field === 'rider.position') {
     //     const updatedRider = Object.assign(element.data.rider, {position: element.newValue, id: element.data.id});

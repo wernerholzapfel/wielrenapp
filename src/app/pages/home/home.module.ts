@@ -11,14 +11,16 @@ import {HeadlinesComponent} from '../../components/headlines/headlines.component
 import {Top5Component} from '../../components/top5/top5.component';
 import {Deelnemertop5Component} from '../../components/top5/deelnemertop5/deelnemertop5.component';
 import {Ridertop5Component} from '../../components/top5/ridertop5/ridertop5.component';
+import {CustomComponentModule} from '../../components/custom-components.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        CustomComponentModule,
+    ],
     declarations: [HomePage, HeadlinesComponent,
       Top5Component,
       Deelnemertop5Component,

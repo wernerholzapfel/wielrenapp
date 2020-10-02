@@ -3,6 +3,15 @@
         <ion-title>
             Etappe Uitslagen
         </ion-title>
+        <ion-buttons slot="end">
+            <ion-button class="ion-no-padding"
+                        fill="clear"
+                        (click)="openSettings()">
+                <ion-icon size="medium"
+                          name="settings"
+                          color="light"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-header>
@@ -27,11 +36,6 @@
     <ion-row class="ion-align-items-center">
         <ion-col>
             <h5>{{activeEtappe?.etappeName}}</h5>
-        </ion-col>
-        <ion-col size="2" class="ion-text-center ion-justify-content-center">
-            <ion-button color="medium" fill="clear" (click)="openSettings()">
-                <ion-icon slot="icon-only" size="large" name="settings-sharp"></ion-icon>
-            </ion-button>
         </ion-col>
     </ion-row>
     <ion-row>
@@ -60,7 +64,7 @@
                             {{line.tourrider.rider.surName}}
                         </ion-col>
                         <ion-col size="2" class="ion-align-self-center">
-                            <ion-chip>{{line.punten}}</ion-chip>
+                            <ion-chip color="primary">{{line.punten}}</ion-chip>
 
                         </ion-col>
                     </ion-row>

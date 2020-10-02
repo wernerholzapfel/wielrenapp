@@ -14,7 +14,7 @@ import {AppState} from '@capacitor/core';
 import {getEtappes, getLatestEtappe} from '../../store/etappe/etappe.reducer';
 import {distinctUntilChanged, mergeMap, takeUntil} from 'rxjs/operators';
 import {IEtappe, IStageClassification} from '../../models/etappe.model';
-import {Subject, zip} from 'rxjs';
+import {combineLatest, Subject, zip} from 'rxjs';
 import {ClassificationsService} from '../../services/stageclassifications.service';
 import {getTour} from '../../store/tour/tour.reducer';
 import {TourService} from '../../services/tour.service';
@@ -68,7 +68,7 @@ export class EtappesPage implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        zip(this.store.pipe(select(getTour)),
+        combineLatest(this.store.pipe(select(getTour)),
             this.store.select(getEtappes))
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(([tour, etappes]) => {
@@ -77,7 +77,9 @@ export class EtappesPage implements OnInit, OnDestroy {
                     this.etappes = etappes;
                     this.etappeIndex = etappes.filter(etappe => etappe.isDriven).length - 1;
 
-                    this.setEtappe(etappes[this.etappeIndex], this.etappeIndex);
+                    if (this.etappeIndex > 0) {
+                        this.setEtappe(etappes[this.etappeIndex], this.etappeIndex);
+                    }
                 }
             });
 

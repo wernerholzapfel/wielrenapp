@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "121086252622",
+    "firebase_url": "https://wielerspel-aec4b.firebaseio.com",
+    "project_id": "wielerspel-aec4b",
+    "storage_bucket": "wielerspel-aec4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121086252622:android:5563178bc57ef386e7151f",
+        "android_client_info": {
+          "package_name": "com.wernerholzapfel.hetwielerspel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121086252622-vtgu87beqt0rf2v6g9lt300kllma1ii7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABrE6nfxOKyBHbQdNvlT6jPOkaMRso_uA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121086252622-vtgu87beqt0rf2v6g9lt300kllma1ii7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
