@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>Renners</ion-title>
+        <ion-title>{{title}}</ion-title>
         <ion-buttons slot="end">
             <ion-button class="ion-no-padding"
                         fill="clear"
@@ -22,25 +22,13 @@
 </ion-header>
 
 <ion-content>
-    <ion-segment color="primary" mode="md" value="punten" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="punten">
-            <ion-label>Punten</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="gekozen">
-            <ion-label>Gekozen</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="uitgevallen">
-            <ion-label>Uitgevallen</ion-label>
-        </ion-segment-button>
-    </ion-segment>
-    <ion-list>
-        <ng-container *ngFor="let line of riders">
-            <app-renner-table-summary [mainValue]="selectedSort"
-                                      [showDetail]="showDetail"
-                                      [line]="line">
-            </app-renner-table-summary>
-        </ng-container>
-    </ion-list>
+    <ng-container *ngFor="let line of mijnTeam">
+    <app-renner-table-summary [mainValue]="selectedSort"
+                              [showDetail]="showDetail"
+                              [line]="line">
+    </app-renner-table-summary>
+    </ng-container>
+
 </ion-content>
 <ion-item class="ion-no-padding ion-no-margin" hidden>
     <ion-label>Sorteren</ion-label>

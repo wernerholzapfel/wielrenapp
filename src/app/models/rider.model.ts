@@ -1,5 +1,6 @@
 import {IStageclassifications} from './participant.model';
 import {ITeam} from './team.model';
+import {LatestEtappe} from './participanttable.model';
 
 export interface IRider {
   id: string;
@@ -29,4 +30,5 @@ export interface IRider {
   mountainPoints?: number;
   tourPoints?: number;
   pointsPoints?: number;
+  latestEtappe?: LatestEtappe;
 }

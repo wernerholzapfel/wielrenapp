@@ -2,6 +2,7 @@ import {Action} from '@ngrx/store';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ITourrider} from '../../models/participant.model';
 import {IRider} from '../../models/rider.model';
+import {ITourriders} from '../../models/tourriders.model';
 
 export const FETCH_TOURRIDERLIST = '[TOURRIDER] Fetch Tourriderlist';
 export const FETCH_TOURRIDERLIST_SUCCESS = '[TOURRIDER] Fetch Tourriderlist Success';
@@ -17,7 +18,7 @@ export class FetchTourriderList implements Action {
 export class FetchTourriderListSuccess implements Action {
   readonly type = FETCH_TOURRIDERLIST_SUCCESS;
 
-  constructor(public payload: IRider[]) {
+  constructor(public payload: ITourriders[]) {
   }
 }
 

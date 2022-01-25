@@ -94,5 +94,9 @@ export interface Prediction {
     isComplete: boolean;
     rider: Rider;
     totalStagePoints: number;
+    deltaStagePoints: number;
+    mountainPoints?: number;
+    pointsPoints?: number;
+    youthPoints?: number;
 }
 

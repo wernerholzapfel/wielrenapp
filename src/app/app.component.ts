@@ -57,7 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.store.dispatch(new fromParticipanttable.FetchLastUpdated(tour.id));
             }
         });
-        this.store.dispatch(new fromTour.FetchTourById('58a049a7-f788-4b08-83cc-ffa2da36701f'));
 
     }
 

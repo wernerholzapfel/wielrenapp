@@ -5,6 +5,7 @@ import {IRider} from '../models/rider.model';
 import {environment} from '../../environments/environment';
 import {ITourrider} from '../models/etappe.model';
 import {AngularFireDatabase} from '@angular/fire/database';
+import {ITourriders} from '../models/tourriders.model';
 
 @Injectable()
 export class RiderService {
@@ -18,8 +19,8 @@ export class RiderService {
     return this.http.get<IRider[]>(`${environment.apiBaseUrl}/riders`);
   }
 
-  getDetailTourriders(tourId: string): Observable<IRider[]> {
-    return this.db.list<IRider>(tourId + '/renners/').valueChanges();
+  getDetailTourriders(tourId: string): Observable<ITourriders[]> {
+    return this.db.list<ITourriders>(tourId + '/renners/').valueChanges();
   }
 
   updateTourRidersFirebase(tourId): Observable<any> {

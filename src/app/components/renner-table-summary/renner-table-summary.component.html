@@ -7,57 +7,51 @@
         {{line?.rider?.firstName}} {{line?.rider?.surName}}
       </ion-col>
       <ion-col size="3" class="ion-align-self-center ion-text-end">
-        <ion-chip *ngIf="mainValue === 'totalPoints'" color="primary">
-          TP:{{line.totalPoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'totalTourPoints'" color="primary">
-          AK: {{line.totalTourPoints}}</ion-chip>
+          TP:{{line.points.totalTourPoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'totalMountainPoints'" color="primary">
-          BK: {{line.totalMountainPoints}}</ion-chip>
+          BK: {{line.points.totalMountainPoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'totalPointsPoints'" color="primary">
-          PK: {{line.totalPointsPoints}}</ion-chip>
+          PK: {{line.points.totalPointsPoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'totalYouthPoints'" color="primary">
-          JK: {{line.totalYouthPoints}}</ion-chip>
+          JK: {{line.points.totalYouthPoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'totalStagePoints'" color="primary">
-          EP: {{line.totalStagePoints}}</ion-chip>
+          EP: {{line.points.totalStagePoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'deltaTotalStagePoints'" color="primary">
-          ∆: {{line.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.deltaTotalStagePoints}}</ion-chip>
+          ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>
       </ion-col>
     </ion-row>
     <ion-row class="ion-no-padding ion-padding-top ion-wrap" *ngIf="showDetail">
       <ion-col *ngIf="mainValue !== 'totalPoints'"
                size="3" class="ion-align-self-center">
-        <ion-chip outline>TP:{{line.totalPoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'totalTourPoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline> AK: {{line.totalTourPoints}}</ion-chip>
+        <ion-chip outline>TP:{{line.points.totalTourPoints}}</ion-chip>
       </ion-col>
       <ion-col *ngIf="mainValue !== 'totalMountainPoints'"
                size="3" class="ion-align-self-center">
-        <ion-chip outline> BK: {{line.totalMountainPoints}}</ion-chip>
+        <ion-chip outline> BK: {{line.points.totalMountainPoints}}</ion-chip>
       </ion-col>
       <ion-col *ngIf="mainValue !== 'totalPointsPoints'"
                size="3" class="ion-align-self-center">
-        <ion-chip outline> PK: {{line.totalPointsPoints}}</ion-chip>
+        <ion-chip outline> PK: {{line.points.totalPointsPoints}}</ion-chip>
       </ion-col>
       <ion-col *ngIf="mainValue !== 'totalYouthPoints'"
                size="3" class="ion-align-self-center">
-        <ion-chip outline> JK: {{line.totalYouthPoints}}</ion-chip>
+        <ion-chip outline> JK: {{line.points.totalYouthPoints}}</ion-chip>
       </ion-col>
       <ion-col *ngIf="mainValue !== 'totalStagePoints'"
                size="3" class="ion-align-self-center">
-        <ion-chip outline> EP: {{line.totalStagePoints}}</ion-chip>
-      </ion-col>
-      <ion-col size="3" class="ion-align-self-center" *ngIf="line.isOut">
-        <ion-chip color="danger" outline>
-          <ion-icon color="danger" name="bicycle-sharp"></ion-icon>
-          <ion-label>Etappe {{line.latestEtappe.etappeNumber}}</ion-label>
-        </ion-chip>
+        <ion-chip outline> EP: {{line.points.totalStagePoints}}</ion-chip>
       </ion-col>
       <ion-col *ngIf="mainValue !== 'deltaTotalStagePoints'"
                size="3" class="ion-align-self-center">
         <ion-chip outline>
-          ∆: {{line.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.deltaTotalStagePoints}}</ion-chip>
+          ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>
+      </ion-col>
+      <ion-col size="6" class="ion-align-self-center" *ngIf="line.rider.isOut">
+        <ion-chip color="danger" outline>
+          <ion-icon color="danger" name="bicycle-sharp"></ion-icon>
+          <ion-label>Etappe {{line.latestEtappe.etappeNumber}}</ion-label>
+        </ion-chip>
       </ion-col>
     </ion-row>
   </ion-grid>

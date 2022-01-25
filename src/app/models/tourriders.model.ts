@@ -10,6 +10,10 @@ export interface ITourriders {
   team?: ITeam;
   waterdragerTotalPoints?: number;
   waterdragerEtappePoints?: number;
+  mountainPoints?: number;
+  tourPoints?: number;
+  pointsPoints?: number;
+  youthPoints?: number;
   totalStagePoints?: number;
 }
 
