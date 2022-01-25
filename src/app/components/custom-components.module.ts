@@ -20,14 +20,13 @@ import {LoginComponent} from './login/login.component';
         FormsModule,
         ReactiveFormsModule,
     ],
-    entryComponents: [],
     exports: [
         TableSettingsComponent,
         DeelnemerTableSummaryComponent,
         RennerTableSummaryComponent,
         LoginComponent
     ],
-    providers: [],
+    providers: []
 })
 export class CustomComponentModule {
 }

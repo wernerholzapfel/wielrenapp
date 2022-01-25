@@ -18,9 +18,6 @@ import {CustomComponentModule} from '../../components/custom-components.module';
         SwiperModule,
         CustomComponentModule,
     ],
-    entryComponents: [
-        TableSettingsComponent,
-    ],
     declarations: [
         EtappesPage
     ]

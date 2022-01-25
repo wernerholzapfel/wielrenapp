@@ -39,7 +39,6 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
     declarations: [
         AppComponent,
     ],
-    entryComponents: [],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -58,7 +57,7 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         RiderService,
         TourService,
         AuthService,
