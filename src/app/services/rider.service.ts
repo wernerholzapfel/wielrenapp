@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {IRider} from '../models/rider.model';
 import {environment} from '../../environments/environment';
 import {ITourrider} from '../models/etappe.model';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireDatabase} from '@angular/fire/compat/database';
 import {ITourriders} from '../models/tourriders.model';
 
 @Injectable()

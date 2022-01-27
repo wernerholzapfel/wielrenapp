@@ -5,9 +5,8 @@ import {FormsModule} from '@angular/forms';
 import {EtappesPage} from './etappes-page.component';
 
 import {EtappesPagePageRoutingModule} from './etappes-page-routing.module';
-import {SwiperModule} from 'ngx-swiper-wrapper';
-import {TableSettingsComponent} from '../../components/table-settings/table-settings.component';
 import {CustomComponentModule} from '../../components/custom-components.module';
+import {SwiperModule} from 'swiper/angular';
 
 @NgModule({
     imports: [
@@ -15,8 +14,8 @@ import {CustomComponentModule} from '../../components/custom-components.module';
         CommonModule,
         FormsModule,
         EtappesPagePageRoutingModule,
-        SwiperModule,
         CustomComponentModule,
+        SwiperModule
     ],
     declarations: [
         EtappesPage

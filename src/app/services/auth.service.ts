@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-// import * as firebase from 'firebase';
-import {AngularFireAuth} from '@angular/fire/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../store/store';
 import {FetchParticipant} from '../store/participant/participant.actions';
@@ -14,14 +13,14 @@ export class AuthService {
     public user$: Observable<firebase.User>;
     public isAdmin = false;
 
-    constructor(private angularFireAuth: AngularFireAuth, private router: Router, private store: Store<IAppState>) {
-        this.user$ = angularFireAuth.authState;
+    constructor(private firebaseAuth: AngularFireAuth, private router: Router, private store: Store<IAppState>) {
+        this.user$ = firebaseAuth.authState;
 
         this.user$.subscribe(user => {
             if (user) {
                 this.store.dispatch(new FetchParticipant());
 
-                this.angularFireAuth.idTokenResult.subscribe(tokenResult => {
+                this.firebaseAuth.idTokenResult.subscribe(tokenResult => {
                     this.isAdmin = tokenResult.claims.admin;
                 });
             }
@@ -30,39 +29,39 @@ export class AuthService {
 
     signInRegular(email, password) {
         const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-        return this.angularFireAuth.signInWithEmailAndPassword(email, password);
+        return this.firebaseAuth.signInWithEmailAndPassword(email, password);
     }
 
     updateProfile(displayName: string) {
-        this.angularFireAuth.user.subscribe(response => {
+        this.firebaseAuth.user.subscribe(response => {
             response.updateProfile({displayName});
         });
     }
 
     signUpRegular(email, password, displayName) {
-        return this.angularFireAuth.createUserWithEmailAndPassword(email, password);
+        return this.firebaseAuth.createUserWithEmailAndPassword(email, password);
     }
 
     isLoggedIn() {
-        return this.angularFireAuth.authState;
+        return this.firebaseAuth.authState;
     }
 
     logout() {
-        this.angularFireAuth.signOut()
+        this.firebaseAuth.signOut()
             .then((res) =>
                 this.router.navigate(['/']));
     }
 
     getToken(): Observable<string> {
-        return this.angularFireAuth.idToken;
+        return this.firebaseAuth.idToken;
     }
 
     getTokenResult(): Observable<firebase.auth.IdTokenResult> {
-        return this.angularFireAuth.idTokenResult;
+        return this.firebaseAuth.idTokenResult;
     }
 
     sendPasswordResetEmail(email: string): Promise<any> {
-        return this.angularFireAuth.sendPasswordResetEmail(email);
+        return this.firebaseAuth.sendPasswordResetEmail(email);
     }
 
 

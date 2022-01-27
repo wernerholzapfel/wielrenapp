@@ -5,16 +5,21 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "module": "esnext",
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "skipDefaultLibCheck": true, // https://stackoverflow.com/questions/70401240/error-in-configuration-of-firebase-in-angular
+    "skipLibCheck": true // https://stackoverflow.com/questions/70401240/error-in-configuration-of-firebase-in-angular
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

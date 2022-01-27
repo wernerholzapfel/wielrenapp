@@ -7,7 +7,6 @@ import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ParticipantService} from '../../services/participant.service';
 import {getParticipantPredictions} from '../../store/participanttable/participanttable.reducer';
-import IMijnTeam = namespace.IMijnTeam;
 import {IParticipanttable, Prediction} from '../../models/participanttable.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
 import {IonSelect} from '@ionic/angular';

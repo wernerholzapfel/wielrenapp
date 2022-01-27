@@ -3,21 +3,19 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {SplashScreen} from '@capacitor/splash-screen';
+import {StatusBar} from '@capacitor/status-bar';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {SwiperModule} from 'ngx-swiper-wrapper';
 import {DateFnsModule} from 'ngx-date-fns';
 import {effects, reducers} from './store/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {environment} from '../environments/environment';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireModule} from '@angular/fire/compat';
+import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
 import {RiderService} from './services/rider.service';
 import {TourService} from './services/tour.service';
 import {PredictionService} from './services/prediction.service';
@@ -29,11 +27,8 @@ import {EtappeService} from './services/etappe.service';
 import {ClassificationsService} from './services/stageclassifications.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Deelnemertop5Component} from './components/top5/deelnemertop5/deelnemertop5.component';
-import {Top5Component} from './components/top5/top5.component';
-import {Ridertop5Component} from './components/top5/ridertop5/ridertop5.component';
-import {DeelnemerTableSummaryComponent} from './components/deelnemer-table-summary/deelnemer-table-summary.component';
 import {TokenInterceptor} from './interceptors/token.interceptor';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 
 @NgModule({
     declarations: [
@@ -45,7 +40,6 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
-        SwiperModule,
         DateFnsModule,
         AngularFireDatabaseModule,
         AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
@@ -55,8 +49,6 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
         EffectsModule.forRoot(effects),
     ],
     providers: [
-        StatusBar,
-        SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         RiderService,
         TourService,

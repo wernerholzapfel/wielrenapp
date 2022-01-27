@@ -16,21 +16,25 @@
 </ion-header>
 <ion-header>
     <ion-toolbar>
-        <swiper [config]="config" [(index)]="etappeIndex">
-            <div *ngFor="let etappe of etappes; let index = index">
-                <ion-grid>
-                    <ion-row class="ion-justify-content-center">
-                        <ion-col class="ion-text-center">
-                            <ion-chip [color]="etappe?.id === activeEtappe?.id ? 'secondary' : 'primary'"
-                                      (click)="setEtappe(etappe, index)">
-                                {{etappe.etappeNumber}}
-                            </ion-chip>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </div>
-        </swiper>
+                <swiper [config]="config"
+                        [initialSlide]="etappeIndex" #etappeSlides>
+                    <ng-template swiperSlide *ngFor="let etappe of etappes; let index = index">
+                    <div>
+                        <ion-grid>
+                            <ion-row class="ion-justify-content-center">
+                                <ion-col class="ion-text-center">
+                                    <ion-chip [color]="etappe?.id === activeEtappe?.id ? 'secondary' : 'primary'"
+                                              (click)="setEtappe(etappe, index)">
+                                        {{etappe.etappeNumber}}
+                                    </ion-chip>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                    </ng-template>
+                </swiper>
     </ion-toolbar>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
 <ion-content [fullscreen]="true">
     <ion-row class="ion-align-items-center">
@@ -40,9 +44,11 @@
     </ion-row>
     <ion-row>
         <ion-col>
-                <ion-note color="dark" class="ion-no-margin" *ngIf="uitslag?.length > 0"> Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</ion-note>
+            <ion-note color="dark" class="ion-no-margin" *ngIf="uitslag?.length > 0">
+                Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</ion-note>
         </ion-col>
     </ion-row>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
     <ion-segment color="primary" mode="md" value="uitslag" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="uitslag">
             <ion-label>Renners</ion-label>

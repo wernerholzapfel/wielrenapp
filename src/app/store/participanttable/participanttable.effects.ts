@@ -4,7 +4,7 @@ import * as participanttable from './participanttable.actions';
 import {catchError, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireDatabase} from '@angular/fire/compat/database';
 
 @Injectable()
 export class ParticipanttableEffects {
