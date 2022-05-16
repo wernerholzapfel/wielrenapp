@@ -21,13 +21,30 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
+<!--        <ion-row class="ion-align-items-center ion-no-padding">-->
+<!--            <ion-col>-->
+<!--                <h5> {{teamnaam}} </h5>-->
+<!--            </ion-col>-->
+<!--        </ion-row>-->
+<!--        <ion-row class="ion-no-padding">-->
+<!--            <ion-col>-->
+<!--                <ion-note color="dark" class="ion-no-margin">{{deelnemerNaam}}</ion-note>-->
+<!--            </ion-col>-->
+<!--        </ion-row>-->
+        <app-deelnemer-table-summary
+                [showDetail]="false"
+                [line]="participantLine"
+                mainValue="totalPoints">
+        </app-deelnemer-table-summary>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
     <ng-container *ngFor="let line of mijnTeam">
     <app-renner-table-summary [mainValue]="selectedSort"
                               [showDetail]="showDetail"
-                              [line]="line">
+                              [line]="line"
+    (click)="openRenner(line.rider.id)">
     </app-renner-table-summary>
     </ng-container>
 

@@ -1,18 +1,18 @@
-<ion-item (click)="openDeelnemer(line.id)">
+<ion-item (click)="openDeelnemer(line?.id)" lines="none" *ngIf="line" >
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-no-padding ion-padding-top">
             <ion-col size="2" class="ion-align-self-center">
-                {{line.position}} <span
-                    *ngIf="line.previousPosition && (line.previousPosition - line.position) != 0">({{line.previousPosition - line.position}})
+                {{line?.position}} <span
+                    *ngIf="line && line.previousPosition && (line.previousPosition - line.position) != 0">({{line.previousPosition - line.position}})
             </span>
             </ion-col>
             <ion-col class="ion-align-self-center ion-text-wrap" size="7">
                 <ion-row>
-                    {{line.teamName}}
+                    {{line?.teamName}}
                 </ion-row>
                 <ion-row>
                     <ion-text color="medium">
-                        {{line.displayName}}
+                        {{line?.displayName}}
                     </ion-text>
                 </ion-row>
             </ion-col>

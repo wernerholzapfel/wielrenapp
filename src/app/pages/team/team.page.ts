@@ -27,7 +27,11 @@ export class TeamPage implements OnInit {
                 private router: Router) {
     }
 
-    title: string;
+    participantLine: any; //todo
+    teamnaam: string;
+    deelnemerNaam: string;
+    totalPoints: number;
+    position: number;
     mijnTeam: IRennerTableSummary[];
     tour: ITour;
     selectedSort = 'totalTourPoints';
@@ -49,8 +53,10 @@ export class TeamPage implements OnInit {
         }))
             .subscribe(participanttable => {
                 if (participanttable) {
-                    this.title = participanttable.teamName;
                     console.log(participanttable);
+                    // this.teamnaam = participanttable.teamName;
+                    // this.deelnemerNaam = participanttable.displayName
+                    this.participantLine = participanttable
                     this.mijnTeam = participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction));
                     this.sortRenners(this.selectedSort);
                 }
@@ -116,5 +122,9 @@ export class TeamPage implements OnInit {
                     return b.points.deltaTotalStagePoints - a.points.deltaTotalStagePoints;
             }
         });
+    }
+
+    openRenner(rennerId) {
+        console.log(rennerId);
     }
 }
