@@ -15,7 +15,7 @@ import {CustomComponentModule} from '../../components/custom-components.module';
         FormsModule,
         IonicModule,
         RennersPageRoutingModule,
-        CustomComponentModule
+        CustomComponentModule,
     ],
   declarations: [RennersPage]
 })

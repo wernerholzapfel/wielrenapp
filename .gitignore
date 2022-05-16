@@ -32,3 +32,6 @@ npm-debug.log*
 /www
 /.firebase/hosting.d3d3.cache
 /.gradle/
+/android/
+/e2e/
+/ios/

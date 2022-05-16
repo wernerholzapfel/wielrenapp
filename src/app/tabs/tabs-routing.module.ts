@@ -25,6 +25,9 @@ const routes: Routes = [
       {
         path: 'renners',
         loadChildren: () => import('../pages/renners/renners.module').then(m => m.RennersPageModule)
+      }, {
+        path: 'inschrijven',
+        loadChildren: () => import('../pages/subscribe/subscribe.module').then(m => m.SubscribePageModule)
       },
       {
         path: 'menu',

@@ -30,6 +30,7 @@ export interface ITourrider {
 
 export interface IPrediction {
   id?: string;
+  index?: number;
   isRider: boolean;
   isWaterdrager: boolean;
   isMeesterknecht: boolean;

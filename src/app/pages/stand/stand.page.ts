@@ -7,6 +7,8 @@ import * as dayjs from 'dayjs';
 import {Observable, Subject} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
 import {IonSelect} from '@ionic/angular';
+import * as relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 @Component({
     selector: 'app-stand',
@@ -41,13 +43,15 @@ export class StandPage implements OnInit, OnDestroy {
         this.store.pipe(select(getParticipanttable)).subscribe(participantTable => {
             this.participantstable = participantTable;
         });
-        this.lastUpdated$ = this.store.pipe(select(getLastUpdated));
 
-        this.lastUpdated$.pipe(takeUntil(this.unsubscribe)).subscribe(lastupdated => {
-            if (lastupdated) {
-                this.lastUpdated = dayjs(lastupdated.lastUpdated).fromNow();
-            }
-        });
+        this.store.pipe(select(getLastUpdated))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(lastupdated => {
+                console.log(lastupdated)
+                if (lastupdated) {
+                    this.lastUpdated = dayjs(lastupdated.lastUpdated).fromNow();
+                }
+            });
     }
 
     ngOnDestroy() {

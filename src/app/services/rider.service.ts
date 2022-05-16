@@ -15,7 +15,6 @@ export class RiderService {
   }
 
   getRiders(): Observable<IRider[]> {
-
     return this.http.get<IRider[]>(`${environment.apiBaseUrl}/riders`);
   }
 

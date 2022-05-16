@@ -5,11 +5,16 @@
 </ion-header>
 
 <ion-content>
-    <ion-button
+    <ion-item detail="false" href="/tabs/inschrijven">
+        <ion-label>
+            Inschrijven
+        </ion-label>
+    </ion-item>
+    <ion-item
             *ngIf="(authService.user$ | async)"
-            color="secondary"
-            expand="full"
             (click)="logout()">
-        Logout
-    </ion-button>
+        <ion-label>
+            Uitloggen
+        </ion-label>
+    </ion-item>
 </ion-content>

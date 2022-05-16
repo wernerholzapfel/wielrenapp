@@ -30,7 +30,9 @@ export class RennersPage implements OnInit, OnDestroy {
     searchTerm: string;
     tour: ITour;
     riders: IRennerTableSummary[];
+    uitgevallenRiders: IRennerTableSummary[];
     unsubscribe = new Subject<void>();
+    segmentView = 'punten';
 
     constructor(private riderService: RiderService, private store: Store<IAppState>) {
     }
@@ -42,21 +44,22 @@ export class RennersPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.store.pipe(select(getTour))
-            .pipe(takeUntil(this.unsubscribe)).subscribe(tour => {
-            this.tour = tour;
-            if (new Date(this.tour.deadline) < new Date()) {
-                // todo refactor for example  subscribe until
-                // todo move to store?
-                this.riderService.getDetailTourriders(tour.id)
-                    .subscribe(response => {
-                        console.log(response);
-                        this.riders = response.map(rider => this.mapToRennerTableSummary(rider));
-                        this.sortRenners(this.selectedSort);
-                    });
-            } else {
-                this.riders = [];
-            }
-        });
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(tour => {
+                this.tour = tour;
+                if (new Date(this.tour.deadline) < new Date()) {
+                    // todo refactor for example  subscribe until
+                    // todo move to store?
+                    this.riderService.getDetailTourriders(tour.id)
+                        .subscribe(response => {
+                            console.log(response);
+                            this.riders = response.map(rider => this.mapToRennerTableSummary(rider));
+                            this.sortRenners(this.selectedSort);
+                        });
+                } else {
+                    this.riders = [];
+                }
+            });
     }
 
     ngOnDestroy() {
@@ -69,7 +72,7 @@ export class RennersPage implements OnInit, OnDestroy {
     }
 
     sortRenners(sort: string) {
-        this.selectedSort = sort;
+        this.selectedSort = sort === 'gekozen' ? this.selectedSort : sort;
         this.riders = this.riders.slice().sort((a, b) => {
             switch (sort) {
                 case 'totalTourPoints':
@@ -84,12 +87,15 @@ export class RennersPage implements OnInit, OnDestroy {
                     return b.points.totalStagePoints - a.points.totalStagePoints;
                 case 'deltaTotalStagePoints':
                     return b.points.deltaTotalStagePoints - a.points.deltaTotalStagePoints;
+                case 'gekozen':
+                    return b.gekozen - a.gekozen;
             }
         });
     }
 
     segmentChanged($event) {
-        console.log($event.detail.value);
+        this.segmentView = $event.detail.value;
+        this.sortRenners($event.detail.value === 'gekozen' ? $event.detail.value : this.selectedSort);
     }
 
     // addPosition(element: any) {
@@ -105,15 +111,16 @@ export class RennersPage implements OnInit, OnDestroy {
                 id: rider.rider.id,
                 firstName: rider.rider.firstName,
                 surName: rider.rider.surName,
-                isOut: rider.rider.isOut,
+                isOut: rider.isOut,
                 nationality: rider.rider.nationality,
+                waarde: rider.waarde
                 // isBeschermdeRenner: line.isBeschermdeRenner,
                 // isLinkebal: line.isLinkebal,
                 // isMeesterknecht: line.isMeesterknecht,
                 // isRider: line.isRider,
                 // isWaterdrager: line.isWaterdrager,
             },
-            latestEtappe: rider.rider.latestEtappe,
+            latestEtappe: rider.latestEtappe,
             points: {
                 totalTourPoints: this.determineTotaalpunten(rider),
                 totalMountainPoints: rider.mountainPoints ? rider.mountainPoints : 0,
@@ -121,7 +128,8 @@ export class RennersPage implements OnInit, OnDestroy {
                 totalYouthPoints: rider.youthPoints ? rider.youthPoints : 0,
                 totalStagePoints: rider.totalStagePoints ? rider.totalStagePoints : 0,
                 deltaTotalStagePoints: 0, // todo
-            }
+            },
+            gekozen: rider.predictions ? rider.predictions.length : 0
         };
     }
 

@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            <ion-icon name="bicycle"></ion-icon>
+            <img src="/assets/header_white3.png" height="36px;">
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item class="ion-no-padding"
+              [color]="calculatedWaardepunten > maxParticipantRidersPunten ? 'danger' : 'light'">
+        <ion-icon name="bicycle"></ion-icon>
+        <h3>
+            Team {{isParticitantRidersComplete && calculatedWaardepunten < maxParticipantRidersPunten ? 'compleet' : 'incompleet'}}
+            <ion-text slot="end">{{calculatedWaardepunten}}/{{maxParticipantRidersPunten}}</ion-text>
+        </h3>
+    </ion-item>
+
+    <ion-list>
+        <ion-item *ngFor="let rider of partipantRidersForm?.riders">
+            <div>
+                <ion-icon name="bicycle"></ion-icon>
+                <img *ngIf="rider?.rider?.rider?.nationality" style="height: 16px;"
+                     src="/assets/flag/{{rider?.rider?.rider?.nationality}}.png">
+                {{rider?.rider?.rider?.firstName}}
+                {{rider?.rider?.rider?.surNameShort}}
+                <ion-text *ngIf="rider?.rider?.waarde">({{rider?.rider?.waarde}})</ion-text>
+            </div>
+            <ion-icon *ngIf="!rider?.id" slot="end" name="add" (click)="openRidersPopup(rider?.index, 'rider')"></ion-icon>
+            <ion-icon *ngIf="rider?.id" slot="end" name="trash" (click)="deleteRider(rider)"></ion-icon>
+        </ion-item>
+        <app-choose-rider-item [rider]="partipantRidersForm?.beschermdeRenner"
+                               icon="fitness"
+                               (openRiderEvent)="openRidersPopup($event, 'beschermderenner')"
+                               (deleteRiderEvent)="deleteRider($event)">
+        </app-choose-rider-item>
+        <app-choose-rider-item [rider]="partipantRidersForm?.meesterknecht"
+                               icon="build"
+                               (openRiderEvent)="openRidersPopup($event, 'meesterknecht')"
+                               (deleteRiderEvent)="deleteRider($event)">
+        </app-choose-rider-item>
+        <app-choose-rider-item [rider]="partipantRidersForm?.waterdrager"
+                               icon="water"
+                               (openRiderEvent)="openRidersPopup($event, 'waterdrager')"
+                               (deleteRiderEvent)="deleteRider($event)">
+        </app-choose-rider-item>
+        <app-choose-rider-item [rider]="partipantRidersForm?.linkebal"
+                               icon="nuclear"
+                               (openRiderEvent)="openRidersPopup($event, 'linkebal')"
+                               (deleteRiderEvent)="deleteRider($event)">
+        </app-choose-rider-item>
+    </ion-list>
+</ion-content>
+<!--<ion-item class="ion-no-padding">-->
+<!--    <ion-icon id="joker-popover" name="nuclear"></ion-icon>-->
+<!--    <ion-popover trigger="joker-popover" side="top">-->
+<!--        <ng-template>-->
+<!--            <ion-content>-->
+<!--                Joker<br>-->
+<!--                -Uit laagste waardegroep (10 waardepunten)<br>-->
+<!--                -Krijgt dubbele punten<br>-->
+<!--                -Als hij uitvalt 20 strafpunten<br>-->
+<!--            </ion-content>-->
+<!--        </ng-template>-->
+<!--    </ion-popover>-->
+<!--    <h3>Mijn Joker</h3>-->
+<!--</ion-item>-->

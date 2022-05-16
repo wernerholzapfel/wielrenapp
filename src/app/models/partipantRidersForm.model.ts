@@ -10,3 +10,7 @@ export interface IPartipantRidersFormModel {
   waterdrager: IPrediction;
   tour: ITour;
 }
+export interface PostPartipantRidersFormModel {
+  prediction: IPrediction;
+  tour: ITour;
+}

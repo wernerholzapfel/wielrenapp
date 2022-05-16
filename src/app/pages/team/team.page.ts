@@ -70,6 +70,7 @@ export class TeamPage implements OnInit {
                 isMeesterknecht: line.isMeesterknecht,
                 isRider: line.isRider,
                 isWaterdrager: line.isWaterdrager,
+                waarde: line.rider.waarde
             },
             latestEtappe: line.rider.latestEtappe,
             points: {
@@ -79,7 +80,7 @@ export class TeamPage implements OnInit {
                 totalYouthPoints: line.youthPoints ?  line.youthPoints : 0,
                 totalStagePoints: line.totalStagePoints ?  line.totalStagePoints : 0,
                 deltaTotalStagePoints: line.deltaStagePoints,
-            }
+            },
         };
     }
 

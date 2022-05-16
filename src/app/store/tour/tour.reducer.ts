@@ -40,6 +40,7 @@ export function tourReducer(state = initaltourState, action): TourState {
         inProgress: true,
       };
     case tour.FETCH_TOUR_SUCCESS:
+      console.log('fetchtoursucces');
       return {
         ...state,
         isRegistrationOpen: Date.parse(action.payload.deadline) >= Date.now(),

@@ -1,6 +1,8 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>Stand</ion-title>
+        <ion-title>
+            <img src="/assets/header_white3.png" height="36px;">
+        </ion-title>
         <ion-buttons slot="end">
             <ion-button class="ion-no-padding"
                         fill="clear"
@@ -19,30 +21,23 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
-</ion-header>
-
-<ion-content>
     <ion-grid>
-        <ion-row class="ion-align-items-center">
+        <ion-row class="ion-align-items-center ion-no-padding">
             <ion-col>
-                <h5>{{activeStand}}</h5>
+                <h5> {{activeStand}} </h5>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row class="ion-no-padding">
             <ion-col>
                 <ion-note color="dark" class="ion-no-margin">Bijgewerkt: {{lastUpdated}}</ion-note>
             </ion-col>
         </ion-row>
-        <ion-row class="ion-justify-content-between">
-            <ion-col class="ion-align-self-center">
-            </ion-col>
-            <ion-col size="3" class="ion-align-items-end ion-text-end">
-
-            </ion-col>
-        </ion-row>
     </ion-grid>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+</ion-header>
+
+<ion-content>
     <ion-list>
-        <ion-progress-bar value="1" color="primary"></ion-progress-bar>
         <ng-container *ngFor="let line of participantstable">
             <app-deelnemer-table-summary
                     [showDetail]="showDetail"

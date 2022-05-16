@@ -5,6 +5,7 @@
         <img style="height: 16px;"
              src="/assets/flag/{{line?.rider?.nationality}}.png">
         {{line?.rider?.firstName}} {{line?.rider?.surName}}
+        <ion-text color="medium" size="small">({{line.rider.waarde}})</ion-text>
       </ion-col>
       <ion-col size="3" class="ion-align-self-center ion-text-end">
         <ion-chip *ngIf="mainValue === 'totalTourPoints'" color="primary">
@@ -19,6 +20,8 @@
           EP: {{line.points.totalStagePoints}}</ion-chip>
         <ion-chip *ngIf="mainValue === 'deltaTotalStagePoints'" color="primary">
           ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>
+        <ion-chip *ngIf="mainValue === 'gekozen'" color="primary">
+          {{line.gekozen}}</ion-chip>
       </ion-col>
     </ion-row>
     <ion-row class="ion-no-padding ion-padding-top ion-wrap" *ngIf="showDetail">

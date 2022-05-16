@@ -17,6 +17,10 @@ import {
     PushNotifications,
     Token,
 } from '@capacitor/push-notifications';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/nl';
+
+dayjs.locale('nl');
 
 @Component({
     selector: 'app-root',
@@ -41,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     unsubscribe = new Subject<void>();
 
     ngOnInit() {
-        this.store.dispatch(new fromTour.FetchTourList);
+        this.store.dispatch(new fromTour.FetchTourList());
         this.store.dispatch(new fromTour.FetchTour());
 
         this.tour$ = this.store.pipe(select(getTour));

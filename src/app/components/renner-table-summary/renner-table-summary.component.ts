@@ -13,6 +13,7 @@ export interface IRennerTableSummary {
         isMeesterknecht?: boolean;
         isLinkebal?: boolean;
         isBeschermdeRenner?: boolean;
+        waarde: number
     };
     points: {
         totalTourPoints: number
@@ -23,6 +24,7 @@ export interface IRennerTableSummary {
         deltaTotalStagePoints: number
     };
     latestEtappe: LatestEtappe;
+    gekozen?: number
 }
 
 @Component({

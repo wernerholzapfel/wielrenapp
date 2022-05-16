@@ -6,13 +6,17 @@ import {TableSettingsComponent} from './table-settings/table-settings.component'
 import {DeelnemerTableSummaryComponent} from './deelnemer-table-summary/deelnemer-table-summary.component';
 import {RennerTableSummaryComponent} from './renner-table-summary/renner-table-summary.component';
 import {LoginComponent} from './login/login.component';
+import {ChooseRiderItemComponent} from './choose-rider-item/choose-rider-item.component';
+import {FilterIsOutPipe} from '../services/pipe/filter-is-out.pipe';
 
 @NgModule({
     declarations: [
         TableSettingsComponent,
         DeelnemerTableSummaryComponent,
         RennerTableSummaryComponent,
-        LoginComponent
+        LoginComponent,
+        ChooseRiderItemComponent,
+        FilterIsOutPipe
     ],
     imports: [
         CommonModule,
@@ -24,7 +28,9 @@ import {LoginComponent} from './login/login.component';
         TableSettingsComponent,
         DeelnemerTableSummaryComponent,
         RennerTableSummaryComponent,
-        LoginComponent
+        LoginComponent,
+        ChooseRiderItemComponent,
+        FilterIsOutPipe
     ],
     providers: []
 })

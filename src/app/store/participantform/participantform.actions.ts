@@ -12,7 +12,7 @@ export const FETCH_PARTICIPANTFORM_FAILURE = '[PARTICIPANTFORM] Fetch Participan
 export class AddRiderToForm implements Action {
   readonly type = ADD_RIDER_TO_FORM;
 
-  constructor(public payload: any) {
+  constructor(public payload: { rider: any, index: number}) {
   }
 }
 

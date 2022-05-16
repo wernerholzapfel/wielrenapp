@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-list *ngIf="rider">
+    <ion-icon [name]="icon"></ion-icon>
+    <img *ngIf="rider?.rider?.rider?.nationality"
+         style="height: 16px;"
+         src="/assets/flag/{{rider?.rider?.rider?.nationality}}.png">
+    {{rider?.rider.rider.firstName}}
+    {{rider?.rider.rider.surNameShort}}
+    <ion-text *ngIf="rider?.rider.waarde">({{rider?.rider.waarde}})</ion-text>
+  </ion-list>
+  <ion-icon *ngIf="!rider?.id" slot="end" name="add" (click)="openRidersPopup(rider?.index)"></ion-icon>
+  <ion-icon *ngIf="rider?.id" slot="end" name="trash" (click)="deleteRider(rider)"></ion-icon>
+</ion-item>

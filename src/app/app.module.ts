@@ -29,6 +29,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './interceptors/token.interceptor';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import {OrderModule} from 'ngx-order-pipe';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
         BrowserAnimationsModule,
         IonicModule.forRoot(),
         AppRoutingModule,
+        OrderModule,
         HttpClientModule,
         DateFnsModule,
         AngularFireDatabaseModule,
@@ -49,7 +51,7 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
         EffectsModule.forRoot(effects),
     ],
     providers: [
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         RiderService,
         TourService,
         AuthService,
