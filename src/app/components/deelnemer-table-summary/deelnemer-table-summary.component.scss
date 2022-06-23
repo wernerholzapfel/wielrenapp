@@ -1,4 +1,21 @@
+:host {
+
+  .hws-font-weight-600 {
+    font-weight: 600;
+  }
+  ion-item {
+    --min-height: 32px;
+  }
+  ion-col {
+    font-size: 12px;
+  }
+
+  ion-chip {
+    font-size: 12px;
+  }
+}
+
 ion-chip {
-  width: 95%;
-  max-width: 120px;
+  //width: 95%;
+  //max-width: 120px;
 }

@@ -10,9 +10,10 @@
             <ion-label>Waarde</ion-label>
         </ion-segment-button>
     </ion-segment>
-    <ion-searchbar color="light"></ion-searchbar>
-</ion-header>
+<!--    <ion-searchbar (ionChange)="search($event)" placeholder="Zoek renner" color="light"-->
+<!--                   debounce="500"></ion-searchbar>-->
 
+</ion-header>
 <ion-content>
     <ion-list *ngIf="selectedSegment === 'teamlijst'">
         <ion-list *ngFor="let team of teams">

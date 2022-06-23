@@ -16,9 +16,10 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.line);
     }
 
     openDeelnemer(deelnemerId) {
-        this.router.navigate(['/tabs/team', { id: deelnemerId }]);
+        this.router.navigate(['/tabs/team', {id: deelnemerId}], {state: this.line});
     }
 }

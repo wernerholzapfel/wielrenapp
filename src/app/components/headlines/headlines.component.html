@@ -5,8 +5,8 @@
         </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-        <p [innerHTML]="headline.text">
-        </p>
+        <div [innerHTML]="headline.text">
+        </div>
     </ion-card-content>
     <ion-footer>
         <ion-button fill="clear" color="light" [disabled]="headlineIndex === 0" (click)="previousHeadline()">

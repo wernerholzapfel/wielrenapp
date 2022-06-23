@@ -27,9 +27,7 @@ export class TeamPage implements OnInit {
                 private router: Router) {
     }
 
-    participantLine: any; //todo
-    teamnaam: string;
-    deelnemerNaam: string;
+    participantLine: any; // todo
     totalPoints: number;
     position: number;
     mijnTeam: IRennerTableSummary[];
@@ -56,7 +54,7 @@ export class TeamPage implements OnInit {
                     console.log(participanttable);
                     // this.teamnaam = participanttable.teamName;
                     // this.deelnemerNaam = participanttable.displayName
-                    this.participantLine = participanttable
+                    this.participantLine = participanttable;
                     this.mijnTeam = participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction));
                     this.sortRenners(this.selectedSort);
                 }
@@ -65,10 +63,13 @@ export class TeamPage implements OnInit {
 
     private mapToRennerTableSummary(line: Prediction): IRennerTableSummary {
         return {
+            id: line.id,
             rider: {
                 id: line.rider.id,
                 firstName: line.rider.rider.firstName,
                 surName: line.rider.rider.surName,
+                surNameShort: line.rider.rider.surNameShort,
+                initials: line.rider.rider.initials,
                 isOut: line.rider.isOut,
                 nationality: line.rider.rider.nationality,
                 isBeschermdeRenner: line.isBeschermdeRenner,
@@ -124,7 +125,4 @@ export class TeamPage implements OnInit {
         });
     }
 
-    openRenner(rennerId) {
-        console.log(rennerId);
-    }
 }

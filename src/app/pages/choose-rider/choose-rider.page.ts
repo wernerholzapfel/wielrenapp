@@ -11,6 +11,7 @@ import {IRider} from '../../models/rider.model';
 import {ITourriders} from '../../models/tourriders.model';
 import {ModalController} from '@ionic/angular';
 import {ITeam} from '../../models/team.model';
+import {UiServiceService} from '../../services/ui-service.service';
 
 @Component({
     selector: 'app-choose-rider',
@@ -31,6 +32,7 @@ export class ChooseRiderPage implements OnInit {
 
     constructor(
         private riderService: RiderService,
+        private uiService: UiServiceService,
         private store: Store<IAppState>,
         private modalController: ModalController) {
     }
@@ -68,5 +70,9 @@ export class ChooseRiderPage implements OnInit {
             rider,
             predictionType: this.predictionType
         });
+    }
+
+    search(searchTerm: any) {
+     console.log(this.uiService.filterRenners(searchTerm.detail.value, this.teams));
     }
 }

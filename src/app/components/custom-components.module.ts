@@ -8,6 +8,8 @@ import {RennerTableSummaryComponent} from './renner-table-summary/renner-table-s
 import {LoginComponent} from './login/login.component';
 import {ChooseRiderItemComponent} from './choose-rider-item/choose-rider-item.component';
 import {FilterIsOutPipe} from '../services/pipe/filter-is-out.pipe';
+import {PuntenColComponent} from './punten-col/punten-col.component';
+import {IconWithPointsComponent} from './icon-with-points/icon-with-points.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +18,8 @@ import {FilterIsOutPipe} from '../services/pipe/filter-is-out.pipe';
         RennerTableSummaryComponent,
         LoginComponent,
         ChooseRiderItemComponent,
+        PuntenColComponent,
+        IconWithPointsComponent,
         FilterIsOutPipe
     ],
     imports: [
@@ -30,6 +34,8 @@ import {FilterIsOutPipe} from '../services/pipe/filter-is-out.pipe';
         RennerTableSummaryComponent,
         LoginComponent,
         ChooseRiderItemComponent,
+        PuntenColComponent,
+        IconWithPointsComponent,
         FilterIsOutPipe
     ],
     providers: []

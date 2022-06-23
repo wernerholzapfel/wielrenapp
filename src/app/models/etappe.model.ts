@@ -15,10 +15,11 @@ export interface IEtappe {
 export interface IStageClassification {
   id?: string;
   position: number;
+  punten: number;
   tour: ITour;
   etappe: IEtappe;
   tourrider: ITourrider;
-  punten?: number;
+  stagePoints?: number;
 }
 
 export interface ITourClassification {
@@ -30,6 +31,7 @@ export interface ITourClassification {
 
 export interface ITourrider {
   id: string;
+  waarde: number;
   rider: IRider;
   stageclassifications?: IStageClassification[];
   predictions?: IPrediction[];

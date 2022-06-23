@@ -1,21 +1,20 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>
-            <ion-icon name="bicycle"></ion-icon>
             <img src="/assets/header_white3.png" height="36px;">
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-item class="ion-no-padding"
+    <ion-item class="ion-padding-horizontal" lines="none"
               [color]="calculatedWaardepunten > maxParticipantRidersPunten ? 'danger' : 'light'">
-        <ion-icon name="bicycle"></ion-icon>
         <h3>
             Team {{isParticitantRidersComplete && calculatedWaardepunten < maxParticipantRidersPunten ? 'compleet' : 'incompleet'}}
             <ion-text slot="end">{{calculatedWaardepunten}}/{{maxParticipantRidersPunten}}</ion-text>
         </h3>
     </ion-item>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 
     <ion-list>
         <ion-item *ngFor="let rider of partipantRidersForm?.riders">

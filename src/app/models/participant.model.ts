@@ -43,7 +43,7 @@ export interface IPrediction {
   youthPoints?: number;
   waarde?: number;
   isComplete?: boolean;
-  participant?: IParticipant[];
+  participant?: IParticipant;
 }
 
 

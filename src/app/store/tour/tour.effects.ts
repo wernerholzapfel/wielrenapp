@@ -18,7 +18,8 @@ export class TourEffects {
   @Effect()
   fetchTour$ = this.actions$
     .pipe(
-      ofType<tour.FetchTour>(tour.FETCH_TOUR),
+      ofType<tour.
+          FetchTour>(tour.FETCH_TOUR),
       switchMap(action => {
         return this.tourService
           .getTour()

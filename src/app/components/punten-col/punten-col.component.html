@@ -1,0 +1,9 @@
+<ion-row class="ion-justify-content-end ion-align-items-center">
+  <img src="/assets/rider_tour.png" height="18px;" style="padding-right: 8px;">
+  <ion-text class="hws-font-weight-600">{{punten}}</ion-text>
+  <ion-text color="medium" *ngIf="showDelta">
+    (<ion-icon [name]="deltaPunten > 0 ? 'chevron-up' : 'chevron-down'"
+               [color]="deltaPunten > 0 ? 'success' : 'danger'">
+  </ion-icon>{{deltaPunten}})
+  </ion-text>
+</ion-row>

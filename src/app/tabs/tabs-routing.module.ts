@@ -25,7 +25,12 @@ const routes: Routes = [
       {
         path: 'renners',
         loadChildren: () => import('../pages/renners/renners.module').then(m => m.RennersPageModule)
-      }, {
+      },
+      {
+        path: 'renner-detail',
+        loadChildren: () => import('../pages/renner-detail/renner-detail.module').then( m => m.RennerDetailPageModule)
+      },
+      {
         path: 'inschrijven',
         loadChildren: () => import('../pages/subscribe/subscribe.module').then(m => m.SubscribePageModule)
       },

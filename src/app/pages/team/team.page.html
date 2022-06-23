@@ -21,18 +21,8 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
-<!--        <ion-row class="ion-align-items-center ion-no-padding">-->
-<!--            <ion-col>-->
-<!--                <h5> {{teamnaam}} </h5>-->
-<!--            </ion-col>-->
-<!--        </ion-row>-->
-<!--        <ion-row class="ion-no-padding">-->
-<!--            <ion-col>-->
-<!--                <ion-note color="dark" class="ion-no-margin">{{deelnemerNaam}}</ion-note>-->
-<!--            </ion-col>-->
-<!--        </ion-row>-->
         <app-deelnemer-table-summary
-                [showDetail]="false"
+                [showDetail]="true"
                 [line]="participantLine"
                 mainValue="totalPoints">
         </app-deelnemer-table-summary>
@@ -44,10 +34,10 @@
     <app-renner-table-summary [mainValue]="selectedSort"
                               [showDetail]="showDetail"
                               [line]="line"
-    (click)="openRenner(line.rider.id)">
+                              [riderId]="line.rider.id"
+    >
     </app-renner-table-summary>
     </ng-container>
-
     <ion-item *ngIf="!mijnTeam" lines="none">
         Voor deze ronde heb je geen team gemaakt.
     </ion-item>

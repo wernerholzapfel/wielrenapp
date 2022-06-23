@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            <img src="/assets/header_white3.png" height="36px;">
+        </ion-title>
+    </ion-toolbar>
+    <app-renner-table-summary [riderId]="rennerTableSummary.id" [line]="rennerTableSummary" [showDetail]="true"
+                              lineType="none"
+                              [mainValue]="'totalTourPoints'"></app-renner-table-summary>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+</ion-header>
+
+<ion-content>
+    <ion-segment color="primary" mode="md" value="gekozen" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="gekozen">
+            <ion-label>Gekozen</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="etappes">
+            <ion-label>Etappes</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <ng-container *ngIf="activeSegment === 'gekozen'">
+        <ion-item lines="full" *ngIf="chosenRiderStats?.length > 0">
+            <ion-grid class="ion-no-padding">
+                <ion-row class="ion-no-padding ion-justify-content-around">
+                    <ion-col class="ion-no-padding ion-text-center ion-align-self-center hws-font-size-16"
+                             *ngFor="let chosenRiderStat of chosenRiderStats; let i = index">
+                        <ion-row class="ion-justify-content-center ion-align-items-center">
+                            <ion-chip [color]="chosenRiderStat.active ? 'secondary' : 'primary'"
+                                      (click)="setRiderStats(i)">
+                                <ion-icon [name]="chosenRiderStat.icon"></ion-icon>
+                                <ion-label>{{chosenRiderStat.predictions.length}}</ion-label>
+                            </ion-chip>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item-divider *ngIf="chosenRiderStats?.length > 0">
+            Gekozen als {{headerDisplayname}} door:
+        </ion-item-divider>
+        <ion-item *ngIf="chosenRiderStats?.length === 0">Niemand heeft deze renner gekozen</ion-item>
+        <ng-container *ngFor="let prediction of activePredictions">
+            <ion-item lines="full" (click)="openDeelnemer(prediction?.participant)">
+                 <ion-icon
+                        slot="start"
+                        [name]="prediction.isRider ?
+                'bicycle' : prediction.isLinkebal ?
+                'nuclear' : prediction.isBeschermdeRenner ?
+                'fitness' : prediction.isWaterdrager ?
+                'water' : prediction.isMeesterknecht ?
+                'meesterknecht' : 'bicycle'"></ion-icon>
+                {{prediction.participant?.displayName}}
+            </ion-item>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="activeSegment === 'etappes'">
+        <ion-item *ngFor="let etappe of stageclassifications" lines="full">
+            <ion-chip color="primary" slot="start">{{etappe.position}}</ion-chip>
+            {{etappe.etappe.etappeName}}
+            <ion-chip color="secondary" slot="end">{{etappe.stagePoints}}</ion-chip>
+        </ion-item>
+    </ng-container>
+</ion-content>

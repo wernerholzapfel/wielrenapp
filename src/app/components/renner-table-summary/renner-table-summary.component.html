@@ -1,61 +1,39 @@
-<ion-item>
-  <ion-grid class="ion-no-padding">
-    <ion-row class="ion-no-padding ion-padding-top">
-      <ion-col class="ion-align-self-center">
-        <img style="height: 16px;"
-             src="/assets/flag/{{line?.rider?.nationality}}.png">
-        {{line?.rider?.firstName}} {{line?.rider?.surName}}
-        <ion-text color="medium" size="small">({{line.rider.waarde}})</ion-text>
-      </ion-col>
-      <ion-col size="3" class="ion-align-self-center ion-text-end">
-        <ion-chip *ngIf="mainValue === 'totalTourPoints'" color="primary">
-          TP:{{line.points.totalTourPoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'totalMountainPoints'" color="primary">
-          BK: {{line.points.totalMountainPoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'totalPointsPoints'" color="primary">
-          PK: {{line.points.totalPointsPoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'totalYouthPoints'" color="primary">
-          JK: {{line.points.totalYouthPoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'totalStagePoints'" color="primary">
-          EP: {{line.points.totalStagePoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'deltaTotalStagePoints'" color="primary">
-          ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>
-        <ion-chip *ngIf="mainValue === 'gekozen'" color="primary">
-          {{line.gekozen}}</ion-chip>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-no-padding ion-padding-top ion-wrap" *ngIf="showDetail">
-      <ion-col *ngIf="mainValue !== 'totalPoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline>TP:{{line.points.totalTourPoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'totalMountainPoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline> BK: {{line.points.totalMountainPoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'totalPointsPoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline> PK: {{line.points.totalPointsPoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'totalYouthPoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline> JK: {{line.points.totalYouthPoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'totalStagePoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline> EP: {{line.points.totalStagePoints}}</ion-chip>
-      </ion-col>
-      <ion-col *ngIf="mainValue !== 'deltaTotalStagePoints'"
-               size="3" class="ion-align-self-center">
-        <ion-chip outline>
-          ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>
-      </ion-col>
-      <ion-col size="6" class="ion-align-self-center" *ngIf="line.rider.isOut">
-        <ion-chip color="danger" outline>
-          <ion-icon color="danger" name="bicycle-sharp"></ion-icon>
-          <ion-label>Etappe {{line.latestEtappe.etappeNumber}}</ion-label>
-        </ion-chip>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-item (click)="openRenner()" *ngIf="line.rider" [lines]="lineType">
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-padding-vertical">
+            <ion-col class="ion-align-self-center">
+                <img style="height: 16px;"
+                     src="/assets/flag/{{line?.rider?.nationality}}.png">
+                {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
+                <ion-text color="medium" size="small">({{line.rider.waarde}})</ion-text>
+            </ion-col>
+            <ion-col size="3" class="ion-align-self-center ion-text-end">
+                <app-punten-col [punten]="line.points.totalTourPoints" [showDelta]="false"></app-punten-col>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
+            <app-icon-with-points image="/assets/etappes_donker.png"
+                                  [points]="line.points.totalStagePoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_algemeen.png"
+                                  [points]="line.points.totalTourPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_punten.png"
+                                  [points]="line.points.totalPointsPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_berg.png"
+                                  [points]="line.points.totalMountainPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_jongeren.png"
+                                  [points]="line.points.totalYouthPoints"></app-icon-with-points>
+            <!--todo delta en uitval tonen-->
+            <!--      <ion-col *ngIf="mainValue !== 'deltaTotalStagePoints'"-->
+            <!--               size="3" class="ion-align-self-center">-->
+            <!--        <ion-chip outline>-->
+            <!--          ∆: {{line.points.deltaTotalStagePoints < 0 ? '-' : '+'}}{{line.points.deltaTotalStagePoints}}</ion-chip>-->
+            <!--      </ion-col>-->
+            <!--      <ion-col size="6" class="ion-align-self-center" *ngIf="line.rider.isOut">-->
+            <!--        <ion-chip color="danger" outline>-->
+            <!--          <ion-icon color="danger" name="bicycle-sharp"></ion-icon>-->
+            <!--          <ion-label>Etappe {{line.latestEtappe.etappeNumber}}</ion-label>-->
+            <!--        </ion-chip>-->
+            <!--      </ion-col>-->
+        </ion-row>
+    </ion-grid>
 </ion-item>

@@ -39,6 +39,7 @@
         <ng-container *ngFor="let line of riders">
             <app-renner-table-summary [mainValue]="selectedSort"
                                       [showDetail]="showDetail"
+                                      [riderId]="line.id"
                                       [line]="line">
             </app-renner-table-summary>
         </ng-container>
@@ -47,6 +48,7 @@
         <ng-container *ngFor="let line of riders">
             <app-renner-table-summary [mainValue]="'gekozen'"
                                       [showDetail]="showDetail"
+                                      [riderId]="line.id"
                                       [line]="line">
             </app-renner-table-summary>
         </ng-container>
@@ -55,6 +57,7 @@
         <ng-container *ngFor="let line of riders | filterIsOut">
             <app-renner-table-summary [mainValue]="selectedSort"
                                       [showDetail]="showDetail"
+                                      [riderId]="line.id"
                                       [line]="line">
             </app-renner-table-summary>
         </ng-container>

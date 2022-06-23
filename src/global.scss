@@ -25,12 +25,34 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '~swiper/scss';
+@import '~swiper/swiper';
 @import '~@ionic/angular/css/ionic-swiper';
 
-ion-text {
-  font-size: 14px;
+
+:root {
+  font-size: 10px;
+  ion-card-title {
+    font-size: 18px;
+  }
+  ion-card-sub-title {
+    font-size: 14px;
+  }
+  ion-card-content, ion-item {
+    font-size: 10px;
+  }
+  ion-icon {
+    font-size: 16px;
+  }
+  ion-item {
+    --min-height: 32px
+  }
 }
+
+
+//ion-text {
+//  font-size: 14px;
+//}
+
 h5 {
   margin-top: 0;
   margin-bottom: 0;

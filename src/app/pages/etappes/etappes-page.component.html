@@ -41,12 +41,6 @@
                 <h5>{{activeEtappe?.etappeName}}</h5>
             </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col>
-                <ion-note color="dark" class="ion-no-margin" *ngIf="uitslag?.length > 0">
-                    Winnaar {{uitslag[0].tourrider.rider.firstName}} {{uitslag[0].tourrider.rider.surName}}</ion-note>
-            </ion-col>
-        </ion-row>
     </ion-grid>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>

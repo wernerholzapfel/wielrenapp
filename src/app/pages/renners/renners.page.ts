@@ -107,11 +107,14 @@ export class RennersPage implements OnInit, OnDestroy {
 
     mapToRennerTableSummary(rider: ITourriders): IRennerTableSummary {
         return {
+            id: rider.id,
             rider: {
                 id: rider.rider.id,
                 firstName: rider.rider.firstName,
                 surName: rider.rider.surName,
                 isOut: rider.isOut,
+                initials: rider.rider.initials,
+                surNameShort: rider.rider.surNameShort,
                 nationality: rider.rider.nationality,
                 waarde: rider.waarde
                 // isBeschermdeRenner: line.isBeschermdeRenner,
