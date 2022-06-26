@@ -23,12 +23,14 @@ export class ChooseRiderPage implements OnInit {
     @Input() ridersWaardeList: any[];
     @Input() teams: ITeam[];
     @Input() predictionType: string;
+    @Input() beschermdeRennerMeesterKnechtWaarde: number;
     selectedSegment = 'teamlijst';
     showDetail = false;
     searchTerm: string;
     tour: ITour;
     unsubscribe = new Subject<void>();
     title = 'Kies Renner';
+
 
     constructor(
         private riderService: RiderService,
@@ -41,15 +43,23 @@ export class ChooseRiderPage implements OnInit {
         switch (this.predictionType) {
             case 'beschermderenner' :
                 this.title = 'Kies Beschermde renner';
+                if (this.beschermdeRennerMeesterKnechtWaarde > 0) {
+                    this.filterRennersBijWaarde(this.beschermdeRennerMeesterKnechtWaarde);
+                }
+
                 break;
             case 'linkebal' :
                 this.title = 'Kies Joker';
+                this.filterRennersBijWaarde(10);
                 break;
             case 'waterdrager' :
                 this.title = 'Kies Waterdrager';
                 break;
             case 'meesterknecht' :
                 this.title = 'Kies Meesterknecht';
+                if (this.beschermdeRennerMeesterKnechtWaarde > 0) {
+                    this.filterRennersBijWaarde(this.beschermdeRennerMeesterKnechtWaarde);
+                }
                 break;
             default:
                 this.title = 'Kies Renner';
@@ -75,4 +85,14 @@ export class ChooseRiderPage implements OnInit {
     search(searchTerm: any) {
      console.log(this.uiService.filterRenners(searchTerm.detail.value, this.teams));
     }
+
+    filterRennersBijWaarde(waarde: number) {
+        this.teams = this.teams.map(team => {
+            return {
+                ...team,
+                tourRiders: [...team.tourRiders].filter(tr => tr.waarde === waarde)
+            };
+        });
+        this.ridersWaardeList = this.ridersWaardeList.filter(rwl => rwl.waarde === waarde);
+    };
 }

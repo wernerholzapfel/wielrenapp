@@ -4,10 +4,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'subscribe',
-    loadChildren: () => import('./pages/subscribe/subscribe.module').then( m => m.SubscribePageModule)
-  },  {
+    loadChildren: () => import('./pages/subscribe/subscribe.module').then( m => m.SubscribePageModule)},  {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
   },
 ];
 @NgModule({

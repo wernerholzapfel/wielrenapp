@@ -44,6 +44,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     init: Subscription;
     isRegistrationOpen: boolean;
     unsubscribe = new Subject<void>();
+    beschermdeRennerMeesterKnechtWaarde: number;
 
     constructor(private store: Store<IAppState>,
                 private predictionService: PredictionService,
@@ -82,7 +83,12 @@ export class SubscribePage implements OnInit, OnDestroy {
                 if (this.isRegistrationOpen === true) {
                     this.teams$.pipe(takeUntil(this.unsubscribe)).subscribe(teams => {
                         if (teams) {
-                            this.teams = teams;
+                            this.teams = teams.map(team => {
+                                return {
+                                    ...team,
+                                    tourRiders: [...team.tourRiders].sort((a, b) => b.waarde - a.waarde)
+                                };
+                            });
 
                             let ridersWaardeList = [];
                             this.newWaardeList = [];
@@ -100,7 +106,16 @@ export class SubscribePage implements OnInit, OnDestroy {
                                 mapList[k].push(item);
                             });
 
-                            this.newWaardeList = Object.keys(mapList).map(k => ({waarde: k, tourRiders: mapList[k]}));
+                            this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
+
+                            this.newWaardeList = this.newWaardeList.map(nwl => {
+                                return {
+                                    ...nwl,
+                                    tourRiders: [...nwl.tourRiders].sort((a, b) => {
+                                        return a.rider.surNameShort < b.rider.surNameShort ? -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
+                                    })
+                                };
+                            });
 
                             this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
                         }
@@ -117,7 +132,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     private calculateUsedWaardepunten(participantRidersForm) {
-        this.calculatedWaardepunten = participantRidersForm.reduce((acc, obj) => {
+        this.calculatedWaardepunten = participantRidersForm.filter(pr => pr.isRider).reduce((acc, obj) => {
             return obj.id ? acc + obj.rider.waarde : acc;
         }, 0);
     }
@@ -142,20 +157,22 @@ export class SubscribePage implements OnInit, OnDestroy {
             componentProps: {
                 teams: this.teams,
                 ridersWaardeList: this.newWaardeList,
-                predictionType
+                predictionType,
+                beschermdeRennerMeesterKnechtWaarde: this.beschermdeRennerMeesterKnechtWaarde
             }
         });
         await modal.present();
 
         return await modal.onWillDismiss().then(data => {
-            if (data) {
-                this.uiService.presentToast(`${data.data.rider.rider.firstName} is toegevoegd aan je team`);
+            if (data.data) {
+                this.uiService.presentToast(`${data.data.rider.rider.firstName} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
                     case 'rider':
                         this.addRenner(data.data.rider, index);
                         break;
                     case 'beschermderenner':
                         this.addBeschermdeRenner(data.data.rider, index);
+                        this.beschermdeRennerMeesterKnechtWaarde = data.data.rider.waarde;
                         break;
                     case 'waterdrager':
                         this.addWaterdrager(data.data.rider, index);
@@ -165,6 +182,7 @@ export class SubscribePage implements OnInit, OnDestroy {
                         break;
                     case 'meesterknecht':
                         this.addMeesterknecht(data.data.rider, index);
+                        this.beschermdeRennerMeesterKnechtWaarde = data.data.rider.waarde;
                         break;
                     default:
                         console.log('not implemented');
@@ -227,6 +245,10 @@ export class SubscribePage implements OnInit, OnDestroy {
     deleteRider(prediction: IPrediction) {
         this.predictionService.deletePrediction(prediction.id).subscribe(response => {
             this.store.dispatch(new fromParticipantForm.DeleteRiderFromForm(Object.assign(prediction)));
+            if ((prediction.isMeesterknecht || prediction.isBeschermdeRenner) &&
+                (this.partipantRidersForm.beschermdeRenner || this.partipantRidersForm.meesterknecht)) {
+                this.beschermdeRennerMeesterKnechtWaarde = 0;
+            }
             // this.setCurrentRiderAsSelected(prediction.rider, prediction.rider.team, false);
         });
 
