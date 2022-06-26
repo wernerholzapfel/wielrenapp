@@ -68,6 +68,11 @@ export class SubscribePage implements OnInit, OnDestroy {
                 meesterknecht: response.find(p => p.isMeesterknecht),
                 tour: null,
             };
+            this.beschermdeRennerMeesterKnechtWaarde =
+                this.partipantRidersForm.beschermdeRenner && this.partipantRidersForm.beschermdeRenner.id ?
+                    this.partipantRidersForm.beschermdeRenner.rider.waarde :
+                    this.partipantRidersForm.meesterknecht && this.partipantRidersForm.meesterknecht.id ?
+                        this.partipantRidersForm.meesterknecht.rider.waarde : 0;
             this.calculateUsedWaardepunten(response);
             this.setParticipantRidersComplete(response);
         });
@@ -246,7 +251,8 @@ export class SubscribePage implements OnInit, OnDestroy {
         this.predictionService.deletePrediction(prediction.id).subscribe(response => {
             this.store.dispatch(new fromParticipantForm.DeleteRiderFromForm(Object.assign(prediction)));
             if ((prediction.isMeesterknecht || prediction.isBeschermdeRenner) &&
-                (this.partipantRidersForm.beschermdeRenner || this.partipantRidersForm.meesterknecht)) {
+                (this.partipantRidersForm.beschermdeRenner && !this.partipantRidersForm.beschermdeRenner.id &&
+                    this.partipantRidersForm.meesterknecht && !this.partipantRidersForm.meesterknecht.id)) {
                 this.beschermdeRennerMeesterKnechtWaarde = 0;
             }
             // this.setCurrentRiderAsSelected(prediction.rider, prediction.rider.team, false);
