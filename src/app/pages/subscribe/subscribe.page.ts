@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {IAppState} from '../../store/store';
 import {PredictionService} from '../../services/prediction.service';
 import {ParticipantService} from '../../services/participant.service';
-import {Observable, Subject, Subscription} from 'rxjs';
+import {Observable, of, Subject, Subscription, switchMap} from 'rxjs';
 import {ITeam} from '../../models/team.model';
 import {ITour} from '../../models/tour.model';
 import {getParticipantforms} from '../../store/participantform/participantform.reducer';
@@ -41,10 +41,10 @@ export class SubscribePage implements OnInit, OnDestroy {
     laagsteWaardegroep = 10;
     newWaardeList: any[];
     isLoading: boolean;
-    init: Subscription;
     isRegistrationOpen: boolean;
     unsubscribe = new Subject<void>();
     beschermdeRennerMeesterKnechtWaarde: number;
+    isParticipantFormReady = false;
 
     constructor(private store: Store<IAppState>,
                 private predictionService: PredictionService,
@@ -56,7 +56,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     ngOnInit() {
         this.store.dispatch(new fromParticipantForm.FetchParticipantform('ad756953-cb34-48bb-bbea-4dd52b993598'));
 
-        this.participantsForm$ = this.store.select(getParticipantforms);
+        this.participantsForm$ = this.store.select(getParticipantforms).pipe(takeUntil(this.unsubscribe));
 
 
         this.participantsForm$.subscribe(response => {
@@ -68,6 +68,14 @@ export class SubscribePage implements OnInit, OnDestroy {
                 meesterknecht: response.find(p => p.isMeesterknecht),
                 tour: null,
             };
+
+            if (!this.isParticipantFormReady && response && response.length > 0) {
+                response.filter(item => item.id).forEach(rider => {
+                    this.setCurrentRiderAsSelected(rider.rider, rider.rider.team, true);
+                });
+                this.isParticipantFormReady = true;
+            }
+
             this.beschermdeRennerMeesterKnechtWaarde =
                 this.partipantRidersForm.beschermdeRenner && this.partipantRidersForm.beschermdeRenner.id ?
                     this.partipantRidersForm.beschermdeRenner.rider.waarde :
@@ -77,61 +85,57 @@ export class SubscribePage implements OnInit, OnDestroy {
             this.setParticipantRidersComplete(response);
         });
 
-        this.tour$ = this.store.select(getTour);
+        this.tour$ = this.store.select(getTour).pipe(takeUntil(this.unsubscribe));
         this.tour$.subscribe(tour => this.tour = tour);
 
-        this.teams$ = this.store.select(getTourTeams);
-        this.isRegistrationOpen$ = this.store.select(isRegistrationOpen);
-        this.isRegistrationOpen$.pipe(takeUntil(this.unsubscribe))
-            .subscribe(response => {
-                this.isRegistrationOpen = response;
-                if (this.isRegistrationOpen === true) {
-                    this.teams$.pipe(takeUntil(this.unsubscribe)).subscribe(teams => {
-                        if (teams) {
-                            this.teams = teams.map(team => {
-                                return {
-                                    ...team,
-                                    tourRiders: [...team.tourRiders].sort((a, b) => b.waarde - a.waarde)
-                                };
-                            });
-
-                            let ridersWaardeList = [];
-                            this.newWaardeList = [];
-
-                            teams.map(team => {
-                                console.log('team.tourRiders lengte: ' + team.tourRiders.length);
-                                ridersWaardeList = [...ridersWaardeList,
-                                    ...team.tourRiders.map(rider => rider, {team: {id: team.id}})];
-                            });
-
-                            const mapList = {};
-                            ridersWaardeList.forEach(item => {
-                                const k = item.waarde;
-                                mapList[k] = mapList[k] || [];
-                                mapList[k].push(item);
-                            });
-
-                            this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
-
-                            this.newWaardeList = this.newWaardeList.map(nwl => {
-                                return {
-                                    ...nwl,
-                                    tourRiders: [...nwl.tourRiders].sort((a, b) => {
-                                        return a.rider.surNameShort < b.rider.surNameShort ? -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
-                                    })
-                                };
-                            });
-
-                            this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
-                        }
+        this.teams$ = this.store.select(getTourTeams).pipe(takeUntil(this.unsubscribe));
+        this.isRegistrationOpen$ = this.store.select(isRegistrationOpen).pipe(takeUntil(this.unsubscribe));
+        this.isRegistrationOpen$.pipe(switchMap(response => {
+            this.isRegistrationOpen = response;
+            return this.isRegistrationOpen === true ? this.teams$ : of(null);
+        })).subscribe(teams => {
+                if (teams) {
+                    this.teams = teams.map(team => {
+                        return {
+                            ...team,
+                            tourRiders: [...team.tourRiders].filter(tr => !tr.isSelected).sort((a, b) => b.waarde - a.waarde)
+                        };
                     });
+
+                    let ridersWaardeList = [];
+                    this.newWaardeList = [];
+
+                    teams.map(team => {
+                        ridersWaardeList = [...ridersWaardeList,
+                            ...team.tourRiders.map(rider => rider, {team: {id: team.id}})];
+                    });
+
+                    const mapList = {};
+                    ridersWaardeList.forEach(item => {
+                        const k = item.waarde;
+                        mapList[k] = mapList[k] || [];
+                        mapList[k].push(item);
+                    });
+
+                    this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
+
+                    this.newWaardeList = this.newWaardeList.map(nwl => {
+                        return {
+                            ...nwl,
+                            tourRiders: [...nwl.tourRiders].sort((a, b) => {
+                                return a.rider.surNameShort < b.rider.surNameShort ?
+                                    -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
+                            })
+                        };
+                    });
+
+                    this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
                 }
             });
     }
 
     setCurrentRider(rider, team, $event) {
         this.currentRider = Object.assign(rider);
-        console.log(this.currentRider);
         this.currentTeam = team;
         $event.stopPropagation();
     }
@@ -170,7 +174,8 @@ export class SubscribePage implements OnInit, OnDestroy {
 
         return await modal.onWillDismiss().then(data => {
             if (data.data) {
-                this.uiService.presentToast(`${data.data.rider.rider.firstName} is toegevoegd aan je ploeg`);
+                this.setCurrentRiderAsSelected(data.data.rider, data.data.team, true);
+                this.uiService.presentToast(`${data.data.rider.rider.surName} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
                     case 'rider':
                         this.addRenner(data.data.rider, index);
@@ -197,7 +202,6 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     addRenner(rider: IPrediction, index: number) {
-        // this.setCurrentRiderAsSelected(this.currentRider, this.currentTeam, true); // bij ophalen filteren ipv in store?
         this.submitForm({
             tour: this.tour,
             prediction: {isRider: true, rider: {...rider}}

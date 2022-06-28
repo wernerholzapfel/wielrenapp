@@ -17,35 +17,30 @@
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 
     <ion-list>
-        <ion-item *ngFor="let rider of partipantRidersForm?.riders">
-            <div>
-                <ion-icon name="bicycle"></ion-icon>
-                <img *ngIf="rider?.rider?.rider?.nationality" style="height: 16px;"
-                     src="/assets/flag/{{rider?.rider?.rider?.nationality}}.png">
-                {{rider?.rider?.rider?.firstName}}
-                {{rider?.rider?.rider?.surNameShort}}
-                <ion-text *ngIf="rider?.rider?.waarde">({{rider?.rider?.waarde}})</ion-text>
-            </div>
-            <ion-icon *ngIf="!rider?.id" slot="end" name="add" (click)="openRidersPopup(rider?.index, 'rider')"></ion-icon>
-            <ion-icon *ngIf="rider?.id" slot="end" name="trash" (click)="deleteRider(rider)"></ion-icon>
-        </ion-item>
+        <ng-container *ngFor="let rider of partipantRidersForm?.riders">
+        <app-choose-rider-item [rider]="rider"
+                               icon="rider_black"
+                               (openRiderEvent)="openRidersPopup($event, 'rider')"
+                               (deleteRiderEvent)="deleteRider($event)">
+        </app-choose-rider-item>
+        </ng-container>
         <app-choose-rider-item [rider]="partipantRidersForm?.beschermdeRenner"
-                               icon="fitness"
+                               icon="beschermderenner_black"
                                (openRiderEvent)="openRidersPopup($event, 'beschermderenner')"
                                (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
         <app-choose-rider-item [rider]="partipantRidersForm?.meesterknecht"
-                               icon="build"
+                               icon="meesterknecht_black"
                                (openRiderEvent)="openRidersPopup($event, 'meesterknecht')"
                                (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
         <app-choose-rider-item [rider]="partipantRidersForm?.waterdrager"
-                               icon="water"
+                               icon="waterdrager_black"
                                (openRiderEvent)="openRidersPopup($event, 'waterdrager')"
                                (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
         <app-choose-rider-item [rider]="partipantRidersForm?.linkebal"
-                               icon="nuclear"
+                               icon="joker_black"
                                (openRiderEvent)="openRidersPopup($event, 'linkebal')"
                                (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>

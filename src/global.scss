@@ -46,6 +46,11 @@
   ion-item {
     --min-height: 32px
   }
+
+  .align-content-horizontal {
+    display: flex;
+    align-items:  center;
+  }
 }
 
 

@@ -73,11 +73,12 @@ export class ChooseRiderPage implements OnInit {
         this.selectedSegment = ev;
     }
 
-    selectRider(rider: ITourriders) {
+    selectRider(rider: ITourriders, team?: ITeam) {
         // using the injected ModalController this page
         // can "dismiss" itself and optionally pass back data
         this.modalController.dismiss({
             rider,
+            team,
             predictionType: this.predictionType
         });
     }

@@ -88,7 +88,7 @@ export function tourReducer(state = initaltourState, action): TourState {
           teamNameShort: team.teamNameShort,
           country: team.country,
           tourRiders: team.tourRiders.map(rider => (rider.id === action.payload.rider.id ?
-            Object.assign(rider, {isSelected: action.payload.selected}) : rider)
+              {...rider, isSelected: action.payload.selected} : rider)
           )
         } : team)),
         inProgress: false,
