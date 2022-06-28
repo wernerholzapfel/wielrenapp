@@ -24,7 +24,7 @@ export class ChooseRiderPage implements OnInit {
     @Input() teams: ITeam[];
     @Input() predictionType: string;
     @Input() beschermdeRennerMeesterKnechtWaarde: number;
-    selectedSegment = 'teamlijst';
+    selectedSegment = 'waardelijst';
     showDetail = false;
     searchTerm: string;
     tour: ITour;
@@ -46,7 +46,6 @@ export class ChooseRiderPage implements OnInit {
                 if (this.beschermdeRennerMeesterKnechtWaarde > 0) {
                     this.filterRennersBijWaarde(this.beschermdeRennerMeesterKnechtWaarde);
                 }
-
                 break;
             case 'linkebal' :
                 this.title = 'Kies Joker';
@@ -65,7 +64,6 @@ export class ChooseRiderPage implements OnInit {
                 this.title = 'Kies Renner';
                 break;
         }
-        console.log(this.ridersWaardeList);
     }
 
     segmentChanged(ev: string) {

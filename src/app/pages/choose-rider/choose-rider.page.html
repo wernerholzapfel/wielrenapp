@@ -2,12 +2,12 @@
     <ion-toolbar color="primary">
         <ion-title>{{title}}</ion-title>
     </ion-toolbar>
-    <ion-segment mode="md" (ionChange)="segmentChanged($event.detail.value)" value="teamlijst">
-        <ion-segment-button value="teamlijst">
-            <ion-label>Ploeg</ion-label>
-        </ion-segment-button>
+    <ion-segment mode="md" (ionChange)="segmentChanged($event.detail.value)" value="waardelijst">
         <ion-segment-button value="waardelijst">
             <ion-label>Waarde</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="teamlijst">
+            <ion-label>Ploeg</ion-label>
         </ion-segment-button>
     </ion-segment>
 <!--    <ion-searchbar (ionChange)="search($event)" placeholder="Zoek renner" color="light"-->
@@ -35,7 +35,7 @@
     <ion-list *ngIf="selectedSegment === 'waardelijst'">
         <ion-list *ngFor="let waarde of ridersWaardeList">
             <ion-item color="tertiary">{{waarde.waarde}}</ion-item>
-            <ion-item *ngFor="let rider of waarde.tourRiders"  (click)="selectRider(rider)">
+            <ion-item *ngFor="let rider of waarde.tourRiders"  (click)="selectRider(rider, rider.team)">
                 <img slot="start" style="height: 16px;" src="/assets/flag/{{rider?.rider?.nationality}}.png">
                 {{rider?.rider.firstName}}
                 {{rider?.rider.surNameShort}}

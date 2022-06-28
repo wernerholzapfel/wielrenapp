@@ -1,4 +1,4 @@
-<ion-item>
+<ion-item (click)="rider?.id ? '' : openRidersPopup(rider?.index)">
 
     <!--<ion-grid class="ion-no-padding">-->
     <!--  <ion-row class="ion-padding-vertical">-->
@@ -26,6 +26,6 @@
 
         </div>
     </ion-list>
-    <ion-icon *ngIf="!rider?.id" slot="end" name="add" (click)="openRidersPopup(rider?.index)"></ion-icon>
+    <ion-icon *ngIf="!rider?.id" slot="end" name="add"></ion-icon>
     <ion-icon *ngIf="rider?.id" slot="end" name="trash" (click)="deleteRider(rider)"></ion-icon>
 </ion-item>

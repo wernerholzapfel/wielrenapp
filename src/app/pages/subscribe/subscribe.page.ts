@@ -61,7 +61,7 @@ export class SubscribePage implements OnInit, OnDestroy {
 
         this.participantsForm$.subscribe(response => {
             this.partipantRidersForm = {
-                riders: response.filter(p => p.isRider),
+                riders: response.filter(p => p.isRider).sort((a, b) => b.rider.waarde - a.rider.waarde),
                 beschermdeRenner: response.find(p => p.isBeschermdeRenner),
                 waterdrager: response.find(p => p.isWaterdrager),
                 linkebal: response.find(p => p.isLinkebal),
@@ -98,7 +98,9 @@ export class SubscribePage implements OnInit, OnDestroy {
                 this.teams = teams.map(team => {
                     return {
                         ...team,
-                        tourRiders: [...team.tourRiders].filter(tr => !tr.isSelected).sort((a, b) => b.waarde - a.waarde)
+                        tourRiders: [...team.tourRiders]
+                            .filter(tr => !tr.isSelected)
+                            .sort((a, b) => b.waarde - a.waarde)
                     };
                 });
 
@@ -107,7 +109,14 @@ export class SubscribePage implements OnInit, OnDestroy {
 
                 teams.map(team => {
                     ridersWaardeList = [...ridersWaardeList,
-                        ...team.tourRiders.map(rider => rider, {team: {id: team.id}})];
+                        ...team.tourRiders
+                            .filter(r => !r.isSelected)
+                            .map(rider => {
+                                return {
+                                    ...rider,
+                                    team: {id: team.id}
+                                };
+                            })];
                 });
 
                 const mapList = {};
@@ -117,19 +126,11 @@ export class SubscribePage implements OnInit, OnDestroy {
                     mapList[k].push(item);
                 });
 
-                this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
+                this.newWaardeList = Object.keys(mapList)
+                    .map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
 
-                this.newWaardeList = this.newWaardeList.map(nwl => {
-                    return {
-                        ...nwl,
-                        tourRiders: [...nwl.tourRiders].sort((a, b) => {
-                            return a.rider.surNameShort < b.rider.surNameShort ?
-                                -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
-                        })
-                    };
-                });
-
-                this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
+                this.newWaardeList = [...this.newWaardeList]
+                    .sort((a, b) => b.waarde - a.waarde);
             }
         });
     }
@@ -158,6 +159,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     async openRidersPopup(index, predictionType) {
+        console.log(this.newWaardeList[0]);
         const modal = await this.modalController.create({
             component: ChooseRiderPage,
             cssClass: 'my-custom-class',
@@ -174,6 +176,7 @@ export class SubscribePage implements OnInit, OnDestroy {
 
         return await modal.onWillDismiss().then(data => {
             if (data.data) {
+                console.log(data.data);
                 this.setCurrentRiderAsSelected(data.data.rider, data.data.team, true);
                 this.uiService.presentToast(`${data.data.rider.rider.surName} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
