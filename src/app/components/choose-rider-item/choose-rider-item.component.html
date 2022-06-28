@@ -18,7 +18,12 @@
             {{rider?.rider.rider.firstName}}
             {{rider?.rider.rider.surNameShort}}
             <span *ngIf="rider?.rider?.rider?.id">
-            ({{rider?.rider.waarde}})</span>
+            ({{rider?.rider.waarde}}) </span>
+            <ng-container *ngIf="this.isYoungster">
+                &nbsp;
+                <img src="/assets/shirt_jongeren.png" style="height: 24px;">
+            </ng-container>
+
         </div>
     </ion-list>
     <ion-icon *ngIf="!rider?.id" slot="end" name="add" (click)="openRidersPopup(rider?.index)"></ion-icon>

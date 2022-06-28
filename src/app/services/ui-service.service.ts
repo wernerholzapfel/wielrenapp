@@ -14,6 +14,7 @@ export class UiServiceService {
   constructor(private toastCtrl: ToastController) { }
 
   showUitslagenType: BehaviorSubject<string> = new BehaviorSubject(ETAPPE);
+  tourStartDate: Date;
 
   async presentToast(message: string, color: string = 'tertiary', duration: number = 2000, showCloseButton = true) {
     const toast = await this.toastCtrl.create({

@@ -94,44 +94,44 @@ export class SubscribePage implements OnInit, OnDestroy {
             this.isRegistrationOpen = response;
             return this.isRegistrationOpen === true ? this.teams$ : of(null);
         })).subscribe(teams => {
-                if (teams) {
-                    this.teams = teams.map(team => {
-                        return {
-                            ...team,
-                            tourRiders: [...team.tourRiders].filter(tr => !tr.isSelected).sort((a, b) => b.waarde - a.waarde)
-                        };
-                    });
+            if (teams) {
+                this.teams = teams.map(team => {
+                    return {
+                        ...team,
+                        tourRiders: [...team.tourRiders].filter(tr => !tr.isSelected).sort((a, b) => b.waarde - a.waarde)
+                    };
+                });
 
-                    let ridersWaardeList = [];
-                    this.newWaardeList = [];
+                let ridersWaardeList = [];
+                this.newWaardeList = [];
 
-                    teams.map(team => {
-                        ridersWaardeList = [...ridersWaardeList,
-                            ...team.tourRiders.map(rider => rider, {team: {id: team.id}})];
-                    });
+                teams.map(team => {
+                    ridersWaardeList = [...ridersWaardeList,
+                        ...team.tourRiders.map(rider => rider, {team: {id: team.id}})];
+                });
 
-                    const mapList = {};
-                    ridersWaardeList.forEach(item => {
-                        const k = item.waarde;
-                        mapList[k] = mapList[k] || [];
-                        mapList[k].push(item);
-                    });
+                const mapList = {};
+                ridersWaardeList.forEach(item => {
+                    const k = item.waarde;
+                    mapList[k] = mapList[k] || [];
+                    mapList[k].push(item);
+                });
 
-                    this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
+                this.newWaardeList = Object.keys(mapList).map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
 
-                    this.newWaardeList = this.newWaardeList.map(nwl => {
-                        return {
-                            ...nwl,
-                            tourRiders: [...nwl.tourRiders].sort((a, b) => {
-                                return a.rider.surNameShort < b.rider.surNameShort ?
-                                    -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
-                            })
-                        };
-                    });
+                this.newWaardeList = this.newWaardeList.map(nwl => {
+                    return {
+                        ...nwl,
+                        tourRiders: [...nwl.tourRiders].sort((a, b) => {
+                            return a.rider.surNameShort < b.rider.surNameShort ?
+                                -1 : a.rider.surNameShort > b.rider.surNameShort ? 1 : 0;
+                        })
+                    };
+                });
 
-                    this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
-                }
-            });
+                this.newWaardeList.sort((a, b) => b.waarde - a.waarde);
+            }
+        });
     }
 
     setCurrentRider(rider, team, $event) {

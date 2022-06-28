@@ -19,6 +19,7 @@ import {
 } from '@capacitor/push-notifications';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nl';
+import {UiServiceService} from './services/ui-service.service';
 
 dayjs.locale('nl');
 
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private platform: Platform,
         private store: Store,
         private router: Router,
+        private uiService: UiServiceService
     ) {
         this.initializeApp();
     }
@@ -52,6 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.tour$ = this.store.pipe(select(getTour));
         this.tour$.pipe(takeUntil(this.unsubscribe)).subscribe(tour => {
             if (tour && tour.id) {
+                this.uiService.tourStartDate = tour.startDate;
                 this.selectedTour = tour;
                 this.store.dispatch(new fromParticipanttable.FetchParticipanttable(tour.id));
                 this.store.dispatch(new fromParticipanttable.FetchLastUpdated(tour.id));

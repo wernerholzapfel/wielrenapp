@@ -53,7 +53,19 @@ export function tourReducer(state = initaltourState, action): TourState {
           deadline: action.payload.deadline,
           hasEnded: action.payload.hasEnded,
         },
-        teams: action.payload.teams,
+        teams: action.payload.teams.map(team => {
+          return {
+            ...team,
+            tourRiders: [...team.tourRiders].map(rider => {
+              return {
+                ...rider,
+                isYoungster:
+                    (new Date(action.payload.startDate).getFullYear() -
+                        new Date(rider.rider.dateOfBirth).getFullYear()) < 26,
+              };
+            })
+          };
+        }),
         inProgress: false,
         error: undefined
       };

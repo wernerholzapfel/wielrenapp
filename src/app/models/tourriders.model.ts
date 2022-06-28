@@ -21,5 +21,6 @@ export interface ITourriders {
   totalStagePoints?: number;
   predictions: IPrediction[];
   isSelected?: boolean;
+  isYoungster?: boolean;
 }
 
