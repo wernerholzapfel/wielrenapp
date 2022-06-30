@@ -7,6 +7,8 @@
 </ion-header>
 
 <ion-content>
+    <ion-button color="secondary" expand="full" href="/tabs/inschrijven">Maak je team</ion-button>
+    <ion-chip *ngIf="deadlinetimer" class="align-content-horizontal" color="danger">Deadline is {{deadlinetimer}}</ion-chip>
     <app-login></app-login>
     <app-headlines></app-headlines>
     <app-top5 [lastUpdated]="lastUpdated" [isRegistrationOpen$]="isRegistrationOpen$"></app-top5>

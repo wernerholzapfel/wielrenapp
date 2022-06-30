@@ -10,6 +10,7 @@ import {ChooseRiderItemComponent} from './choose-rider-item/choose-rider-item.co
 import {FilterIsOutPipe} from '../services/pipe/filter-is-out.pipe';
 import {PuntenColComponent} from './punten-col/punten-col.component';
 import {IconWithPointsComponent} from './icon-with-points/icon-with-points.component';
+import {HeadlinesComponent} from './headlines/headlines.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import {IconWithPointsComponent} from './icon-with-points/icon-with-points.compo
         LoginComponent,
         ChooseRiderItemComponent,
         PuntenColComponent,
+        HeadlinesComponent,
         IconWithPointsComponent,
         FilterIsOutPipe
     ],
@@ -35,6 +37,7 @@ import {IconWithPointsComponent} from './icon-with-points/icon-with-points.compo
         LoginComponent,
         ChooseRiderItemComponent,
         PuntenColComponent,
+        HeadlinesComponent,
         IconWithPointsComponent,
         FilterIsOutPipe
     ],

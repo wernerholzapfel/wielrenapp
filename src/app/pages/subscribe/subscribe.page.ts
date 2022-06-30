@@ -262,7 +262,7 @@ export class SubscribePage implements OnInit, OnDestroy {
                     this.partipantRidersForm.meesterknecht && !this.partipantRidersForm.meesterknecht.id)) {
                 this.beschermdeRennerMeesterKnechtWaarde = 0;
             }
-            // this.setCurrentRiderAsSelected(prediction.rider, prediction.rider.team, false);
+            this.setCurrentRiderAsSelected(prediction.rider, prediction.rider.team, false);
         });
 
     }

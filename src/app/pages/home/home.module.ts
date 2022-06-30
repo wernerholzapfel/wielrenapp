@@ -21,10 +21,11 @@ import {CustomComponentModule} from '../../components/custom-components.module';
         HomePageRoutingModule,
         CustomComponentModule,
     ],
-    declarations: [HomePage, HeadlinesComponent,
-      Top5Component,
-      Deelnemertop5Component,
-      Ridertop5Component
-]
+    exports: [],
+    declarations: [HomePage,
+        Top5Component,
+        Deelnemertop5Component,
+        Ridertop5Component
+    ]
 })
 export class HomePageModule {}

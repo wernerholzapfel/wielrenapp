@@ -167,6 +167,7 @@ export function tourReducer(state = initaltourState, action): TourState {
 export const gettourState = createFeatureSelector<TourState>('tour');
 export const isRegistrationOpen = createSelector(gettourState, (state: TourState) => state.isRegistrationOpen);
 export const getTour = createSelector(gettourState, (state: TourState) => state.tour);
+export const getDeadline = createSelector(gettourState, (state: TourState) => state.tour.deadline);
 export const getTourInProgress = createSelector(gettourState, (state: TourState) => state.inProgress);
 export const getTourTeams = createSelector(gettourState, (state: TourState) => state.teams ? state.teams : undefined);
 export const getTourRiders = createSelector(getTourTeams, (tourTeams: ITeam[]) => {
