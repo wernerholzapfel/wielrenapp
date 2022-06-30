@@ -12,19 +12,13 @@
             Home
         </ion-label>
     </ion-item>
-    <ion-item detail="false" href="/tabs/inschrijven">
-        <ion-label>
-            Inschrijven
-        </ion-label>
-    </ion-item>
     <ion-item>
         <ion-label>Tour</ion-label>
         <ion-select placeholder="Select tour" (ionChange)="fetchTour($event.detail.value.id)">
             <ion-select-option *ngFor="let tour of (tours$ | async)" [value]="tour">{{tour.tourName}}</ion-select-option>
         </ion-select>
     </ion-item>
-    <ion-item
-            *ngIf="(authService.user$ | async)"
+    <ion-item *ngIf="(authService.user$ | async)"
             (click)="logout()">
         <ion-label>
             Uitloggen

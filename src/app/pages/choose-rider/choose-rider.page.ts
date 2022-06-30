@@ -93,5 +93,5 @@ export class ChooseRiderPage implements OnInit {
             };
         });
         this.ridersWaardeList = this.ridersWaardeList.filter(rwl => rwl.waarde === waarde);
-    };
+    }
 }

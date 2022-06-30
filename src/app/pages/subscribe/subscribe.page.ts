@@ -110,7 +110,7 @@ export class SubscribePage implements OnInit, OnDestroy {
                 teams.map(team => {
                     ridersWaardeList = [...ridersWaardeList,
                         ...team.tourRiders
-                            .filter(r => !r.isSelected)
+                            // .filter(r => !r.isSelected)
                             .map(rider => {
                                 return {
                                     ...rider,
@@ -159,7 +159,6 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     async openRidersPopup(index, predictionType) {
-        console.log(this.newWaardeList[0]);
         const modal = await this.modalController.create({
             component: ChooseRiderPage,
             cssClass: 'my-custom-class',
@@ -176,7 +175,6 @@ export class SubscribePage implements OnInit, OnDestroy {
 
         return await modal.onWillDismiss().then(data => {
             if (data.data) {
-                console.log(data.data);
                 this.setCurrentRiderAsSelected(data.data.rider, data.data.team, true);
                 this.uiService.presentToast(`${data.data.rider.rider.surName} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
@@ -212,7 +210,6 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     addBeschermdeRenner(rider: IPrediction, index: number) {
-        // this.setCurrentRiderAsSelected(this.currentRider, this.currentTeam, true); // bij ophalen filteren ipv in store?
         this.submitForm({
             tour: this.tour,
             prediction: {isBeschermdeRenner: true, rider: {...rider}}
@@ -228,7 +225,6 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     addLinkebal(rider: IPrediction, index: number) {
-        // this.setCurrentRiderAsSelected(this.currentRider, this.currentTeam, true); // bij ophalen filteren ipv in store?
         this.submitForm({
             tour: this.tour,
             prediction: {isLinkebal: true, rider: {...rider}}
@@ -237,7 +233,6 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     addWaterdrager(rider: IPrediction, index: number) {
-        // this.setCurrentRiderAsSelected(this.currentRider, this.currentTeam, true); // bij ophalen filteren ipv in store?
         this.submitForm({
             tour: this.tour,
             prediction: {isWaterdrager: true, rider: {...rider}}
