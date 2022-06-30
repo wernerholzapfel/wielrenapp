@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start" color="dark">
+            <ion-back-button text="" defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <img src="/assets/header_white3.png" height="36px;">
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item color="light" lines="none" *ngIf="participants">
+        <h3>{{participants?.length}} Deelnemers</h3>
+    </ion-item>
+    <ion-item *ngFor="let deelnemer of participants">{{deelnemer.displayName}} met {{deelnemer.teamName}}</ion-item>
+</ion-content>

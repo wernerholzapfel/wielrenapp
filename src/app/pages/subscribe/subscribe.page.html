@@ -13,7 +13,7 @@
     <ion-item class="ion-padding-horizontal" lines="none"
               [color]="calculatedWaardepunten > maxParticipantRidersPunten ? 'danger' : 'light'">
         <h3>
-            Team {{isParticitantRidersComplete && calculatedWaardepunten < maxParticipantRidersPunten ? 'compleet' : 'incompleet'}}
+            Team {{isParticitantRidersComplete && calculatedWaardepunten <= maxParticipantRidersPunten ? 'compleet' : 'incompleet'}}
             <ion-text slot="end">{{calculatedWaardepunten}}/{{maxParticipantRidersPunten}}</ion-text>
         </h3>
     </ion-item>

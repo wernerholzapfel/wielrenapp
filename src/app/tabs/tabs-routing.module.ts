@@ -49,9 +49,17 @@ const routes: Routes = [
         path: 'menu',
         loadChildren: () => import('../pages/menu/menu.module').then(m => m.MenuPageModule),
         data: {animation: 'menuPage',
-        }
+        },
       },
-      {
+        {
+            path: 'spelregels',
+            loadChildren: () => import('../pages/spelregels/spelregels.module').then( m => m.SpelregelsPageModule)
+        },
+        {
+            path: 'deelnemers',
+            loadChildren: () => import('../pages/deelnemers/deelnemers.module').then( m => m.DeelnemersPageModule)
+        },
+        {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
