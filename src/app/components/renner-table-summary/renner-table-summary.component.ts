@@ -44,11 +44,15 @@ export class RennerTableSummaryComponent implements OnInit {
     @Input() showDetail = true;
     @Input() mainValue: string;
     @Input() lineType: 'inset';
-
+    icon: string;
     constructor(private router: Router) {
     }
 
     ngOnInit() {
+            this.icon = this.line.rider.isBeschermdeRenner ? 'beschermderenner_black' :
+            this.line.rider.isWaterdrager ? 'waterdrager_black' :
+            this.line.rider.isMeesterknecht ? 'meesterknecht_black' :
+            this.line.rider.isLinkebal ? 'joker_black' : 'rider_black';
     }
     openRenner() {
         console.log(this.line);

@@ -52,31 +52,31 @@ export class RennerDetailPage implements OnInit {
                                 {
                                     type: 'rider',
                                     predictions: this.predictions.filter(p => p.isRider),
-                                    icon: 'bicycle',
+                                    icon: 'rider.svg',
                                     active: true,
                                     displayName: 'renner',
                                 }, {
                                     type: 'linkebal',
                                     predictions: this.predictions.filter(p => p.isLinkebal),
-                                    icon: 'nuclear',
+                                    icon: 'joker.svg',
                                     active: false,
                                     displayName: 'joker',
                                 }, {
                                     type: 'beschermdeRenner',
                                     predictions: this.predictions.filter(p => p.isBeschermdeRenner),
-                                    icon: 'fitness',
+                                    icon: 'beschermde_renner.svg',
                                     active: false,
                                     displayName: 'beschermde renner',
                                 }, {
                                     type: 'waterdrager',
                                     predictions: this.predictions.filter(p => p.isWaterdrager),
-                                    icon: 'water',
+                                    icon: 'waterdrager.svg',
                                     active: false,
                                     displayName: 'waterdrager',
                                 }, {
                                     type: 'meesterknecht',
                                     predictions: this.predictions.filter(p => p.isMeesterknecht),
-                                    icon: 'build',
+                                    icon: 'meesterknecht.svg',
                                     active: false,
                                     displayName: 'meesterknecht',
                                 }].filter(p => p.predictions.length > 0);

@@ -28,7 +28,7 @@
                         <ion-row class="ion-justify-content-center ion-align-items-center">
                             <ion-chip [color]="chosenRiderStat.active ? 'secondary' : 'primary'"
                                       (click)="setRiderStats(i)">
-                                <ion-icon [name]="chosenRiderStat.icon"></ion-icon>
+                                <ion-icon [src]="'assets/'+chosenRiderStat.icon"></ion-icon>
                                 <ion-label>{{chosenRiderStat.predictions.length}}</ion-label>
                             </ion-chip>
                         </ion-row>
@@ -44,12 +44,12 @@
             <ion-item lines="full" (click)="openDeelnemer(prediction?.participant)">
                  <ion-icon
                         slot="start"
-                        [name]="prediction.isRider ?
-                'bicycle' : prediction.isLinkebal ?
-                'nuclear' : prediction.isBeschermdeRenner ?
-                'fitness' : prediction.isWaterdrager ?
-                'water' : prediction.isMeesterknecht ?
-                'meesterknecht' : 'bicycle'"></ion-icon>
+                        [src]="prediction.isRider ?
+                'assets/rider.svg' : prediction.isLinkebal ?
+                'assets/joker.svg' : prediction.isBeschermdeRenner ?
+                'assets/beschermde_renner.svg' : prediction.isWaterdrager ?
+                'assets/waterdager.svg' : prediction.isMeesterknecht ?
+                'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
                 {{prediction.participant?.displayName}}
             </ion-item>
         </ng-container>

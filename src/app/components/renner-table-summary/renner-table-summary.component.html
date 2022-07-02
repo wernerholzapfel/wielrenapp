@@ -1,14 +1,21 @@
 <ion-item (click)="openRenner()" *ngIf="line.rider" [lines]="lineType">
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-padding-vertical">
-            <ion-col class="ion-align-self-center">
+            <ion-col>
+            <div class="align-content-horizontal">
+            <img
+                        style="height: 24px;"
+                        [src]="'/assets/'+icon+'.png'">
+                &nbsp;
                 <img style="height: 16px;"
                      src="/assets/flag/{{line?.rider?.nationality}}.png">
+                &nbsp;
                 {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
                 <ion-text color="medium" size="small">({{line.rider.waarde}})</ion-text>
+            </div>
             </ion-col>
             <ion-col size="3" class="ion-align-self-center ion-text-end">
-                <app-punten-col [punten]="line.points.totalTourPoints" [showDelta]="false"></app-punten-col>
+                <app-punten-col [punten]="mainValue === 'gekozen' ? line.gekozen : line.points.totalTourPoints" [showDelta]="false"></app-punten-col>
             </ion-col>
         </ion-row>
         <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
