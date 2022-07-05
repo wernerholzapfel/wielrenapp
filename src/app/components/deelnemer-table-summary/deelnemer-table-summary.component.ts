@@ -35,7 +35,7 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     }
 
     @Input() showDetail: boolean;
-    @Input() showDelta: boolean;
+    @Input() showDelta = true;
     @Input() showImage = false;
     punten: number;
     imageUrl: string;

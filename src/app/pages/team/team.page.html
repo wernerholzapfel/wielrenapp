@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>
+        <ion-title routerLink="/tabs/home">
             <img src="/assets/header_white3.png" height="36px;">
         </ion-title>
         <ion-buttons slot="end">
@@ -33,6 +33,7 @@
     <ng-container *ngFor="let line of mijnTeam">
     <app-renner-table-summary [mainValue]="selectedSort"
                               [showDetail]="showDetail"
+                              [showDelta]="true"
                               [line]="line"
                               [riderId]="line.rider.id"
     >

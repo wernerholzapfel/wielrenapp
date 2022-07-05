@@ -7,6 +7,15 @@
                     <img style="height: 16px;"
                          src="/assets/flag/{{line?.rider?.nationality}}.png">
                     &nbsp;
+                    <ion-icon
+                            slot="start"
+                            [src]="line.rider.isRider ?
+                'assets/rider.svg' : line.rider.isLinkebal ?
+                'assets/joker.svg' : line.rider.isBeschermdeRenner ?
+                'assets/beschermde_renner.svg' : line.rider.isWaterdrager ?
+                'assets/waterdrager.svg' : line.rider.isMeesterknecht ?
+                'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
+                    &nbsp;
                     {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
                     <ion-text color="medium" size="small">
                         &nbsp;({{line.rider.waarde}})

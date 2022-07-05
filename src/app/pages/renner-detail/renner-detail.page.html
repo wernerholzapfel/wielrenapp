@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>
-            <img src="/assets/header_white3.png" height="36px;">
+        <ion-title routerLink="/tabs/home">
+        <img src="/assets/header_white3.png" height="36px;">
         </ion-title>
     </ion-toolbar>
     <app-renner-table-summary [riderId]="rennerTableSummary.id" [line]="rennerTableSummary" [showDetail]="true"
@@ -48,7 +48,7 @@
                 'assets/rider.svg' : prediction.isLinkebal ?
                 'assets/joker.svg' : prediction.isBeschermdeRenner ?
                 'assets/beschermde_renner.svg' : prediction.isWaterdrager ?
-                'assets/waterdager.svg' : prediction.isMeesterknecht ?
+                'assets/waterdrager.svg' : prediction.isMeesterknecht ?
                 'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
                 {{prediction.participant?.displayName}}
             </ion-item>
@@ -56,9 +56,9 @@
     </ng-container>
     <ng-container *ngIf="activeSegment === 'etappes'">
         <ion-item *ngFor="let etappe of stageclassifications" lines="full">
-            <ion-chip color="primary" slot="start">{{etappe.position}}</ion-chip>
+            <ion-chip color="primary" slot="start">{{etappe.position}}<sup>e</sup></ion-chip>
             {{etappe.etappe.etappeName}}
-            <ion-chip color="secondary" slot="end">{{etappe.stagePoints}}</ion-chip>
+            <ion-chip color="secondary" slot="end">{{etappe.stagePoints}}pt</ion-chip>
         </ion-item>
     </ng-container>
 </ion-content>
