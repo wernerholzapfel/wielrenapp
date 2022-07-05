@@ -87,7 +87,6 @@ export class RennerTableSummaryComponent implements OnInit {
     }
 
     openRenner() {
-        console.log(this.line);
         this.router.navigate(['/tabs/renner-detail', {id: this.riderId}], {state: this.line});
     }
 

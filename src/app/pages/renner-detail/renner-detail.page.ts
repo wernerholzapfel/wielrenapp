@@ -12,6 +12,7 @@ import {ITour} from '../../models/tour.model';
 import {RiderService} from '../../services/rider.service';
 import {IParticipant, IPrediction} from '../../models/participant.model';
 import {IStageClassification} from '../../models/etappe.model';
+import {UiServiceService} from '../../services/ui-service.service';
 
 @Component({
     selector: 'app-renner-detail',
@@ -46,7 +47,7 @@ export class RennerDetailPage implements OnInit {
                     .subscribe(tourrider => {
                         if (tourrider) {
                             this.rider = tourrider.rider;
-                            this.stageclassifications = tourrider.stageclassifications;
+                            this.stageclassifications = tourrider.stageclassifications.sort((a,b) => a.etappe.etappeNumber - b.etappe.etappeNumber);;
                             this.predictions = tourrider.predictions;
                             this.chosenRiderStats = [
                                 {
