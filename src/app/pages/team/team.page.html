@@ -22,9 +22,9 @@
         </ion-buttons>
     </ion-toolbar>
         <app-deelnemer-table-summary
-                [showDetail]="true"
+                [showDetail]="showDetail"
                 [line]="participantLine"
-                mainValue="totalPoints">
+                [mainValue]="'totalPoints'">
         </app-deelnemer-table-summary>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
@@ -46,11 +46,7 @@
     <ion-label>Sorteren</ion-label>
     <ion-select [value]="selectedSort" okText="Ok" cancelText="Annuleren" interface="popover" #selectsort
                 (ionChange)="sortRenners($event.detail.value)">
-        <ion-select-option value="totalTourPoints">Totaalstand</ion-select-option>
-        <ion-select-option value="totalMountainPoints">Bergstand</ion-select-option>
-        <ion-select-option value="totalPointsPoints">Puntenstand</ion-select-option>
-        <ion-select-option value="totalYouthPoints">Jongerenstand</ion-select-option>
-        <ion-select-option value="totalStagePoints">Etappestand</ion-select-option>
-        <ion-select-option value="deltaTotalStagePoints">Delta</ion-select-option>
+        <ion-select-option value="totalPoints">Punten</ion-select-option>
+        <ion-select-option value="waarde">Waarde</ion-select-option>
     </ion-select>
 </ion-item>

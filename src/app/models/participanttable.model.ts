@@ -95,8 +95,9 @@ export interface Prediction {
     rider: Rider;
     totalStagePoints: number;
     deltaStagePoints: number;
-    mountainPoints?: number;
-    pointsPoints?: number;
-    youthPoints?: number;
+    tourPoints?: number; // algemeen klassement
+    mountainPoints?: number; // bergklassement
+    pointsPoints?: number; // punten klassement
+    youthPoints?: number; //jongeren klassement
 }
 

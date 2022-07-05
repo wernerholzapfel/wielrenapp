@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {UiServiceService} from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-icon-with-points',
@@ -9,8 +11,14 @@ export class IconWithPointsComponent implements OnInit {
 
   @Input() points: number;
   @Input() image: string;
-  constructor() { }
+  tourHasEnded: boolean;
 
-  ngOnInit() {}
+  constructor(private uiService: UiServiceService) {
+  }
+
+  ngOnInit() {
+    this.tourHasEnded = this.uiService.selectedTour.hasEnded;
+
+  }
 
 }

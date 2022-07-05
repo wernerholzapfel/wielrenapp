@@ -1,6 +1,6 @@
 <ion-col size="auto" class="ion-text-start">
   <ion-row class="ion-justify-content-center ion-align-items-center">
     <img [src]="image" height="24px;">
-    <ion-text class="ion-padding-horizontal">{{points}}</ion-text>
+    <ion-text [color]="tourHasEnded || image === '/assets/etappes_donker.png' ? 'dark' : 'medium'" class="ion-padding-horizontal">{{points}}</ion-text>
   </ion-row>
 </ion-col>

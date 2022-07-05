@@ -55,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.tour$.pipe(takeUntil(this.unsubscribe)).subscribe(tour => {
             if (tour && tour.id) {
                 this.uiService.tourStartDate = tour.startDate;
+                this.uiService.selectedTour = tour;
                 this.selectedTour = tour;
                 this.store.dispatch(new fromParticipanttable.FetchParticipanttable(tour.id));
                 this.store.dispatch(new fromParticipanttable.FetchLastUpdated(tour.id));

@@ -21,7 +21,7 @@
                 </ion-row>
             </ion-col>
             <ion-col size="4" class="ion-align-self-center ion-text-end">
-                <app-punten-col [punten]="line.totalPoints" [deltaPunten]="line.deltaTotalStagePoints"></app-punten-col>
+                <app-punten-col [showDelta]="showDelta" [showImage]="showImage" [imageUrl]="imageUrl" [punten]="punten" [deltaPunten]="line.deltaTotalStagePoints"></app-punten-col>
             </ion-col>
         </ion-row>
         <ion-row class="ion-no-padding ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">

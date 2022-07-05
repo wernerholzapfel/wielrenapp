@@ -81,10 +81,6 @@ export class ChooseRiderPage implements OnInit {
         });
     }
 
-    search(searchTerm: any) {
-     console.log(this.uiService.filterRenners(searchTerm.detail.value, this.teams));
-    }
-
     filterRennersBijWaarde(waarde: number) {
         this.teams = this.teams.map(team => {
             return {

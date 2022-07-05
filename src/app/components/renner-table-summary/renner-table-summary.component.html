@@ -2,20 +2,28 @@
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-padding-vertical">
             <ion-col>
-            <div class="align-content-horizontal">
-            <img
-                        style="height: 24px;"
-                        [src]="'/assets/'+icon+'.png'">
-                &nbsp;
-                <img style="height: 16px;"
-                     src="/assets/flag/{{line?.rider?.nationality}}.png">
-                &nbsp;
-                {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
-                <ion-text color="medium" size="small">({{line.rider.waarde}})</ion-text>
-            </div>
+                <div class="align-content-horizontal">
+                    &nbsp;
+                    <img style="height: 16px;"
+                         src="/assets/flag/{{line?.rider?.nationality}}.png">
+                    &nbsp;
+                    {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
+                    <ion-text color="medium" size="small">
+                        &nbsp;({{line.rider.waarde}})
+                    </ion-text>
+                    <ng-container *ngIf="line?.rider?.isYoungster">
+                        &nbsp;
+                        <img src="/assets/shirt_jongeren.png" style="height: 24px;">
+                    </ng-container>
+                </div>
             </ion-col>
-            <ion-col size="3" class="ion-align-self-center ion-text-end">
-                <app-punten-col [punten]="mainValue === 'gekozen' ? line.gekozen : line.points.totalTourPoints" [showDelta]="false"></app-punten-col>
+            <ion-col size="4" class="ion-align-self-center ion-text-end">
+                <app-punten-col
+                        [showImage]="showImage"
+                        [imageUrl]="imageUrl"
+                        [punten]="punten"
+                        [deltaPunten]="line.points.deltaTotalStagePoints"
+                        [showDelta]="showDelta"></app-punten-col>
             </ion-col>
         </ion-row>
         <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">

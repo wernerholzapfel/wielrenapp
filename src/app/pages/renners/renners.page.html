@@ -35,26 +35,32 @@
             <ion-label>Uitgevallen</ion-label>
         </ion-segment-button>
     </ion-segment>
+        <ion-searchbar [(ngModel)]="searchTerm" placeholder="Zoek renner" color="light"
+                       debounce="500"></ion-searchbar>
+
     <ion-list *ngIf="segmentView === 'punten'">
-        <ng-container *ngFor="let line of riders">
+        <ng-container *ngFor="let line of riders | searchRiders: searchTerm">
             <app-renner-table-summary [mainValue]="selectedSort"
                                       [showDetail]="showDetail"
+                                      [showDelta]="false"
                                       [riderId]="line.id"
                                       [line]="line">
             </app-renner-table-summary>
         </ng-container>
     </ion-list>
     <ion-list *ngIf="segmentView === 'gekozen'">
-        <ng-container *ngFor="let line of riders">
+        <ng-container *ngFor="let line of riders | searchRiders: searchTerm">
             <app-renner-table-summary [mainValue]="'gekozen'"
                                       [showDetail]="showDetail"
+                                      [showDelta]="false"
+                                      [showImage]="false"
                                       [riderId]="line.id"
                                       [line]="line">
             </app-renner-table-summary>
         </ng-container>
     </ion-list>
     <ion-list *ngIf="segmentView === 'uitgevallen'">
-        <ng-container *ngFor="let line of riders | filterIsOut">
+        <ng-container *ngFor="let line of riders | filterIsOut | searchRiders: searchTerm">
             <app-renner-table-summary [mainValue]="selectedSort"
                                       [showDetail]="showDetail"
                                       [riderId]="line.id"
@@ -67,11 +73,12 @@
     <ion-label>Sorteren</ion-label>
     <ion-select [value]="selectedSort" okText="Ok" cancelText="Annuleren" interface="popover" #selectsort
                 (ionChange)="sortRenners($event.detail.value)">
-        <ion-select-option value="totalTourPoints">Totaalstand</ion-select-option>
-        <ion-select-option value="totalMountainPoints">Bergstand</ion-select-option>
-        <ion-select-option value="totalPointsPoints">Puntenstand</ion-select-option>
-        <ion-select-option value="totalYouthPoints">Jongerenstand</ion-select-option>
-        <ion-select-option value="totalStagePoints">Etappestand</ion-select-option>
+        <ion-select-option value="totalPoints">Stand</ion-select-option>
+        <ion-select-option value="totalTourPoints">Algemeen</ion-select-option>
+        <ion-select-option value="totalMountainPoints">Berg</ion-select-option>
+        <ion-select-option value="totalPointsPoints">Punten</ion-select-option>
+        <ion-select-option value="totalYouthPoints">Jongeren</ion-select-option>
+        <ion-select-option value="totalStagePoints">Etappe</ion-select-option>
         <ion-select-option value="deltaTotalStagePoints">Delta</ion-select-option>
     </ion-select>
 </ion-item>

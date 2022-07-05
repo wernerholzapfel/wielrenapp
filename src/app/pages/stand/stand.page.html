@@ -21,6 +21,7 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
+    <ion-toolbar>
     <ion-grid>
         <ion-row class="ion-align-items-center ion-no-padding">
             <ion-col>
@@ -33,6 +34,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    </ion-toolbar>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
 
@@ -42,7 +44,8 @@
             <app-deelnemer-table-summary
                     [showDetail]="showDetail"
                     [line]="line"
-                    [mainValue]="selectedSort">
+                    [mainValue]="selectedSort"
+            [showImage]="true">
             </app-deelnemer-table-summary>
         </ng-container>
     </ion-list>
@@ -50,11 +53,12 @@
         <ion-label>Sorteren</ion-label>
         <ion-select [value]="selectedSort" okText="Ok" cancelText="Annuleren" interface="popover" #selectsort
                     (ionChange)="sortTable($event)">
-            <ion-select-option value="totalPoints">Totaalstand</ion-select-option>
-            <ion-select-option value="totalMountainPoints">Bergstand</ion-select-option>
-            <ion-select-option value="totalPointsPoints">Puntenstand</ion-select-option>
-            <ion-select-option value="totalYouthPoints">Jongerenstand</ion-select-option>
-            <ion-select-option value="totalStagePoints">Etappestand</ion-select-option>
+            <ion-select-option value="totalPoints">Stand</ion-select-option>
+            <ion-select-option value="totalTourPoints">Algemeen</ion-select-option>
+            <ion-select-option value="totalMountainPoints">Berg</ion-select-option>
+            <ion-select-option value="totalPointsPoints">Punten</ion-select-option>
+            <ion-select-option value="totalYouthPoints">Jongeren</ion-select-option>
+            <ion-select-option value="totalStagePoints">Etappe</ion-select-option>
             <ion-select-option value="deltaTotalStagePoints">Delta</ion-select-option>
         </ion-select>
     </ion-item>

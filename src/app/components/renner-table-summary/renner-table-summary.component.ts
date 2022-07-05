@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LatestEtappe} from '../../models/participanttable.model';
 import {Router} from '@angular/router';
+import {UiServiceService} from '../../services/ui-service.service';
 
 export interface IRennerTableSummary {
     id: string;
@@ -18,6 +19,7 @@ export interface IRennerTableSummary {
         isLinkebal?: boolean;
         isBeschermdeRenner?: boolean;
         waarde: number;
+        isYoungster?: boolean;
     };
     points: {
         totalTourPoints: number;
@@ -26,6 +28,7 @@ export interface IRennerTableSummary {
         totalYouthPoints: number;
         totalStagePoints: number;
         deltaTotalStagePoints: number;
+        totalPoints?: number;
     };
     latestEtappe: LatestEtappe;
     gekozen?: number;
@@ -39,23 +42,63 @@ export interface IRennerTableSummary {
 
 export class RennerTableSummaryComponent implements OnInit {
 
-    @Input() line: IRennerTableSummary;
+    private _line: IRennerTableSummary;
+    private _mainValue: string;
+
+    @Input()
+    set line(value) {
+        this._line = value;
+        if (this.mainValue) {
+            this.setValues(this.mainValue, value);
+        }
+    }
+
+    get line(): IRennerTableSummary {
+        return this._line;
+    }
+
+    @Input()
+    set mainValue(value: string) {
+        this._mainValue = value;
+        this.imageUrl = this.uiService.determineImageUrl(value);
+        if (this.line) {
+            this.setValues(value, this.line);
+        }
+    }
+
+    get mainValue(): any {
+        return this._mainValue;
+    }
+
     @Input() riderId: string;
     @Input() showDetail = true;
-    @Input() mainValue: string;
     @Input() lineType: 'inset';
-    icon: string;
-    constructor(private router: Router) {
+    @Input() showImage = true;
+    @Input() showDelta: boolean;
+    punten: number;
+    deltaPunten: number;
+    imageUrl: string;
+    tourHasEnded: boolean;
+
+    constructor(private router: Router, private uiService: UiServiceService) {
     }
 
     ngOnInit() {
-            this.icon = this.line.rider.isBeschermdeRenner ? 'beschermderenner_black' :
-            this.line.rider.isWaterdrager ? 'waterdrager_black' :
-            this.line.rider.isMeesterknecht ? 'meesterknecht_black' :
-            this.line.rider.isLinkebal ? 'joker_black' : 'rider_black';
     }
+
     openRenner() {
         console.log(this.line);
-        this.router.navigate(['/tabs/renner-detail', { id: this.riderId }], {state: this.line});
+        this.router.navigate(['/tabs/renner-detail', {id: this.riderId}], {state: this.line});
+    }
+
+    setValues(mainValue: string, line: IRennerTableSummary) {
+        if (line) {
+            this.punten = this.uiService.determineDeelnemerPunten(this._line.points, mainValue);
+            if (mainValue === 'gekozen') {
+                this.punten = this.line.gekozen;
+            } else {
+                this.deltaPunten = this.line?.points?.deltaTotalStagePoints;
+            }
+        }
     }
 }

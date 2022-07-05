@@ -1,15 +1,12 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ITourriders} from '../../models/tourriders.model';
 import {IRider} from '../../models/rider.model';
 import {IAppState} from '../../store/store';
 import {RiderService} from '../../services/rider.service';
 import {select, Store} from '@ngrx/store';
-import {FetchRiders} from '../../store/rider/rider.actions';
-import {getTourriders} from '../../store/tourriders/tourrider.reducer';
 import {takeUntil} from 'rxjs/operators';
 import {IonSelect} from '@ionic/angular';
-import {Prediction} from '../../models/participanttable.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
 import {getTour} from '../../store/tour/tour.reducer';
 import {ITour} from '../../models/tour.model';
@@ -25,7 +22,7 @@ export class RennersPage implements OnInit, OnDestroy {
 
     @Output() addPositionEvent: EventEmitter<IRider> = new EventEmitter<IRider>();
 
-    selectedSort = 'totalTourPoints';
+    selectedSort = 'totalPoints';
     showDetail = false;
     searchTerm: string;
     tour: ITour;
@@ -75,7 +72,9 @@ export class RennersPage implements OnInit, OnDestroy {
         this.selectedSort = sort === 'gekozen' ? this.selectedSort : sort;
         this.riders = this.riders.slice().sort((a, b) => {
             switch (sort) {
-                case 'totalTourPoints':
+                case 'totalPoints':
+                    return b.points.totalPoints - a.points.totalPoints;
+                    case 'totalTourPoints':
                     return b.points.totalTourPoints - a.points.totalTourPoints;
                 case 'totalMountainPoints':
                     return b.points.totalMountainPoints - a.points.totalMountainPoints;
@@ -105,6 +104,10 @@ export class RennersPage implements OnInit, OnDestroy {
     //   }
     // }
 
+    search(event) {
+        console.log(event.detail.value);
+    }
+
     mapToRennerTableSummary(rider: ITourriders): IRennerTableSummary {
         return {
             id: rider.id,
@@ -125,7 +128,8 @@ export class RennersPage implements OnInit, OnDestroy {
             },
             latestEtappe: rider.latestEtappe,
             points: {
-                totalTourPoints: this.determineTotaalpunten(rider),
+                totalPoints: this.determineTotaalpunten(rider),
+                totalTourPoints: rider.tourPoints ? rider.tourPoints : 0,
                 totalMountainPoints: rider.mountainPoints ? rider.mountainPoints : 0,
                 totalPointsPoints: rider.pointsPoints ? rider.pointsPoints : 0,
                 totalYouthPoints: rider.youthPoints ? rider.youthPoints : 0,

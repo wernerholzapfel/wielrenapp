@@ -22,7 +22,7 @@ export class StandPage implements OnInit, OnDestroy {
 
     @ViewChild('selectsort') selectsortRef: IonSelect;
 
-    showDetail = true;
+    showDetail = false;
     participantstable: IParticipanttable[];
     lastUpdated$: Observable<any>;
     lastUpdated: string;

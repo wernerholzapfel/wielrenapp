@@ -115,18 +115,6 @@ export class EtappesPage implements OnInit, OnDestroy {
         this.activeSegment = $event.detail.value;
     }
 
-    openSettings(): Promise<any> {
-        return this.modalController.create({
-            component: TableSettingsComponent,
-            swipeToClose: true,
-            presentingElement: (this.routerOutlet.parentOutlet.nativeEl)
-        }).then(modal => {
-            modal.onDidDismiss().then((event: any) => {
-            });
-            return modal.present();
-        });
-    }
-
     calculatePoints(position: number) {
         return eval('etappe' + position);
     }
