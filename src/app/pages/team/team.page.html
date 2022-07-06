@@ -39,7 +39,7 @@
     >
     </app-renner-table-summary>
     </ng-container>
-    <ion-item *ngIf="!mijnTeam" lines="none">
+    <ion-item *ngIf="!mijnTeam && loadingDone" lines="none">
         Voor deze ronde heb je geen team gemaakt.
     </ion-item>
 </ion-content>

@@ -9,7 +9,7 @@ import {ParticipantService} from '../../services/participant.service';
 import {getParticipantPredictions} from '../../store/participanttable/participanttable.reducer';
 import {IParticipanttable, Prediction} from '../../models/participanttable.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
-import {IonSelect} from '@ionic/angular';
+import {IonSelect, LoadingController} from '@ionic/angular';
 import {IParticipant} from '../../models/participant.model';
 import {UiServiceService} from '../../services/ui-service.service';
 
@@ -26,7 +26,9 @@ export class TeamPage implements OnInit {
                 private route: ActivatedRoute,
                 private participantService: ParticipantService,
                 private uiService: UiServiceService,
+                private loadingCtrl: LoadingController,
                 private router: Router) {
+
     }
 
     participantLine: any; // todo
@@ -36,10 +38,16 @@ export class TeamPage implements OnInit {
     tour: ITour;
     selectedSort = 'totalPoints';
     showDetail: boolean;
+    loadingDone = false;
 
-    ngOnInit() {
+    async ngOnInit() {
+        const loading = await this.loadingCtrl.create({
+            message: 'Gegevens ophalen...',
+            spinner: 'circles'
+        });
+
+        loading.present();
         this.store.select(getTour).pipe(switchMap(tour => {
-            console.log('get tour done');
             this.tour = tour;
             return this.route.params.pipe(switchMap(routeParams => {
                 if (routeParams.id) {
@@ -53,13 +61,12 @@ export class TeamPage implements OnInit {
             }));
         }))
             .subscribe(participanttable => {
-                console.log('no participanttable');
                 if (participanttable) {
-                    console.log('participanttable');
                     this.participantLine = participanttable;
                     this.mijnTeam = participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction));
                     this.sortRenners(this.selectedSort);
-                    console.log('init done');
+                    this.loadingDone = true;
+                    loading.dismiss();
                 }
             });
     }
@@ -89,7 +96,7 @@ export class TeamPage implements OnInit {
             latestEtappe: line.rider.latestEtappe,
             points: {
                 totalPoints: this.determineTotaalpunten(line),
-                totalTourPoints: line.tourPoints ? line.tourPoints: 0,
+                totalTourPoints: line.tourPoints ? line.tourPoints : 0,
                 totalMountainPoints: line.mountainPoints ? line.mountainPoints : 0,
                 totalPointsPoints: line.pointsPoints ? line.pointsPoints : 0,
                 totalYouthPoints: line.youthPoints ? line.youthPoints : 0,

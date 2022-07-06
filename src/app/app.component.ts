@@ -5,7 +5,6 @@ import {SplashScreen} from '@capacitor/splash-screen';
 import {StatusBar, Style} from '@capacitor/status-bar';
 import {select, Store} from '@ngrx/store';
 import * as fromTour from './store/tour/tour.actions';
-import {slideInAnimation} from './animations';
 import {getTour} from './store/tour/tour.reducer';
 import {takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
@@ -27,10 +26,6 @@ dayjs.locale('nl');
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-    animations: [
-        slideInAnimation
-        // animation triggers go here
-    ]
 })
 export class AppComponent implements OnInit, OnDestroy {
     constructor(
