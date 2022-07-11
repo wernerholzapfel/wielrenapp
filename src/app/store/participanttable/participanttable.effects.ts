@@ -5,10 +5,11 @@ import {catchError, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
+import {ParticipantService} from '../../services/participant.service';
 
 @Injectable()
 export class ParticipanttableEffects {
-  constructor(private actions$: Actions, private db: AngularFireDatabase) {
+  constructor(private actions$: Actions, private db: AngularFireDatabase, private participantService: ParticipantService) {
   }
 
   @Effect()
@@ -16,7 +17,7 @@ export class ParticipanttableEffects {
     .pipe(
       ofType<participanttable.FetchParticipanttable>(participanttable.FETCH_PARTICIPANTTABLE),
       switchMap(action => {
-      return this.db.list<IParticipanttable>(action.payload + '/stand/').valueChanges()
+      return this.participantService.getStand(action.payload)
         .pipe(
           switchMap(participanttableResponse =>
             of(new participanttable.FetchParticipanttableSuccess(participanttableResponse))),

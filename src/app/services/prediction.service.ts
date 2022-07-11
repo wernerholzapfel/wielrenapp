@@ -22,6 +22,10 @@ export class PredictionService {
         return this.http.get<IPrediction[]>(`${environment.apiBaseUrl}/predictions/user/` + tourId);
     }
 
+    getPredictionSummaryForUser(tourId: string): Observable<IPrediction[]> {
+        return this.http.get<IPrediction[]>(`${environment.apiBaseUrl}/predictions/user/summary/` + tourId);
+    }
+
     deletePrediction(predictionId: string): Observable<any> {
         return this.http.delete<any>(`${environment.apiBaseUrl}/predictions/` + predictionId);
     }

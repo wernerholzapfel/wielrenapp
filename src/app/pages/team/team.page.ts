@@ -12,6 +12,7 @@ import {IRennerTableSummary} from '../../components/renner-table-summary/renner-
 import {IonSelect, LoadingController} from '@ionic/angular';
 import {IParticipant} from '../../models/participant.model';
 import {UiServiceService} from '../../services/ui-service.service';
+import {PredictionService} from '../../services/prediction.service';
 
 @Component({
     selector: 'app-team',
@@ -25,6 +26,7 @@ export class TeamPage implements OnInit {
     constructor(private store: Store<IAppState>,
                 private route: ActivatedRoute,
                 private participantService: ParticipantService,
+                private predictionService: PredictionService,
                 private uiService: UiServiceService,
                 private loadingCtrl: LoadingController,
                 private router: Router) {
@@ -69,6 +71,10 @@ export class TeamPage implements OnInit {
                     loading.dismiss();
                 }
             });
+
+        // this.predictionService.getPredictionSummaryForUser(this.tour.id).subscribe(result => {
+        //     console.log(result);
+        // })
     }
 
     private mapToRennerTableSummary(line: Prediction): IRennerTableSummary {

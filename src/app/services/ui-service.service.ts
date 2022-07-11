@@ -36,8 +36,6 @@ export class UiServiceService {
     }
 
     determineDeelnemerPunten(line: any, mainValue: string) {
-        console.log(mainValue);
-        console.log(line);
         if (line) {
             switch (mainValue) {
                 case 'totalStagePoints':
@@ -63,7 +61,6 @@ export class UiServiceService {
     }
 
     determineImageUrl(mainValue: string) {
-        console.log('determineImageUrl:' + mainValue);
         switch (mainValue) {
             case 'totalStagePoints':
                 return '/assets/etappes_donker.png';

@@ -45,11 +45,16 @@ export function tourriderReducer(state = initaltourriderState, action): Tourride
 
 export const gettourriderState = createFeatureSelector<TourriderState>('tourriders');
 export const getTourriders = createSelector(gettourriderState, (state: TourriderState) => state.tourriders);
+export const getTourrider = (tourriderId: string) => createSelector(getTourriders, (state: ITourriders[]) => {
+         return state ? state.find(p => p.id === tourriderId) : {};
+    }
+);
+
 export const getWaterdragerTopX = (x, tourhasended: boolean) => createSelector(gettourriderState, (state: TourriderState) =>
     state && state.tourriders
         ? tourhasended
-        ? state.tourriders.slice().sort((a, b) => b.waterdragerTotalPoints - a.waterdragerTotalPoints).slice(0, x)
-        : state.tourriders.slice().sort((a, b) => b.waterdragerEtappePoints - a.waterdragerEtappePoints).slice(0, x)
+            ? state.tourriders.slice().sort((a, b) => b.waterdragerTotalPoints - a.waterdragerTotalPoints).slice(0, x)
+            : state.tourriders.slice().sort((a, b) => b.waterdragerEtappePoints - a.waterdragerEtappePoints).slice(0, x)
         : []);
 export const getRennerTopX = (x, tourhasended: boolean) => createSelector(gettourriderState, (state: TourriderState) =>
     state && state.tourriders ?

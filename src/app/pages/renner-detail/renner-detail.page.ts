@@ -47,7 +47,7 @@ export class RennerDetailPage implements OnInit {
                     .subscribe(tourrider => {
                         if (tourrider) {
                             this.rider = tourrider.rider;
-                            this.stageclassifications = tourrider.stageclassifications.sort((a,b) => a.etappe.etappeNumber - b.etappe.etappeNumber);;
+                            this.stageclassifications = tourrider.stageclassifications.sort((a,b) => a.etappe.etappeNumber - b.etappe.etappeNumber);
                             this.predictions = tourrider.predictions;
                             this.chosenRiderStats = [
                                 {

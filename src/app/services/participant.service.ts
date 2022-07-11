@@ -24,4 +24,8 @@ export class ParticipantService {
     return this.http.post<IParticipant>(`${environment.apiBaseUrl}/participants`, body)
       .pipe(map(res => <IParticipant>res));
   }
+
+  getStand(tourId): Observable<any> {
+    return this.http.get<any>(`${environment.apiBaseUrl}/participants/table/${tourId}`);
+  }
 }

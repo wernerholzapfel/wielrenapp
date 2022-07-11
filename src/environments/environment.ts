@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://wielrenapi.herokuapp.com',
+  // apiBaseUrl: 'https://wielrenapi.herokuapp.com',
   // apiBaseUrl: 'https://hetwielerspel-api.herokuapp.com',
-  // apiBaseUrl: 'http://localhost:3000',
+  apiBaseUrl: 'http://localhost:3000',
   firebase: {
     apiKey: 'AIzaSyDqZ6wBr5VZ2w3E0lt1fqaWdGeTLdsaHUM',
     authDomain: 'wielerspel-aec4b.firebaseapp.com',
