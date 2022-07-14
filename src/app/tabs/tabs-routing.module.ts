@@ -60,6 +60,10 @@ const routes: Routes = [
             loadChildren: () => import('../pages/deelnemers/deelnemers.module').then( m => m.DeelnemersPageModule)
         },
         {
+            path: 'klassementen',
+            loadChildren: () => import('../pages/klassementen/klassementen.module').then( m => m.KlassementenPageModule)
+        },
+        {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

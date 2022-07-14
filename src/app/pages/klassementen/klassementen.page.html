@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title routerLink="/tabs/home">
+      <img src="/assets/header_white3.png"
+           height="36px;"></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-header>
+  <ion-toolbar>
+        <ion-select interface="popover" [value]="klassementsType" placeholder="Kies klassement"
+                    (ionChange)="setKlassement($event)">
+          <ion-select-option value="Algemeen klassement">Algemeen</ion-select-option>
+          <ion-select-option value="Bergklassement">Berg</ion-select-option>
+          <ion-select-option value="Puntenklassement">Punten</ion-select-option>
+          <ion-select-option value="Jongerenklassement">Jongeren</ion-select-option>
+        </ion-select>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container>
+    <ion-list>
+      <ion-item *ngFor="let line of uitslag">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-no-padding">
+            <ion-col size="2" class="ion-align-self-center">
+              {{line.position}}
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              {{line.tourrider.rider.firstName}}
+              {{line.tourrider.rider.surName}}
+              <ion-text color="medium" size="small">({{line.tourrider.waarde}})</ion-text>
+
+            </ion-col>
+            <ion-col size="2" class="ion-align-self-center">
+              <ion-chip color="primary">{{line.punten}}</ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+</ion-content>

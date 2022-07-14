@@ -26,6 +26,7 @@ export interface ITourClassification {
   id?: string;
   position: number;
   tour: ITour;
+  totalTourPoints: number;
   tourrider: ITourrider;
 }
 

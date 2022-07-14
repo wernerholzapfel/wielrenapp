@@ -8,6 +8,8 @@ import {Observable, Subject} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
 import {IonSelect} from '@ionic/angular';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
+import * as fromParticipanttable from '../../store/participanttable/participanttable.actions';
+import {UiServiceService} from '../../services/ui-service.service';
 dayjs.extend(relativeTime);
 
 @Component({
@@ -17,7 +19,7 @@ dayjs.extend(relativeTime);
 })
 export class StandPage implements OnInit, OnDestroy {
 
-    constructor(private store: Store<IAppState>) {
+    constructor(private store: Store<IAppState>, private uiService: UiServiceService) {
     }
 
     @ViewChild('selectsort') selectsortRef: IonSelect;
@@ -40,6 +42,8 @@ export class StandPage implements OnInit, OnDestroy {
     };
 
     ngOnInit() {
+        this.store.dispatch(new fromParticipanttable.FetchParticipanttable(this.uiService.selectedTour.id));
+
         this.store.pipe(select(getParticipanttable)).subscribe(participantTable => {
             this.participantstable = participantTable;
         });
