@@ -153,5 +153,7 @@ export class TeamPage implements OnInit {
             }
         });
     }
-
+    openDeelnemer(line) {
+        this.router.navigate(['/tabs/team', {id: line.id}], {state: line});
+    }
 }

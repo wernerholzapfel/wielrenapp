@@ -22,6 +22,7 @@
         </ion-buttons>
     </ion-toolbar>
         <app-deelnemer-table-summary
+                (itemClickedEvent)="openDeelnemer($event)"
                 [showDetail]="showDetail"
                 [line]="participantLine"
                 [mainValue]="'totalPoints'">

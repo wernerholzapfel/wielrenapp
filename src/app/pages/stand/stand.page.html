@@ -42,6 +42,7 @@
     <ion-list>
         <ng-container *ngFor="let line of participantstable">
             <app-deelnemer-table-summary
+                    (itemClickedEvent)="openDeelnemer($event)"
                     [showDetail]="showDetail"
                     [line]="line"
                     [mainValue]="selectedSort"

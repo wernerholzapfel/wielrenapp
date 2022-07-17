@@ -10,6 +10,7 @@ import {IonSelect} from '@ionic/angular';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import * as fromParticipanttable from '../../store/participanttable/participanttable.actions';
 import {UiServiceService} from '../../services/ui-service.service';
+import {Router} from '@angular/router';
 dayjs.extend(relativeTime);
 
 @Component({
@@ -19,7 +20,7 @@ dayjs.extend(relativeTime);
 })
 export class StandPage implements OnInit, OnDestroy {
 
-    constructor(private store: Store<IAppState>, private uiService: UiServiceService) {
+    constructor(private store: Store<IAppState>, private uiService: UiServiceService, private router: Router) {
     }
 
     @ViewChild('selectsort') selectsortRef: IonSelect;
@@ -75,5 +76,7 @@ export class StandPage implements OnInit, OnDestroy {
             return b[this.selectedSort] - a[this.selectedSort];
         });
     }
-
+    openDeelnemer(line) {
+        this.router.navigate(['/tabs/team', {id: line.id}], {state: line});
+    }
 }

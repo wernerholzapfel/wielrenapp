@@ -20,6 +20,8 @@ import {IAppState} from '../../store/store';
 import SwiperCore, {SwiperOptions, A11y} from 'swiper';
 import {SwiperSlide} from 'swiper/svelte/swiper-svelte';
 import {SwiperComponent} from 'swiper/angular';
+import {Router} from '@angular/router';
+import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
 
 SwiperCore.use([A11y]);
 
@@ -37,7 +39,7 @@ dayjs.extend(isoWeek);
 export class EtappesPage implements OnInit, OnDestroy {
     @ViewChild('etappeSlides', { static: false }) swiper?: SwiperComponent;
     s: SwiperCore;
-    public activeSegment = 'uitslag';
+    public activeSegment = 'stand';
     public activeEtappe: IEtappe;
     public etappeIndex: number;
     public tourId: string;
@@ -45,10 +47,13 @@ export class EtappesPage implements OnInit, OnDestroy {
     public uitslag: IStageClassification[];
     public stand: IParticipanttable[];
     unsubscribe = new Subject<void>();
+    presentingElement = null;
 
     constructor(private store: Store<IAppState>,
                 private classificationsService: ClassificationsService,
                 private tourService: TourService,
+                private modalCtrl: ModalController,
+                private router: Router,
                 private modalController: ModalController,
                 private routerOutlet: IonRouterOutlet) {
     }
@@ -118,6 +123,24 @@ export class EtappesPage implements OnInit, OnDestroy {
     calculatePoints(position: number) {
         return eval('etappe' + position);
     }
+    async openDeelnemer(line) {
+        const modal = await this.modalCtrl.create({
+            component: EtappeUitslagComponent,
+            componentProps: {
+                uitslag: this.uitslag,
+                participant: line,
+                selectedEtappe: this.activeEtappe
+            },
+            swipeToClose: true,
+            // initialBreakpoint: 0.9,
+            // breakpoints: [0]
+        });
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+
+    }
+
 }
 
 

@@ -84,8 +84,8 @@ export class RennersPage implements OnInit, OnDestroy {
                     return b.points.totalYouthPoints - a.points.totalYouthPoints;
                 case 'totalStagePoints':
                     return b.points.totalStagePoints - a.points.totalStagePoints;
-                case 'deltaTotalStagePoints':
-                    return b.points.deltaTotalStagePoints - a.points.deltaTotalStagePoints;
+                case 'waarde':
+                    return b.rider.waarde - a.rider.waarde;
                 case 'gekozen':
                     return b.gekozen - a.gekozen;
             }

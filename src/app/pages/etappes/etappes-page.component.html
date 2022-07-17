@@ -35,14 +35,6 @@
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
 <ion-content [fullscreen]="true">
-    <ion-segment color="primary" mode="md" value="uitslag" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="uitslag">
-            <ion-label>Renners</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="stand">
-            <ion-label>Deelnemers</ion-label>
-        </ion-segment-button>
-    </ion-segment>
     <ng-container *ngIf="activeSegment === 'uitslag'">
         <ion-list>
             <ion-item *ngFor="let line of uitslag">
@@ -68,9 +60,62 @@
     <ng-container *ngIf="activeSegment === 'stand'">
         <ion-list>
             <ng-container *ngFor="let line of stand">
-                <app-deelnemer-table-summary [showDelta]="false" [line]="line" mainValue="totalStagePoints"></app-deelnemer-table-summary>
+                <app-deelnemer-table-summary (itemClickedEvent)="openDeelnemer($event)"
+                        [showDelta]="false" [line]="line"
+                        mainValue="totalStagePoints"></app-deelnemer-table-summary>
             </ng-container>
         </ion-list>
     </ng-container>
-
+    <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Modal</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="modal.dismiss()">Close</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <ion-list>
+                    <ion-item>
+                        <ion-avatar slot="start">
+                            <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                            <h2>Connor Smith</h2>
+                            <p>Sales Rep</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-avatar slot="start">
+                            <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                            <h2>Daniel Smith</h2>
+                            <p>Product Designer</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-avatar slot="start">
+                            <ion-img src="https://i.pravatar.cc/300?u=d"></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                            <h2>Greg Smith</h2>
+                            <p>Director of Operations</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-avatar slot="start">
+                            <ion-img src="https://i.pravatar.cc/300?u=e"></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                            <h2>Zoey Smith</h2>
+                            <p>CEO</p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
 </ion-content>

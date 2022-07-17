@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()" color="light">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title routerLink="/tabs/home">
+            <img src="/assets/header_white3.png" height="36px;">
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <app-deelnemer-table-summary
+                [showDelta]="false" [line]="participant"
+                mainValue="totalStagePoints"></app-deelnemer-table-summary>
+        <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+        <ion-item *ngFor="let line of uitslag" [color]="line.selected? 'tertiary': ''">
+            <ion-grid class="ion-no-padding">
+                <ion-row class="ion-no-padding">
+                    <ion-col size="2" class="ion-align-self-center">
+                        {{line.position}}
+                    </ion-col>
+                    <ion-col class="ion-align-self-center">
+                        {{line.tourrider.rider.firstName}}
+                        {{line.tourrider.rider.surName}}
+                        <ion-text color="medium" size="small">({{line.tourrider.waarde}})</ion-text>
+                    </ion-col>
+                    <ion-col size="2" class="ion-align-self-center">
+                        <ion-chip color="dark">{{line.punten}}</ion-chip>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+</ion-content>

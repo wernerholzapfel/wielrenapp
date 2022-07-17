@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {UiServiceService} from '../../services/ui-service.service';
+import {IRider} from '../../models/rider.model';
 
 @Component({
     selector: 'app-deelnemer-table-summary',
@@ -37,6 +38,8 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     @Input() showDetail: boolean;
     @Input() showDelta = true;
     @Input() showImage = false;
+    @Output() itemClickedEvent: EventEmitter<string> = new EventEmitter<string>();
+
     punten: number;
     imageUrl: string;
 
@@ -48,7 +51,7 @@ export class DeelnemerTableSummaryComponent implements OnInit {
         }
     }
 
-    openDeelnemer(deelnemerId) {
-        this.router.navigate(['/tabs/team', {id: deelnemerId}], {state: this.line});
+    itemClicked(line) {
+            this.itemClickedEvent.emit(line);
     }
 }
