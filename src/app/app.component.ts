@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
             (token: Token) => {
             console.log(token);
                 // todo send token to backend
-            alert('Push registration success, token: ' + token.value);
+            // alert('Push registration success, token: ' + token.value);
             }
         );
 
@@ -106,21 +106,20 @@ export class AppComponent implements OnInit, OnDestroy {
         PushNotifications.addListener('registrationError',
             (error: any) => {
         alert('Error on registration: ' + JSON.stringify(error));
-        }
-        );
+        });
 
         // Show us the notification payload if the app is open on our device
         PushNotifications.addListener(
             'pushNotificationReceived',
             (notification: PushNotificationSchema) => {
-                alert('Push received: ' + JSON.stringify(notification));
+                // alert('Push received: ' + JSON.stringify(notification));
             },
         );
 
         // Method called when tapping on a notification
         PushNotifications.addListener('pushNotificationActionPerformed',
             (notification: ActionPerformed) => {
-                this.router.navigate(['tabs/stand']);
+                // this.router.navigate(['tabs/stand']);
             }
         );
 

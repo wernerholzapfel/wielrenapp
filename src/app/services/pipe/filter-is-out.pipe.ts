@@ -9,7 +9,10 @@ export class FilterIsOutPipe implements PipeTransform {
   transform(value: IRennerTableSummary[]): IRennerTableSummary[] {
     if(!value)return null;
 
-    return value.filter(r => r.rider.isOut);
+    return value.filter(r => r.rider.isOut)
+        .sort((a, b) => {
+              return b.latestEtappe?.etappeNumber - a.latestEtappe?.etappeNumber;
+        });
   }
 
 }

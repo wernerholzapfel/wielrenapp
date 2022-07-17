@@ -74,7 +74,7 @@ export class RennersPage implements OnInit, OnDestroy {
             switch (sort) {
                 case 'totalPoints':
                     return b.points.totalPoints - a.points.totalPoints;
-                    case 'totalTourPoints':
+                case 'totalTourPoints':
                     return b.points.totalTourPoints - a.points.totalTourPoints;
                 case 'totalMountainPoints':
                     return b.points.totalMountainPoints - a.points.totalMountainPoints;
@@ -88,13 +88,15 @@ export class RennersPage implements OnInit, OnDestroy {
                     return b.rider.waarde - a.rider.waarde;
                 case 'gekozen':
                     return b.gekozen - a.gekozen;
+                case 'uitgevallen':
+                    return;
             }
         });
     }
 
     segmentChanged($event) {
         this.segmentView = $event.detail.value;
-        this.sortRenners($event.detail.value === 'gekozen' ? $event.detail.value : this.selectedSort);
+        this.sortRenners($event.detail.value !== 'punten' ? $event.detail.value : this.selectedSort);
     }
 
     // addPosition(element: any) {
