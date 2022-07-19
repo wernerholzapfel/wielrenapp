@@ -15,7 +15,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ng-container>
+  <ion-list>
+    <ng-container *ngFor="let line of participantstable">
+      <app-deelnemer-table-summary [showImage]="true"
+                                   (itemClickedEvent)="openDeelnemer(line)"
+                                   [showDelta]="false" [line]="line"
+                                   [mainValue]="mainValue"></app-deelnemer-table-summary>
+    </ng-container>
+  </ion-list>
+  <ng-container *ngIf="false">
     <ion-list>
       <ion-item *ngFor="let line of uitslag">
         <ion-grid class="ion-no-padding">

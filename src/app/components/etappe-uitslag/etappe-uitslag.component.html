@@ -15,9 +15,9 @@
     <ion-list>
         <app-deelnemer-table-summary
                 [showDelta]="false" [line]="participant"
-                mainValue="totalStagePoints"></app-deelnemer-table-summary>
+                [mainValue]="mainValue"></app-deelnemer-table-summary>
         <ion-progress-bar value="1" color="primary"></ion-progress-bar>
-        <ion-item *ngFor="let line of uitslag" [color]="line.selected? 'tertiary': ''">
+        <ion-item *ngFor="let line of uitslag" [color]="line.selected? 'selected': ''" [lines]="line.selected ? 'none': 'full'">
             <ion-grid class="ion-no-padding">
                 <ion-row class="ion-no-padding">
                     <ion-col size="2" class="ion-align-self-center">
