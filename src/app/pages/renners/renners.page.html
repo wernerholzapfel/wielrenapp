@@ -37,6 +37,7 @@
     </ion-segment>
         <ion-searchbar [(ngModel)]="searchTerm" placeholder="Zoek renner" color="light"
                        debounce="500"></ion-searchbar>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 
     <ion-list *ngIf="segmentView === 'punten'">
         <ng-container *ngFor="let line of riders | searchRiders: searchTerm">

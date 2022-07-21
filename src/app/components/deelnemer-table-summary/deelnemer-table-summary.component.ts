@@ -37,7 +37,7 @@ export class DeelnemerTableSummaryComponent implements OnInit {
 
     @Input() showDetail: boolean;
     @Input() showDelta = true;
-    @Input() showImage = false;
+    @Input() showImage = true;
     @Output() itemClickedEvent: EventEmitter<string> = new EventEmitter<string>();
 
     punten: number;

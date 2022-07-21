@@ -1,4 +1,4 @@
-<ion-item (click)="itemClicked(line)" lines="full" *ngIf="line">
+<ion-item (click)="itemClicked(line)" lines="full" *ngIf="line" [color]="line.eigenvoorspelling ? 'selected': ''">
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-no-padding">
             <ion-col size="2" class="ion-align-self-center">
@@ -7,7 +7,8 @@
                           *ngIf="line && line.previousPosition && (line.previousPosition - line.position) != 0">
                     <ion-icon [name]="line.previousPosition - line.position > 0 ? 'chevron-up' : 'chevron-down'"
                               [color]="line.previousPosition - line.position > 0 ? 'success' : 'danger'">
-                    </ion-icon>{{line.previousPosition - line.position}}
+                    </ion-icon>
+                    {{line.previousPosition - line.position}}
                 </ion-text>
             </ion-col>
             <ion-col class="ion-align-self-center ion-text-wrap" size="6">
@@ -21,15 +22,23 @@
                 </ion-row>
             </ion-col>
             <ion-col size="4" class="ion-align-self-center ion-text-end">
-                <app-punten-col [showDelta]="showDelta" [showImage]="showImage" [imageUrl]="imageUrl" [punten]="punten" [deltaPunten]="line.deltaTotalStagePoints"></app-punten-col>
+                <app-punten-col [showDelta]="showDelta" [showImage]="showImage" [imageUrl]="imageUrl" [punten]="punten"
+                                [deltaPunten]="line.deltaTotalStagePoints"></app-punten-col>
             </ion-col>
         </ion-row>
         <ion-row class="ion-no-padding ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
-          <app-icon-with-points image="/assets/etappes_donker.png" [points]="line.totalStagePoints"></app-icon-with-points>
-          <app-icon-with-points image="/assets/shirt_algemeen.png" [points]="line.totalTourPoints"></app-icon-with-points>
-          <app-icon-with-points image="/assets/shirt_punten.png" [points]="line.totalPointsPoints"></app-icon-with-points>
-          <app-icon-with-points image="/assets/shirt_berg.png" [points]="line.totalMountainPoints"></app-icon-with-points>
-          <app-icon-with-points image="/assets/shirt_jongeren.png" [points]="line.totalYouthPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/etappes_donker.png"
+                                  [points]="line.totalStagePoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/tour_shirts_all.png"
+                                  [points]="line.totalTourPoints +line.totalPointsPoints +line.totalMountainPoints +line.totalYouthPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_algemeen.png"
+                                  [points]="line.totalTourPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_punten.png"
+                                  [points]="line.totalPointsPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_berg.png"
+                                  [points]="line.totalMountainPoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_jongeren.png"
+                                  [points]="line.totalYouthPoints"></app-icon-with-points>
         </ion-row>
     </ion-grid>
 </ion-item>

@@ -56,6 +56,7 @@ export class EtappeUitslagComponent implements OnInit {
                     // punten toevoegen indien renner in uitslag voorkomt
                     const zitinuitslag = this.participant.predictions.find(item => item.rider.id === klassement.tourrider.id);
                     klassement.selected = !!this.participant.predictions.find(item => item.rider.id === klassement.tourrider.id);
+                    klassement.punten = zitinuitslag && zitinuitslag.isMeesterknecht ? Math.sqrt((klassement.punten * klassement.punten)) * -1 : Math.sqrt((klassement.punten * klassement.punten))
                     return klassement;
                 });
 

@@ -1,7 +1,7 @@
 <ion-item (click)="openRenner()" *ngIf="line.rider" [lines]="lineType">
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-padding-vertical">
-            <ion-col size="9">
+            <ion-col size="auto">
                 <div class="align-content-horizontal">
                     &nbsp;
                     <img style="height: 16px;"
@@ -43,6 +43,9 @@
         <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
             <app-icon-with-points image="/assets/etappes_donker.png"
                                   [points]="line.points.totalStagePoints"></app-icon-with-points>
+            <app-icon-with-points image="/assets/tour_shirts_all.png"
+                                  [points]="line.points.totalTourPoints +line.points.totalPointsPoints +line.points.totalMountainPoints +line.points.totalYouthPoints"></app-icon-with-points>
+
             <app-icon-with-points image="/assets/shirt_algemeen.png"
                                   [points]="line.points.totalTourPoints"></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_punten.png"

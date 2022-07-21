@@ -4,13 +4,14 @@ import {select, Store} from '@ngrx/store';
 import {getLastUpdated, getParticipanttable} from '../../store/participanttable/participanttable.reducer';
 import {takeUntil} from 'rxjs/operators';
 import * as dayjs from 'dayjs';
-import {Observable, Subject} from 'rxjs';
+import {combineLatest, Observable, Subject} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
 import {IonSelect} from '@ionic/angular';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
 import * as fromParticipanttable from '../../store/participanttable/participanttable.actions';
 import {UiServiceService} from '../../services/ui-service.service';
 import {Router} from '@angular/router';
+import {getParticipant} from '../../store/participant/participant.reducer';
 dayjs.extend(relativeTime);
 
 @Component({
@@ -45,8 +46,16 @@ export class StandPage implements OnInit, OnDestroy {
     ngOnInit() {
         this.store.dispatch(new fromParticipanttable.FetchParticipanttable(this.uiService.selectedTour.id));
 
-        this.store.pipe(select(getParticipanttable)).subscribe(participantTable => {
-            this.participantstable = participantTable;
+
+        combineLatest([this.store.pipe(select(getParticipanttable)), this.store.pipe(select(getParticipant))])
+            .subscribe(([participantTable, participant]) => {
+                if (participantTable)
+            this.participantstable = participant ? participantTable.map(p => {
+                return {
+                    ...p,
+                    eigenvoorspelling: p.id === participant.id
+                }
+            }): participantTable;
         });
 
         this.store.pipe(select(getLastUpdated))
