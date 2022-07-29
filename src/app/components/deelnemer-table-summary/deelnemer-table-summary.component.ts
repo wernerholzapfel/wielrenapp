@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {Router} from '@angular/router';
 import {UiServiceService} from '../../services/ui-service.service';
 import {IRider} from '../../models/rider.model';
+import {ITotaalStand} from '../../models/uitslagen.model';
 
 @Component({
     selector: 'app-deelnemer-table-summary',
@@ -9,16 +10,17 @@ import {IRider} from '../../models/rider.model';
     styleUrls: ['./deelnemer-table-summary.component.scss'],
 })
 export class DeelnemerTableSummaryComponent implements OnInit {
-    private _line: any;
+    private _line: ITotaalStand;
     private _mainValue: string;
 
+    totaaltruien: number;
     @Input()
     set line(value) {
         this._line = value;
-        this.punten = this.uiService.determineDeelnemerPunten(value, this._mainValue);
+        this.punten = value[this._mainValue];
     }
 
-    get line(): any {
+    get line(): ITotaalStand {
         return this._line;
     }
 
@@ -26,7 +28,7 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     set mainValue(value: string) {
         this._mainValue = value;
         if (this.line) {
-            this.punten = this.uiService.determineDeelnemerPunten(this._line, value);
+            this.punten = this._line[value];
         }
         this.imageUrl = this.uiService.determineImageUrl(value);
     }

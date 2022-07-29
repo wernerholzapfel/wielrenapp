@@ -2,6 +2,6 @@
     <img *ngIf="showImage" [src]="imageUrl" height="18px;" style="padding-right: 8px;">
     <ion-text class="hws-font-weight-600">{{punten}}</ion-text>
     <ion-text color="medium" *ngIf="showDelta" class="ion-padding-start">
-            {{deltaPunten > 0 ? '(+'+deltaPunten+')' : deltaPunten < 0 ? '(-'+deltaPunten+')' : 0}}
+            {{deltaPunten > 0 ? '(+'+deltaPunten+')' : deltaPunten < 0 ? '('+deltaPunten+')' : 0}}
     </ion-text>
 </ion-row>

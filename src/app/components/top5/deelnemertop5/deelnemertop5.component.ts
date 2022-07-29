@@ -5,32 +5,45 @@ import {IAppState} from '../../../store/store';
 import {select, Store} from '@ngrx/store';
 import {getLastUpdated} from '../../../store/participanttable/participanttable.reducer';
 import {getParticipant} from '../../../store/participant/participant.reducer';
+import {IEtappeStand, ITotaalStand} from '../../../models/uitslagen.model';
+import {UiServiceService} from '../../../services/ui-service.service';
+import {getTour} from '../../../store/tour/tour.reducer';
 
 @Component({
-  selector: 'app-deelnemertop5',
-  templateUrl: './deelnemertop5.component.html',
-  styleUrls: ['./deelnemertop5.component.scss']
+    selector: 'app-deelnemertop5',
+    templateUrl: './deelnemertop5.component.html',
+    styleUrls: ['./deelnemertop5.component.scss']
 })
 export class Deelnemertop5Component implements OnInit {
 
-  constructor(private store: Store<IAppState>) {
-  }
+    constructor(private store: Store<IAppState>, private uiService: UiServiceService) {
+    }
 
-  @Input() top: number;
-  @Input() stand$: Observable<IParticipanttable[]>;
-  @Input() isRegistrationOpen$: Observable<boolean>;
-  @Input() lastUpdated: string;
-  @Input() title: string;
-  @Input() participantPrediction: IParticipanttable;
+    private _participantPrediction: ITotaalStand | IEtappeStand;
 
-  participantId: string;
+    @Input() top: number;
+    @Input() puntenproperty: string;
+    @Input() stand$: Observable<ITotaalStand[] | IEtappeStand[]>;
+    @Input() isRegistrationOpen$: Observable<boolean>;
+    @Input() lastUpdated: string;
+    @Input() title: string;
 
-  ngOnInit() {
-    this.store.pipe(select(getParticipant)).subscribe(participant => {
-      if (participant) {
-        this.participantId = participant.id;
-      }
-    });
-  }
+    @Input()
+    set participantPrediction(value) {
+        this._participantPrediction = value;
+    }
+
+    get participantPrediction() {
+        return this._participantPrediction;
+    }
+    participantId: string;
+
+    ngOnInit() {
+        this.store.pipe(select(getParticipant)).subscribe(participant => {
+            if (participant) {
+                this.participantId = participant.id;
+            }
+        });
+    }
 
 }

@@ -2,6 +2,7 @@
   <app-deelnemertop5
                      [stand$]="stand$"
                      [lastUpdated]="lastUpdated"
+                     [puntenproperty]="tour.hasEnded ? 'totaalpunten' : 'etappepunten'"
                      [isRegistrationOpen$]="isRegistrationOpen$"
                      [participantPrediction]="latestParticipantTotalScore"
                      [top]="top"
@@ -11,6 +12,7 @@
   <div></div>
   <app-deelnemertop5
                      [stand$]="etappeStand$"
+                     [puntenproperty]="'punten'"
                      [lastUpdated]="lastUpdated"
                      [isRegistrationOpen$]="isRegistrationOpen$"
                      [participantPrediction]="latestEtappeParticipantScore"

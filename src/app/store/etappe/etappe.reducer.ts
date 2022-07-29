@@ -3,10 +3,11 @@ import * as etappe from './etappe.actions';
 import {IEtappe} from '../../models/etappe.model';
 import {ITeam} from '../../models/team.model';
 import {getparticipanttableState, ParticipanttableState} from '../participanttable/participanttable.reducer';
+import {IEtappeStand} from '../../models/uitslagen.model';
 
 export interface EtappeState {
   etappes: IEtappe[];
-  latestEtappe: any[];
+  latestEtappe: IEtappeStand[];
   inProgress: boolean;
   error: any;
 }
