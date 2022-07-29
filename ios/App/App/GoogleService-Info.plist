@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>121086252622-pi93nq0p0gki2h4ieve9392njt7k864b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.121086252622-pi93nq0p0gki2h4ieve9392njt7k864b</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCUnegzqmz73fdStOlhTvDcy8_vrkP_0rI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>121086252622</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wernerholzapfel.hetwielerspel</string>
+	<key>PROJECT_ID</key>
+	<string>wielerspel-aec4b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wielerspel-aec4b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:121086252622:ios:e972b3863b84ea34e7151f</string>
+	<key>DATABASE_URL</key>
+	<string>https://wielerspel-aec4b.firebaseio.com</string>
+</dict>
+</plist>
