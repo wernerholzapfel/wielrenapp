@@ -4,11 +4,13 @@ import * as etappe from './etappe.actions';
 import {EtappeService} from '../../services/etappe.service';
 import {catchError, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {UitslagenService} from '../../services/uitslagen.service';
 
 @Injectable()
 export class EtappeEffects {
   constructor(private actions$: Actions,
-              private etappeService: EtappeService) {
+              private etappeService: EtappeService,
+              private uitslagenService: UitslagenService) {
   }
 
   @Effect()
@@ -26,8 +28,8 @@ export class EtappeEffects {
   fetchLatestEtappe$ = this.actions$
     .pipe(ofType<etappe.FetchLatestEtappe>(etappe.FETCH_LATESTETAPPE),
       switchMap(action => {
-        return this.etappeService
-          .getLatestDrivenEtappe(action.payload)
+        return this.uitslagenService
+          .getLatestDrivenEtappeStand(action.payload)
           .pipe(switchMap(etappeResponse =>
               of(new etappe.FetchLatestEtappeSuccess(etappeResponse))),
             catchError(err => of(new etappe.FetchLatestEtappeFailure(err))));

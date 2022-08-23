@@ -1,6 +1,7 @@
 import {Action} from '@ngrx/store';
 import {HttpErrorResponse} from '@angular/common/http';
 import {IParticipanttable} from '../../models/participanttable.model';
+import {ITotaalStand} from '../../models/uitslagen.model';
 
 export const FETCH_PARTICIPANTTABLE = '[PARTICIPANTABLE] Fetch Participanttable';
 export const FETCH_PARTICIPANTTABLE_SUCCESS = '[PARTICIPANTABLE] Fetch Participanttable Success';
@@ -12,14 +13,14 @@ export const FETCH_LASTUPDATED_FAILURE = '[PARTICIPANTABLE] Fetch Lastupdated Fa
 export class FetchParticipanttable implements Action {
   readonly type = FETCH_PARTICIPANTTABLE;
 
-  constructor(public payload: String) {
+  constructor(public payload: string) {
   }
 }
 
 export class FetchParticipanttableSuccess implements Action {
   readonly type = FETCH_PARTICIPANTTABLE_SUCCESS;
 
-  constructor(public payload: IParticipanttable[]) {
+  constructor(public payload: ITotaalStand[]) {
   }
 }
 
@@ -33,7 +34,7 @@ export class FetchParticipanttableFailure implements Action {
 export class FetchLastUpdated implements Action {
   readonly type = FETCH_LASTUPDATED;
 
-  constructor(public payload: String) {
+  constructor(public payload: string) {
   }
 }
 

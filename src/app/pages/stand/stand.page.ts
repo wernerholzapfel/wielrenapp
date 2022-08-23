@@ -12,6 +12,7 @@ import * as fromParticipanttable from '../../store/participanttable/participantt
 import {UiServiceService} from '../../services/ui-service.service';
 import {Router} from '@angular/router';
 import {getParticipant} from '../../store/participant/participant.reducer';
+import {ITotaalStand} from '../../models/uitslagen.model';
 dayjs.extend(relativeTime);
 
 @Component({
@@ -27,10 +28,10 @@ export class StandPage implements OnInit, OnDestroy {
     @ViewChild('selectsort') selectsortRef: IonSelect;
 
     showDetail = false;
-    participantstable: IParticipanttable[];
+    participantstable: ITotaalStand[];
     lastUpdated$: Observable<any>;
     lastUpdated: string;
-    selectedSort = 'totalPoints';
+    selectedSort = 'totaalpunten';
     activeStand = 'Totaalstand';
     unsubscribe = new Subject<void>();
 
@@ -49,13 +50,14 @@ export class StandPage implements OnInit, OnDestroy {
 
         combineLatest([this.store.pipe(select(getParticipanttable)), this.store.pipe(select(getParticipant))])
             .subscribe(([participantTable, participant]) => {
-                if (participantTable)
-            this.participantstable = participant ? participantTable.map(p => {
-                return {
-                    ...p,
-                    eigenvoorspelling: p.id === participant.id
+                if (participantTable) {
+                    this.participantstable = participant ? participantTable.map(p => {
+                        return {
+                            ...p,
+                            eigenvoorspelling: p.id === participant.id
+                        };
+                    }) : participantTable;
                 }
-            }): participantTable;
         });
 
         this.store.pipe(select(getLastUpdated))

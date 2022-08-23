@@ -9,6 +9,7 @@ import {getParticipanttable} from '../../store/participanttable/participanttable
 import {IParticipanttable} from '../../models/participanttable.model';
 import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
 import {ModalController} from '@ionic/angular';
+import {ITotaalStand} from '../../models/uitslagen.model';
 
 @Component({
     selector: 'app-klassementen',
@@ -25,7 +26,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
     sortValue = new Subject<string>();
     mainValue: string;
     klassementsType = ALGEMEENKLASSEMENT;
-    participantstable: IParticipanttable[];
+    participantstable: ITotaalStand[];
     uitslag: any[];
     unsubscribe = new Subject<void>();
 
@@ -34,7 +35,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(pt => {
                 this.participantstable = pt;
-                this.sortValue.next('totalTourPoints')
+                this.sortValue.next('totalTourPoints');
             });
 
         this.sortValue.pipe(takeUntil(this.unsubscribe))

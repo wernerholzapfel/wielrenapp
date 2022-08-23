@@ -6,7 +6,7 @@ import {ITour} from '../../models/tour.model';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ParticipantService} from '../../services/participant.service';
-import {getParticipantPredictions} from '../../store/participanttable/participanttable.reducer';
+import {getParticipantTotaalStandRecord} from '../../store/participanttable/participanttable.reducer';
 import {IParticipanttable, Prediction} from '../../models/participanttable.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
 import {IonSelect, LoadingController} from '@ionic/angular';
@@ -53,11 +53,11 @@ export class TeamPage implements OnInit {
             this.tour = tour;
             return this.route.params.pipe(switchMap(routeParams => {
                 if (routeParams.id) {
-                    return this.store.select(getParticipantPredictions(routeParams.id));
+                    return this.store.select(getParticipantTotaalStandRecord(routeParams.id));
                 } else {
                     return this.participantService.getParticipant()
                         .pipe(switchMap(user => {
-                            return this.store.select(getParticipantPredictions(user.id));
+                            return this.store.select(getParticipantTotaalStandRecord(user.id));
                         }));
                 }
             }));
@@ -65,7 +65,7 @@ export class TeamPage implements OnInit {
             .subscribe(participanttable => {
                 if (participanttable) {
                     this.participantLine = participanttable;
-                    this.mijnTeam = participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction));
+                    this.mijnTeam = []; // participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction)); // todo table
                     this.sortRenners(this.selectedSort);
                     this.loadingDone = true;
                     loading.dismiss();
