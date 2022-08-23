@@ -49,7 +49,6 @@ export class EtappeUitslagComponent implements OnInit {
 
             this.uitslag = [...this.uitslag, ...waterdragerEnUitvallers];
         } else {
-            console.log(this.uitslag);
             this.uitslag
                 .filter(item => item.position !== 'Uit' && item.position !== 'WD')
                 .map(klassement => {

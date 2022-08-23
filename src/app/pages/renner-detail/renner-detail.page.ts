@@ -40,7 +40,6 @@ export class RennerDetailPage implements OnInit {
 
     ngOnInit() {
         this.rennerTableSummary = history.state;
-        console.log(this.router.getCurrentNavigation().extras.state);
         this.route.params.pipe(takeUntil(this.unsubscribe)).subscribe(routeParams => {
             if (routeParams.id) {
                 this.riderService.getTourriderDetails(routeParams.id)

@@ -61,7 +61,6 @@ export class StandPage implements OnInit, OnDestroy {
         this.store.pipe(select(getLastUpdated))
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(lastupdated => {
-                console.log(lastupdated);
                 if (lastupdated) {
                     this.lastUpdated = dayjs(lastupdated.lastUpdated).fromNow();
                 }

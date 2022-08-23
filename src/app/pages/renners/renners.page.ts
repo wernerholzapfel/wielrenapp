@@ -46,10 +46,8 @@ export class RennersPage implements OnInit, OnDestroy {
                 this.tour = tour;
                 if (new Date(this.tour.deadline) < new Date()) {
                     // todo refactor for example  subscribe until
-                    // todo move to store?
                     this.riderService.getDetailTourriders(tour.id)
                         .subscribe(response => {
-                            console.log(response);
                             this.riders = response.map(rider => this.mapToRennerTableSummary(rider));
                             this.sortRenners(this.selectedSort);
                         });
@@ -106,9 +104,6 @@ export class RennersPage implements OnInit, OnDestroy {
     //   }
     // }
 
-    search(event) {
-        console.log(event.detail.value);
-    }
 
     mapToRennerTableSummary(rider: ITourriders): IRennerTableSummary {
         return {

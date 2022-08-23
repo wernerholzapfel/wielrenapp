@@ -67,7 +67,6 @@ export class ChooseRiderPage implements OnInit {
     }
 
     segmentChanged(ev: string) {
-        console.log('Segment changed', ev);
         this.selectedSegment = ev;
     }
 

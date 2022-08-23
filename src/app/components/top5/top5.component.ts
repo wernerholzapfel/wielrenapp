@@ -39,7 +39,6 @@ export class Top5Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.stand$ = this.store.select(getTopX(this.top));
 
-    this.stand$.subscribe(stand => console.log(stand));
     // get waterdragertop
     this.store.pipe(select(getTour), switchMap(tour => {
       if (tour) {
@@ -89,8 +88,6 @@ export class Top5Component implements OnInit, OnDestroy {
       }), takeUntil(this.unsubscribe))
       .subscribe(predictions => {
         if (predictions) {
-          // console.log('participantPredictions');
-          // console.log(predictions);
           this.latestParticipantTotalScore = predictions;
         }
       });
@@ -104,8 +101,6 @@ export class Top5Component implements OnInit, OnDestroy {
       }), takeUntil(this.unsubscribe))
       .subscribe(predictions => {
         if (predictions) {
-          // console.log('etappe predictions');
-          // console.log(predictions);
           this.latestEtappeParticipantScore = predictions;
         }
       });

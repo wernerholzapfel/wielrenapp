@@ -72,14 +72,9 @@ export class TeamPage implements OnInit {
                 }
             });
 
-        // this.predictionService.getPredictionSummaryForUser(this.tour.id).subscribe(result => {
-        //     console.log(result);
-        // })
     }
 
     private mapToRennerTableSummary(line: Prediction): IRennerTableSummary {
-        console.log('mapToRennerTableSummary: ');
-        console.log(line);
         return {
             id: line.id,
             rider: {
@@ -113,7 +108,6 @@ export class TeamPage implements OnInit {
     }
 
     determineTotaalpunten(line: Prediction): number {
-        console.log('determineTotaalpunten: ' + line.id);
         if (this.tour.hasEnded) {
             return ((line.totalStagePoints ? line.totalStagePoints : 0) +
                 (line.youthPoints ? line.youthPoints : 0) +

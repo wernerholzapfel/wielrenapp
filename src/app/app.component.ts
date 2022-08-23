@@ -44,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.store.dispatch(new fromTour.FetchTourList());
         this.store.dispatch(new fromTour.FetchTour());
-        // this.store.dispatch(new fromTour.FetchTourById('ad756953-cb34-48bb-bbea-4dd52b993598')); // todo weghalen
 
         this.tour$ = this.store.pipe(select(getTour));
         this.tour$.pipe(takeUntil(this.unsubscribe)).subscribe(tour => {
