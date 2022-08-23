@@ -1,33 +1,33 @@
-<ion-item (click)="openRenner()" *ngIf="line.rider" [lines]="lineType">
+<ion-item (click)="openRenner()" *ngIf="line" [lines]="lineType">
     <ion-grid class="ion-no-padding">
         <ion-row class="ion-padding-vertical">
             <ion-col size="auto">
                 <div class="align-content-horizontal">
                     &nbsp;
                     <img style="height: 16px;"
-                         src="/assets/flag/{{line?.rider?.nationality}}.png">
+                         src="/assets/flag/{{line?.rider_nationality}}.png">
                     &nbsp;
                     <ion-icon
                             slot="start"
-                            [src]="line.rider.isRider ?
-                'assets/rider.svg' : line.rider.isLinkebal ?
-                'assets/joker.svg' : line.rider.isBeschermdeRenner ?
-                'assets/beschermde_renner.svg' : line.rider.isWaterdrager ?
-                'assets/waterdrager.svg' : line.rider.isMeesterknecht ?
+                            [src]="line.prediction_isRider ?
+                'assets/rider.svg' : line.prediction_isLinkebal ?
+                'assets/joker.svg' : line.prediction_isBeschermderenner ?
+                'assets/beschermde_renner.svg' : line.prediction_isWaterdrager ?
+                'assets/waterdrager.svg' : line.prediction_isMeesterknecht ?
                 'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
                     &nbsp;
-                    {{line?.rider?.initials}} {{line?.rider?.surNameShort}}
+                    {{line?.rider_initials}} {{line?.rider_surNameShort}}
                     <ion-text color="medium" size="small">
-                        &nbsp;({{line.rider.waarde}})
+                        &nbsp;({{line.tourrider_waarde}})
                     </ion-text>
-                    <ng-container *ngIf="line?.rider?.isYoungster">
+                    <ng-container *ngIf="line?.tourrider_isJongeren">
                         &nbsp;
                         <img src="/assets/shirt_jongeren.png" style="height: 24px;">
                     </ng-container>
-                    <ng-container *ngIf="line?.rider?.isOut">
+                    <ng-container *ngIf="line?.tourrider_isOut">
                         &nbsp;
                         <ion-icon name="bandage-outline"></ion-icon>
-                        <ion-text color="danger">etappe: {{line?.latestEtappe.etappeNumber}}</ion-text>
+                        <ion-text color="danger">etappe: {{line?.tourrider_latestEtappeNumber}}</ion-text>
                     </ng-container>
                 </div>
             </ion-col>
@@ -36,22 +36,22 @@
                         [showImage]="showImage"
                         [imageUrl]="imageUrl"
                         [punten]="punten"
-                        [deltaPunten]="line.points.deltaTotalStagePoints"
+                        [deltaPunten]="-99"
                         [showDelta]="showDelta"></app-punten-col>
             </ion-col>
         </ion-row>
         <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
             <app-icon-with-points image="/assets/etappes_donker.png"
-                                  [points]="line.points.totalStagePoints"></app-icon-with-points>
+                                  [points]="line.etappepunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/tour_shirts_all.png"
-                                  [points]="line.points.totalTourPoints +line.points.totalPointsPoints +line.points.totalMountainPoints +line.points.totalYouthPoints"></app-icon-with-points>
+                                  [points]="line.algemeenpunten + line.puntenpunten + line.bergpunten + line.jongerenpunten "></app-icon-with-points>
 
             <app-icon-with-points image="/assets/shirt_algemeen.png"
-                                  [points]="line.points.totalTourPoints"></app-icon-with-points>
+                                  [points]="line.algemeenpunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_punten.png"
-                                  [points]="line.points.totalPointsPoints"></app-icon-with-points>
+                                  [points]="line.puntenpunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_berg.png"
-                                  [points]="line.points.totalMountainPoints"></app-icon-with-points>
+                                  [points]="line.bergpunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_jongeren.png"
                                   [points]="line.points.totalYouthPoints"></app-icon-with-points>
         </ion-row>

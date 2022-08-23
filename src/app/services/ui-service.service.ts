@@ -39,23 +39,23 @@ export class UiServiceService {
         if (line) {
             switch (mainValue) {
                 case 'totalStagePoints':
-                    return line.totalStagePoints;
+                    return line.etappepunten;
                 case 'totalMountainPoints':
-                    return line.totalMountainPoints;
+                    return line.bergpunten;
                 case 'totalPointsPoints':
-                    return line.totalPointsPoints;
+                    return line.puntenpunten;
                 case 'totalTourPoints':
-                    return line.totalTourPoints;
+                    return line.algemeenpunten;
                 case 'totalYouthPoints':
-                    return line.totalYouthPoints;
+                    return line.jongerenpunten;
                 case 'deltaTotalStagePoints':
-                    return line.deltaTotalStagePoints;
+                    return -99;
                 case 'totalPoints':
-                    return line.totalPoints;
-                    case 'gekozen':
+                    return line.totaalpunten;
+                case 'gekozen':
                     return line.gekozen;
                 default:
-                    return line.totalPoints;
+                    return line.totaalpunten;
             }
         }
     }

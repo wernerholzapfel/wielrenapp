@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {LatestEtappe} from '../../models/participanttable.model';
 import {Router} from '@angular/router';
 import {UiServiceService} from '../../services/ui-service.service';
+import {ITeamScore} from '../../models/teamscore.model';
 
 export interface IRennerTableSummary {
     id: string;
@@ -42,7 +43,7 @@ export interface IRennerTableSummary {
 
 export class RennerTableSummaryComponent implements OnInit {
 
-    private _line: IRennerTableSummary;
+    private _line: ITeamScore;
     private _mainValue: string;
 
     @Input()
@@ -53,7 +54,7 @@ export class RennerTableSummaryComponent implements OnInit {
         }
     }
 
-    get line(): IRennerTableSummary {
+    get line(): ITeamScore {
         return this._line;
     }
 
@@ -70,7 +71,6 @@ export class RennerTableSummaryComponent implements OnInit {
         return this._mainValue;
     }
 
-    @Input() riderId: string;
     @Input() showDetail = true;
     @Input() lineType: 'inset';
     @Input() showImage = true;
@@ -87,16 +87,16 @@ export class RennerTableSummaryComponent implements OnInit {
     }
 
     openRenner() {
-        this.router.navigate(['/tabs/renner-detail', {id: this.riderId}], {state: this.line});
+        this.router.navigate(['/tabs/renner-detail', {id: this.line.tourrider_id}], {state: this.line});
     }
 
-    setValues(mainValue: string, line: IRennerTableSummary) {
+    setValues(mainValue: string, line: ITeamScore) {
         if (line) {
-            this.punten = this.uiService.determineDeelnemerPunten(this._line.points, mainValue);
+            this.punten = this.uiService.determineDeelnemerPunten(this._line, mainValue);
             if (mainValue === 'gekozen') {
-                this.punten = this.line.gekozen;
+                this.punten = -99; // todo
             } else {
-                this.deltaPunten = this.line?.points?.deltaTotalStagePoints;
+                this.deltaPunten = -99; // todo
             }
         }
     }
