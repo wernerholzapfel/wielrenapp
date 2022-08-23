@@ -14,10 +14,15 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     private _mainValue: string;
 
     totaaltruien: number;
+
     @Input()
     set line(value) {
+        console.log('lijntje');
+        console.log(value);
         this._line = value;
-        this.punten = value[this._mainValue];
+        if (value) {
+            this.punten = value[this._mainValue];
+        }
     }
 
     get line(): ITotaalStand {
@@ -54,6 +59,6 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     }
 
     itemClicked(line) {
-            this.itemClickedEvent.emit(line);
+        this.itemClickedEvent.emit(line);
     }
 }
