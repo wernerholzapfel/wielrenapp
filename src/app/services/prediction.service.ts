@@ -35,6 +35,10 @@ export class PredictionService {
         return this.http.get<ITeamScore[]>(`${environment.apiBaseUrl}/prediction-score/totaal/${tourId}/participant/${participantId}`);
     }
 
+    getStandForEtappe(etappeId: string): Observable<any[]> {
+        return this.http.get<ITeamScore[]>(`${environment.apiBaseUrl}/prediction-score/etappe/${etappeId}`);
+    }
+
     deletePrediction(predictionId: string): Observable<any> {
         return this.http.delete<any>(`${environment.apiBaseUrl}/predictions/` + predictionId);
     }

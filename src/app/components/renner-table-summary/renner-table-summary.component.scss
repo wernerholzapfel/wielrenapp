@@ -1,6 +1,7 @@
 :host {
   ion-item {
     --min-height: 32px;
+    --padding-start: 8px;
   }
   ion-col {
     font-size: 12px;
@@ -9,4 +10,5 @@
   ion-chip {
     font-size: 12px;
   }
+
 }

@@ -35,7 +35,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(pt => {
                 this.participantstable = pt;
-                this.sortValue.next('totalTourPoints');
+                this.sortValue.next('algemeenpunten');
             });
 
         this.sortValue.pipe(takeUntil(this.unsubscribe))
@@ -132,19 +132,19 @@ export class KlassementenPage implements OnInit, OnDestroy {
     setKlassement(event) {
         switch (event.detail.value) {
             case BERGKLASSEMENT:
-                this.sortValue.next('totalMountainPoints');
+                this.sortValue.next('bergpunten');
                 this.fetchMountainClassification();
                 break;
             case JONGERENKLASSEMENT:
-                this.sortValue.next('totalYouthPoints');
+                this.sortValue.next('jongerenpunten');
                 this.fetchYouthClassification();
                 break;
             case ALGEMEENKLASSEMENT:
-                this.sortValue.next('totalTourPoints');
+                this.sortValue.next('algemeenpunten');
                 this.fetchTourClassification();
                 break;
             case PUNTENKLASSEMENT:
-                this.sortValue.next('totalPointsPoints');
+                this.sortValue.next('puntenpunten');
 
                 this.fetchPointsClassification();
                 break;

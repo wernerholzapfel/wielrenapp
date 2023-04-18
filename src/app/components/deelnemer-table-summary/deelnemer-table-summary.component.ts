@@ -17,8 +17,6 @@ export class DeelnemerTableSummaryComponent implements OnInit {
 
     @Input()
     set line(value) {
-        console.log('lijntje');
-        console.log(value);
         this._line = value;
         if (value) {
             this.punten = value[this._mainValue];
@@ -54,8 +52,6 @@ export class DeelnemerTableSummaryComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.line && this.mainValue) {
-        }
     }
 
     itemClicked(line) {

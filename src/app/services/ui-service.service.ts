@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {ETAPPE, KLASSEMENT} from '../models/constants';
-import {ToastController} from '@ionic/angular';
-import {ITour} from '../models/tour.model';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ETAPPE, KLASSEMENT } from '../models/constants';
+import { ToastController } from '@ionic/angular';
+import { ITour } from '../models/tour.model';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +49,7 @@ export class UiServiceService {
                 case 'totalYouthPoints':
                     return line.jongerenpunten;
                 case 'deltaTotalStagePoints':
-                    return -99;
+                    return line.deltaEtappepunten;
                 case 'totalPoints':
                     return line.totaalpunten;
                 case 'gekozen':
@@ -63,14 +63,19 @@ export class UiServiceService {
     determineImageUrl(mainValue: string) {
         switch (mainValue) {
             case 'totalStagePoints':
+            case 'totaalpunten':
                 return '/assets/etappes_donker.png';
             case 'totalMountainPoints':
+            case 'bergpunten':
                 return '/assets/shirt_berg.png';
             case 'totalPointsPoints':
+            case 'puntenpunten':
                 return '/assets/shirt_punten.png';
             case 'totalTourPoints':
+            case 'algemeenpunten':
                 return '/assets/shirt_algemeen.png';
             case 'totalYouthPoints':
+            case 'jongerenpunten':
                 return '/assets/shirt_jongeren.png';
             case 'deltaTotalStagePoints':
                 return '/assets/rider_tour.png';

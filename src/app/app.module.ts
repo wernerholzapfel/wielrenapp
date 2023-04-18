@@ -16,6 +16,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {RiderService} from './services/rider.service';
 import {TourService} from './services/tour.service';
 import {PredictionService} from './services/prediction.service';
@@ -28,7 +29,6 @@ import {ClassificationsService} from './services/stageclassifications.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './interceptors/token.interceptor';
-import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {OrderModule} from 'ngx-order-pipe';
 
 @NgModule({

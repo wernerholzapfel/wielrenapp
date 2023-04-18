@@ -4,19 +4,18 @@
             <ion-col size="auto">
                 <div class="align-content-horizontal">
                     &nbsp;
-                    <img style="height: 16px;"
-                         src="/assets/flag/{{line?.rider_nationality}}.png">
+                    <img style="height: 16px;" src="/assets/flag/{{line?.rider_nationality}}.png">
                     &nbsp;
-                    <ion-icon
-                            slot="start"
-                            [src]="line.prediction_isRider ?
+                    <ion-icon slot="start" [src]="line.prediction_isRider ?
                 'assets/rider.svg' : line.prediction_isLinkebal ?
                 'assets/joker.svg' : line.prediction_isBeschermderenner ?
                 'assets/beschermde_renner.svg' : line.prediction_isWaterdrager ?
                 'assets/waterdrager.svg' : line.prediction_isMeesterknecht ?
                 'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
                     &nbsp;
-                    {{line?.rider_initials}} {{line?.rider_surNameShort}}
+                    <ion-text [color]="line?.tourrider_isOut ? 'medium' : 'dark'">
+                        {{line?.rider_initials}} {{line?.rider_surNameShort}}
+                    </ion-text>
                     <ion-text color="medium" size="small">
                         &nbsp;({{line.tourrider_waarde}})
                     </ion-text>
@@ -27,33 +26,54 @@
                     <ng-container *ngIf="line?.tourrider_isOut">
                         &nbsp;
                         <ion-icon name="bandage-outline"></ion-icon>
-                        <ion-text color="danger">etappe: {{line?.tourrider_latestEtappeNumber}}</ion-text>
+                        <ion-text color="danger">etappe {{line?.tourrider_latestEtappeNumber}}</ion-text>
                     </ng-container>
                 </div>
             </ion-col>
-            <ion-col class="ion-align-self-center ion-text-end">
-                <app-punten-col
-                        [showImage]="showImage"
-                        [imageUrl]="imageUrl"
-                        [punten]="punten"
-                        [deltaPunten]="-99"
-                        [showDelta]="showDelta"></app-punten-col>
+            <ion-col class="ion-align-self-center ion-text-end" *ngIf="segmentView !== 'gekozen'">
+                <app-punten-col [showImage]="showImage" [imageUrl]="imageUrl" [punten]="punten"
+                    [deltaPunten]="deltaPunten" [showDelta]="showDelta"></app-punten-col>
+            </ion-col>
+            <ion-col class="ion-align-self-center ion-text-end" *ngIf="segmentView === 'gekozen'">
+                <ion-row class="ion-justify-content-end ion-align-items-center">
+                    <ng-container *ngIf="mainValue === 'gekozenRenner'">
+                        <ion-icon src="assets/rider.svg"></ion-icon>
+                        <ion-badge color="light">{{line.gekozenRenner}}</ion-badge>
+                    </ng-container>
+
+                    <ng-container *ngIf="mainValue === 'gekozenBeschermderenner'">
+                        <ion-icon src="assets/beschermde_renner.svg"></ion-icon>
+                        <ion-badge color="light">{{line.gekozenBeschermderenner}}</ion-badge>
+                    </ng-container>
+
+                    <ng-container *ngIf="mainValue === 'gekozenMeesterknecht'">
+                        <ion-icon src="assets/meesterknecht.svg"></ion-icon>
+                        <ion-badge color="light">{{line.gekozenMeesterknecht}}</ion-badge>
+                    </ng-container>
+
+                    <ng-container *ngIf="mainValue === 'gekozenWaterdrager'">
+                        <ion-icon src="assets/waterdrager.svg"></ion-icon>
+                        <ion-badge color="light">{{line.gekozenWaterdrager}}</ion-badge>
+                    </ng-container>
+
+                    <ng-container *ngIf="mainValue === 'gekozenLinkebal'">
+                        <ion-icon src="assets/joker.svg"></ion-icon>
+                        <ion-badge color="light">{{line.gekozenLinkebal}}</ion-badge>
+                    </ng-container>
+                </ion-row>
             </ion-col>
         </ion-row>
         <ion-row class="ion-padding-bottom ion-wrap ion-justify-content-end" *ngIf="showDetail">
             <app-icon-with-points image="/assets/etappes_donker.png"
-                                  [points]="line.etappepunten"></app-icon-with-points>
+                [points]="line.etappepunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/tour_shirts_all.png"
-                                  [points]="line.algemeenpunten + line.puntenpunten + line.bergpunten + line.jongerenpunten "></app-icon-with-points>
-
+                [points]="line.algemeenpunten + line.puntenpunten + line.bergpunten + line.jongerenpunten "></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_algemeen.png"
-                                  [points]="line.algemeenpunten"></app-icon-with-points>
-            <app-icon-with-points image="/assets/shirt_punten.png"
-                                  [points]="line.puntenpunten"></app-icon-with-points>
-            <app-icon-with-points image="/assets/shirt_berg.png"
-                                  [points]="line.bergpunten"></app-icon-with-points>
+                [points]="line.algemeenpunten"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_punten.png" [points]="line.puntenpunten"></app-icon-with-points>
+            <app-icon-with-points image="/assets/shirt_berg.png" [points]="line.bergpunten"></app-icon-with-points>
             <app-icon-with-points image="/assets/shirt_jongeren.png"
-                                  [points]="line.points.totalYouthPoints"></app-icon-with-points>
+                [points]="line.jongerenpunten"></app-icon-with-points>
         </ion-row>
     </ion-grid>
 </ion-item>

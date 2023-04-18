@@ -10,6 +10,7 @@ export interface ITotaalStand {
     jongerenpunten: number;
     positie: number;
     deltapunten?: number;
+    eigenvoorspelling?: boolean;
     vorigePositie?: number;
 }
 

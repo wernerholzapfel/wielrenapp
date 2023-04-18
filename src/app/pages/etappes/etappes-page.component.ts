@@ -22,6 +22,7 @@ import {SwiperSlide} from 'swiper/svelte/swiper-svelte';
 import {SwiperComponent} from 'swiper/angular';
 import {Router} from '@angular/router';
 import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
+import { PredictionService } from 'src/app/services/prediction.service';
 
 SwiperCore.use([A11y]);
 
@@ -50,6 +51,7 @@ export class EtappesPage implements OnInit, OnDestroy {
     presentingElement = null;
 
     constructor(private store: Store<IAppState>,
+                private predictionService: PredictionService,
                 private classificationsService: ClassificationsService,
                 private tourService: TourService,
                 private modalCtrl: ModalController,
@@ -80,9 +82,13 @@ export class EtappesPage implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(([tour, etappes]) => {
                 if (etappes && etappes.length > 0) {
+                    console.log(etappes)
                     this.tourId = tour.id;
                     this.etappes = etappes;
-                    this.etappeIndex = etappes.filter(etappe => etappe.isDriven).length - 1;
+                    const latestDrivenEtappe =  etappes.filter(etappe => etappe.isDriven)
+                    const latestEtappe = latestDrivenEtappe ? latestDrivenEtappe[latestDrivenEtappe.length - 1] : this.etappes[0]
+                    this.etappeIndex = etappes.indexOf(latestEtappe)
+                    console.log(this.etappeIndex);
                     if (this.etappeIndex > 0) {
                         this.setEtappe(etappes[this.etappeIndex], this.etappeIndex);
                     }
@@ -97,6 +103,8 @@ export class EtappesPage implements OnInit, OnDestroy {
     }
 
     setEtappe(etappe: IEtappe, index: number) {
+        this.stand = [];
+        this.uitslag = [];
         this.activeEtappe = etappe;
         this.etappeIndex = index;
         this.classificationsService.getStageClassifications(etappe.id)
@@ -110,9 +118,10 @@ export class EtappesPage implements OnInit, OnDestroy {
                 });
             });
 
-        this.tourService.getEtappeStand(this.tourId, this.activeEtappe.id)
+        this.predictionService.getStandForEtappe(this.activeEtappe.id)
             .subscribe(response => {
-                this.stand = response;
+                console.log(response)
+                this.stand = response
             });
     }
 

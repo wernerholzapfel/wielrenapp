@@ -1,22 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IPartipantRidersFormModel} from '../../models/partipantRidersForm.model';
-import {Store} from '@ngrx/store';
-import {IAppState} from '../../store/store';
-import {PredictionService} from '../../services/prediction.service';
-import {ParticipantService} from '../../services/participant.service';
-import {Observable, of, Subject, Subscription, switchMap} from 'rxjs';
-import {ITeam} from '../../models/team.model';
-import {ITour} from '../../models/tour.model';
-import {getParticipantforms} from '../../store/participantform/participantform.reducer';
-import {getTour, getTourTeams, isRegistrationOpen} from '../../store/tour/tour.reducer';
-import {takeUntil} from 'rxjs/operators';
-import {IPrediction, ITourrider} from '../../models/participant.model';
-import {UiServiceService} from '../../services/ui-service.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IPartipantRidersFormModel } from '../../models/partipantRidersForm.model';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../store/store';
+import { PredictionService } from '../../services/prediction.service';
+import { ParticipantService } from '../../services/participant.service';
+import { Observable, of, Subject, Subscription, switchMap } from 'rxjs';
+import { ITeam } from '../../models/team.model';
+import { ITour } from '../../models/tour.model';
+import { getParticipantforms } from '../../store/participantform/participantform.reducer';
+import { getTour, getTourTeams, isRegistrationOpen } from '../../store/tour/tour.reducer';
+import { takeUntil } from 'rxjs/operators';
+import { IPrediction, ITourrider } from '../../models/participant.model';
+import { UiServiceService } from '../../services/ui-service.service';
 import * as fromTour from '../../store/tour/tour.actions';
 import * as fromParticipantForm from '../../store/participantform/participantform.actions';
-import {AddRiderToForm} from '../../store/participantform/participantform.actions';
-import {ModalController} from '@ionic/angular';
-import {ChooseRiderPage} from '../choose-rider/choose-rider.page';
+import { AddRiderToForm } from '../../store/participantform/participantform.actions';
+import { ModalController } from '@ionic/angular';
+import { ChooseRiderPage } from '../choose-rider/choose-rider.page';
 
 @Component({
     selector: 'app-subscribe',
@@ -47,21 +47,31 @@ export class SubscribePage implements OnInit, OnDestroy {
     isParticipantFormReady = false;
 
     constructor(private store: Store<IAppState>,
-                private predictionService: PredictionService,
-                private participantService: ParticipantService,
-                private modalController: ModalController,
-                private uiService: UiServiceService) {
+        private predictionService: PredictionService,
+        private participantService: ParticipantService,
+        private modalController: ModalController,
+        private uiService: UiServiceService) {
     }
 
     ngOnInit() {
-        this.store.dispatch(new fromParticipantForm.FetchParticipantform('ad756953-cb34-48bb-bbea-4dd52b993598'));
+        this.store.select(getTour)
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(tour => {
+                if (tour && tour.id) {
+                    this.store.dispatch(new fromParticipantForm.FetchParticipantform(tour.id));
+                }
+            })
+
 
         this.participantsForm$ = this.store.select(getParticipantforms).pipe(takeUntil(this.unsubscribe));
 
 
         this.participantsForm$.subscribe(response => {
             this.partipantRidersForm = {
-                riders: response.filter(p => p.isRider).sort((a, b) => b.rider.waarde - a.rider.waarde),
+                riders: response.filter(p => p.isRider).sort((a, b) => {
+                    return !b.rider.waarde ? -99 : b.rider.waarde && a.rider.waarde ? b.rider.waarde - a.rider.waarde :  b.rider.waarde
+                    // return b.index - a.index
+                }),
                 beschermdeRenner: response.find(p => p.isBeschermdeRenner),
                 waterdrager: response.find(p => p.isWaterdrager),
                 linkebal: response.find(p => p.isLinkebal),
@@ -100,8 +110,11 @@ export class SubscribePage implements OnInit, OnDestroy {
                         ...team,
                         tourRiders: [...team.tourRiders]
                             .filter(tr => !tr.isSelected)
-                            .sort((a, b) => b.waarde - a.waarde)
+                            // .sort((a, b) => a.rider.surName.localeCompare(b.rider.surName))
+                        .sort((a, b) => b.waarde - a.waarde)
                     };
+                }).sort((a,b) => {
+                    return a.teamName.localeCompare(b.teamName)
                 });
 
                 let ridersWaardeList = [];
@@ -109,14 +122,15 @@ export class SubscribePage implements OnInit, OnDestroy {
 
                 teams.map(team => {
                     ridersWaardeList = [...ridersWaardeList,
-                        ...team.tourRiders
-                            // .filter(r => !r.isSelected)
-                            .map(rider => {
-                                return {
-                                    ...rider,
-                                    team: {id: team.id}
-                                };
-                            })];
+                    ...team.tourRiders
+                        // .filter(r => !r.isSelected)
+                        .map(rider => {
+                            return {
+                                ...rider,
+                                team: { id: team.id }
+                            };
+                        })]
+                        .sort((a, b) => a.rider.surName.localeCompare(b.rider.surName));
                 });
 
                 const mapList = {};
@@ -127,7 +141,7 @@ export class SubscribePage implements OnInit, OnDestroy {
                 });
 
                 this.newWaardeList = Object.keys(mapList)
-                    .map(k => ({waarde: parseInt(k, 10), tourRiders: mapList[k]}));
+                    .map(k => ({ waarde: parseInt(k, 10), tourRiders: mapList[k] }));
 
                 this.newWaardeList = [...this.newWaardeList]
                     .sort((a, b) => b.waarde - a.waarde);
@@ -148,14 +162,41 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     setParticipantRidersComplete(partipantRidersForm: any[]) {
+        console.log(partipantRidersForm)
         this.isParticitantRidersComplete = partipantRidersForm &&
             this.calculatedWaardepunten <= this.maxParticipantRidersPunten &&
             partipantRidersForm &&
             partipantRidersForm.filter(r => r.id && r.isRider).length === this.maxParticipantRiders &&
-            !!partipantRidersForm.find(pr => pr.isMeesterknecht && pr.id) &&
-            !!partipantRidersForm.find(pr => pr.isLinkebal && pr.id) &&
-            !!partipantRidersForm.find(pr => pr.isWaterdrager && pr.id) &&
-            !!partipantRidersForm.find(pr => pr.isBeschermdeRenner && pr.id);
+            !!partipantRidersForm.find(pr => pr.isMeesterknecht && pr.rider.id) &&
+            !!partipantRidersForm.find(pr => pr.isLinkebal && pr.rider.id) &&
+            !!partipantRidersForm.find(pr => pr.isWaterdrager && pr.rider.id) &&
+            !!partipantRidersForm.find(pr => pr.isBeschermdeRenner && pr.rider.id);
+    }
+
+    getText(predictionType: string) {
+        switch (predictionType) {
+            case 'beschermderenner':
+                return `
+                <li>Evenveel waardepunten als meesterknecht</li>
+                <li>Behaalde punten komen erbij</li>
+                <li>Uitvallen = dubbele strafpunten (40)</li>
+                `
+            case 'meesterknecht':
+                return `<li>Evenveel waardepunten als beschermde renner</li>
+              <li>Behaalde punten worden <B>afgetrokken</B></li>
+              <li>Uitvallen = strafpunten ter hoogte van zijn waarde</li>`
+            case 'waterdrager':
+                return `<li>Krijgt gemiddelde punten van zijn ploeggenoten erbij</li>
+                <li>Zelf behaalde punten worden afgetrokken</li>
+                <li>Na de ronde bij elk eindklassement (4x dus) aftrek punten ter hoogte van zijn waarde</li>
+                <li>Uitvallen = geen punten van teamgenoten meer vanaf dat moment</li>`
+            case 'linkebal':
+                return `<li>Uit laagste waardegroep (waarde 10)</li>
+              <li>Krijgt <B>dubbele punten</B></li>
+              <li>Uitvallen = 20 strafpunten</li>`
+            default:
+            // code block
+        }
     }
 
     async openRidersPopup(index, predictionType) {
@@ -166,6 +207,7 @@ export class SubscribePage implements OnInit, OnDestroy {
             breakpoints: [0, 1],
             componentProps: {
                 teams: this.teams,
+                informationText: this.getText(predictionType),
                 ridersWaardeList: this.newWaardeList,
                 predictionType,
                 beschermdeRennerMeesterKnechtWaarde: this.beschermdeRennerMeesterKnechtWaarde
@@ -176,7 +218,7 @@ export class SubscribePage implements OnInit, OnDestroy {
         return await modal.onWillDismiss().then(data => {
             if (data.data) {
                 this.setCurrentRiderAsSelected(data.data.rider, data.data.team, true);
-                this.uiService.presentToast(`${data.data.rider.rider.surName} is toegevoegd aan je ploeg`);
+                this.uiService.presentToast(`${data.data.rider.rider.firstName} ${data.data.rider.rider.surNameShort} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
                     case 'rider':
                         this.addRenner(data.data.rider, index);
@@ -205,14 +247,14 @@ export class SubscribePage implements OnInit, OnDestroy {
     addRenner(rider: IPrediction, index: number) {
         this.submitForm({
             tour: this.tour,
-            prediction: {isRider: true, rider: {...rider}}
+            prediction: { isRider: true, rider: { ...rider } }
         }, index);
     }
 
     addBeschermdeRenner(rider: IPrediction, index: number) {
         this.submitForm({
             tour: this.tour,
-            prediction: {isBeschermdeRenner: true, rider: {...rider}}
+            prediction: { isBeschermdeRenner: true, rider: { ...rider } }
         }, index);
     }
 
@@ -220,14 +262,14 @@ export class SubscribePage implements OnInit, OnDestroy {
         // this.setCurrentRiderAsSelected(this.currentRider, this.currentTeam, true); // bij ophalen filteren ipv in store?
         this.submitForm({
             tour: this.tour,
-            prediction: {isMeesterknecht: true, rider: {...rider}}
+            prediction: { isMeesterknecht: true, rider: { ...rider } }
         }, index);
     }
 
     addLinkebal(rider: IPrediction, index: number) {
         this.submitForm({
             tour: this.tour,
-            prediction: {isLinkebal: true, rider: {...rider}}
+            prediction: { isLinkebal: true, rider: { ...rider } }
         }, index);
 
     }
@@ -235,7 +277,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     addWaterdrager(rider: IPrediction, index: number) {
         this.submitForm({
             tour: this.tour,
-            prediction: {isWaterdrager: true, rider: {...rider}}
+            prediction: { isWaterdrager: true, rider: { ...rider } }
         }, index);
     }
 
@@ -280,7 +322,7 @@ export class SubscribePage implements OnInit, OnDestroy {
     }
 
     setCurrentRiderAsSelected(ridertje: ITourrider, teampje: ITeam, selected: boolean) {
-        this.store.dispatch(new fromTour.SetCurrentRiderAsSelected({rider: ridertje, team: teampje, selected}));
+        this.store.dispatch(new fromTour.SetCurrentRiderAsSelected({ rider: ridertje, team: teampje, selected }));
     }
 
     ngOnDestroy() {

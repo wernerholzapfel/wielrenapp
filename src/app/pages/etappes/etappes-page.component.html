@@ -35,34 +35,12 @@
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
 <ion-content [fullscreen]="true">
-    <ng-container *ngIf="activeSegment === 'uitslag'">
-        <ion-list>
-            <ion-item *ngFor="let line of uitslag">
-                <ion-grid class="ion-no-padding">
-                    <ion-row class="ion-no-padding">
-                        <ion-col size="2" class="ion-align-self-center">
-                            {{line.position}}
-                        </ion-col>
-                        <ion-col class="ion-align-self-center">
-                            {{line.tourrider.rider.firstName}}
-                            {{line.tourrider.rider.surName}}
-                            <ion-text color="medium" size="small">({{line.tourrider.waarde}})</ion-text>
-
-                        </ion-col>
-                        <ion-col size="2" class="ion-align-self-center">
-                            <ion-chip color="primary">{{line.punten}}</ion-chip>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </ion-list>
-    </ng-container>
     <ng-container *ngIf="activeSegment === 'stand'">
         <ion-list>
             <ng-container *ngFor="let line of stand">
                 <app-deelnemer-table-summary (itemClickedEvent)="openDeelnemer($event)"
                         [showDelta]="false" [line]="line"
-                        mainValue="etappetotaal"></app-deelnemer-table-summary>
+                        mainValue="totalStagePoints"></app-deelnemer-table-summary>
             </ng-container>
         </ion-list>
     </ng-container>

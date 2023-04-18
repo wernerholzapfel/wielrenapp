@@ -2,6 +2,10 @@
     <ion-toolbar color="primary">
         <ion-title>{{title}}</ion-title>
     </ion-toolbar>
+    <ion-toolbar color="primary" *ngIf="informationText">
+        <ion-card-content class="ion-padding-vertical" [innerHTML]="informationText">
+        </ion-card-content>
+    </ion-toolbar>
     <ion-segment mode="md" (ionChange)="segmentChanged($event.detail.value)" value="waardelijst">
         <ion-segment-button value="waardelijst">
             <ion-label>Waarde</ion-label>
@@ -10,44 +14,46 @@
             <ion-label>Ploeg</ion-label>
         </ion-segment-button>
     </ion-segment>
-<!--    <ion-searchbar (ionChange)="search($event)" placeholder="Zoek renner" color="light"-->
-<!--                   debounce="500"></ion-searchbar>-->
+    <!--    <ion-searchbar (ionChange)="search($event)" placeholder="Zoek renner" color="light"-->
+    <!--                   debounce="500"></ion-searchbar>-->
 
 </ion-header>
 <ion-content>
-    <ion-list *ngIf="selectedSegment === 'teamlijst'">
-        <ion-list *ngFor="let team of teams">
+    <ng-container *ngIf="selectedSegment === 'teamlijst'">
+        <ng-container *ngFor="let team of teams">
             <ion-item color="tertiary">{{team.teamName}}</ion-item>
-            <ion-item *ngFor="let rider of team.tourRiders" (click)="rider.isSelected ? '' : selectRider(rider, team)">
-                <img slot="start" style="height: 16px;" src="/assets/flag/{{rider?.rider?.nationality}}.png">
-                {{rider?.rider.firstName}}
+            <ion-item *ngFor="let rider of team.tourRiders"
+            (click)="rider.isSelected ? '' : selectRider(rider, team)"
+            lines="full">
+                <img style="height: 16px;" src="/assets/flag/{{rider?.rider?.nationality}}.png">
+                &nbsp;{{rider?.rider.firstName}}
                 {{rider?.rider.surNameShort}}
-                ({{rider?.waarde}})
                 <ng-container *ngIf="rider?.isYoungster">
                     &nbsp;
                     <img src="/assets/shirt_jongeren.png" style="height: 24px;">
                 </ng-container>
+                <ion-chip slot="end" color="secondary"> {{rider?.waarde}}</ion-chip>
                 <ion-icon [name]="rider.isSelected ? 'checkmark-done-outline' : 'add'" slot="end"></ion-icon>
             </ion-item>
-        </ion-list>
-    </ion-list>
-    <ion-list *ngIf="selectedSegment === 'waardelijst'">
-        <ion-list *ngFor="let waarde of ridersWaardeList">
+</ng-container>
+</ng-container>
+    <ng-container *ngIf="selectedSegment === 'waardelijst'">
+        <ng-container *ngFor="let waarde of ridersWaardeList">
             <ion-item color="tertiary">{{waarde.waarde}}</ion-item>
-            <ion-item *ngFor="let rider of waarde.tourRiders"  (click)="rider.isSelected ? '' : selectRider(rider, rider.team)">
-                <img slot="start" style="height: 16px;" src="/assets/flag/{{rider?.rider?.nationality}}.png">
-                {{rider?.rider.firstName}}
+            <ion-item *ngFor="let rider of waarde.tourRiders" lines="full"
+                (click)="rider.isSelected ? '' : selectRider(rider, rider.team)">
+                <img style="height: 16px;" src="/assets/flag/{{rider?.rider?.nationality}}.png">
+                &nbsp;{{rider?.rider.firstName}}
                 {{rider?.rider.surNameShort}}
-                ({{rider?.waarde}})
+
                 <ng-container *ngIf="rider?.isYoungster">
                     &nbsp;
                     <img src="/assets/shirt_jongeren.png" style="height: 24px;">
                 </ng-container>
-
+                <ion-chip slot="end" color="secondary"> {{rider?.waarde}}</ion-chip>
                 <ion-icon [name]="rider.isSelected ? 'checkmark-done-outline' : 'add'" slot="end"></ion-icon>
 
             </ion-item>
-        </ion-list>
-    </ion-list>
-
+</ng-container>
+</ng-container>
 </ion-content>

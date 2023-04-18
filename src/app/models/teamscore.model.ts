@@ -28,9 +28,16 @@ export interface ITeamScore {
     rider_isActive: boolean;
     latestEtappeNumber: number;
     etappepunten: number;
+    deltaEtappepunten: number;
     algemeenpunten: number;
     puntenpunten: number;
     bergpunten: number;
     jongerenpunten: number;
     totaalpunten: number;
+    gekozenTotaal?: number
+    gekozenRenner?: number
+    gekozenLinkebal?: number
+    gekozenMeesterknecht?: number
+    gekozenWaterdrager?: number
+    gekozenBeschermderenner?: number
 }

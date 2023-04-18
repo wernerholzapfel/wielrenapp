@@ -45,6 +45,7 @@ export class RennerTableSummaryComponent implements OnInit {
 
     private _line: ITeamScore;
     private _mainValue: string;
+    private _segmentView: string;
 
     @Input()
     set line(value) {
@@ -70,6 +71,15 @@ export class RennerTableSummaryComponent implements OnInit {
     get mainValue(): any {
         return this._mainValue;
     }
+    
+    @Input()
+    set segmentView(value: string) {
+        this._segmentView = value;
+    }
+
+    get segmentView(): any {
+        return this._segmentView;
+    }
 
     @Input() showDetail = true;
     @Input() lineType: 'inset';
@@ -92,11 +102,11 @@ export class RennerTableSummaryComponent implements OnInit {
 
     setValues(mainValue: string, line: ITeamScore) {
         if (line) {
-            this.punten = this.uiService.determineDeelnemerPunten(this._line, mainValue);
+            this.punten = this.uiService.determineDeelnemerPunten(line, mainValue);
             if (mainValue === 'gekozen') {
-                this.punten = -99; // todo
+                this.punten = line.gekozenTotaal; // todo
             } else {
-                this.deltaPunten = -99; // todo
+                this.deltaPunten = line.deltaEtappepunten;
             }
         }
     }
