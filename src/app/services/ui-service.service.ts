@@ -62,9 +62,11 @@ export class UiServiceService {
 
     determineImageUrl(mainValue: string) {
         switch (mainValue) {
+            case 'etappepunten':
             case 'totalStagePoints':
-            case 'totaalpunten':
                 return '/assets/etappes_donker.png';
+            case 'totaalpunten':
+                return '/assets/rider_icon.png';
             case 'totalMountainPoints':
             case 'bergpunten':
                 return '/assets/shirt_berg.png';
@@ -78,9 +80,9 @@ export class UiServiceService {
             case 'jongerenpunten':
                 return '/assets/shirt_jongeren.png';
             case 'deltaTotalStagePoints':
-                return '/assets/rider_tour.png';
+                return '/assets/rider_icon.png';
             default:
-                return '/assets/rider_tour.png';
+                return '/assets/rider_icon.png';
 
         }
     }

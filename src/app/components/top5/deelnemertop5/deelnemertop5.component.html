@@ -5,12 +5,12 @@
   </ion-card-header>
   <ion-card-content>
     <ng-container *ngIf="!(isRegistrationOpen$ | async) && (stand$ | async)?.length > 1">
-      <div *ngFor="let stand of (stand$ | async); let i = index">
+      <div *ngFor="let stand of (stand$ | async); let i = index" (click)="openDeelnemer(stand)">
           <ion-text [color]="stand.id === participantId ? 'secondary' : ''">
         {{i+1}} {{stand.displayName}} met {{stand[puntenproperty]}} punten.
           </ion-text>
       </div>
-      <div *ngIf="participantPrediction?.positie > top">
+      <div *ngIf="participantPrediction?.positie > top" (click)="openDeelnemer(participantPrediction)">
           <ion-text color="secondary">
         {{participantPrediction.positie}} {{participantPrediction.displayName}} met {{participantPrediction[puntenproperty]}} punten.
           </ion-text>

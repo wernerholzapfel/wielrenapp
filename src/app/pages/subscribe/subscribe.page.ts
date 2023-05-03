@@ -218,7 +218,6 @@ export class SubscribePage implements OnInit, OnDestroy {
         return await modal.onWillDismiss().then(data => {
             if (data.data) {
                 this.setCurrentRiderAsSelected(data.data.rider, data.data.team, true);
-                this.uiService.presentToast(`${data.data.rider.rider.firstName} ${data.data.rider.rider.surNameShort} is toegevoegd aan je ploeg`);
                 switch (data.data.predictionType) {
                     case 'rider':
                         this.addRenner(data.data.rider, index);
@@ -307,13 +306,15 @@ export class SubscribePage implements OnInit, OnDestroy {
     submitForm(body?, formIndex?) {
         this.predictionService.submitPrediction(body)
             .subscribe(response => {
+                this.uiService.presentToast(`${body.prediction.rider.rider.firstName} ${body.prediction.rider.rider.surNameShort} is toegevoegd aan je ploeg`);
+
                 this.store.dispatch(new AddRiderToForm({
                     ...response,
                     index: formIndex
                 }));
             }, error => {
                 if (error.error.statusCode === 403) {
-                    this.uiService.presentToast(error.error.message);
+                    this.uiService.presentToast(error.error.message, 'danger', 0, true);
                 } else {
                     this.uiService.presentToast('Het opslaan is niet gelukt');
                 }

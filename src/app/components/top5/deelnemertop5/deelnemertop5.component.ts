@@ -8,6 +8,7 @@ import {getParticipant} from '../../../store/participant/participant.reducer';
 import {IEtappeStand, ITotaalStand} from '../../../models/uitslagen.model';
 import {UiServiceService} from '../../../services/ui-service.service';
 import {getTour} from '../../../store/tour/tour.reducer';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-deelnemertop5',
@@ -16,7 +17,7 @@ import {getTour} from '../../../store/tour/tour.reducer';
 })
 export class Deelnemertop5Component implements OnInit {
 
-    constructor(private store: Store<IAppState>, private uiService: UiServiceService) {
+    constructor(private store: Store<IAppState>, private uiService: UiServiceService, private router: Router) {
     }
 
     private _participantPrediction: ITotaalStand | IEtappeStand;
@@ -45,5 +46,7 @@ export class Deelnemertop5Component implements OnInit {
             }
         });
     }
-
+    openDeelnemer(line) {
+        this.router.navigate(['/tabs/team', {id: line.id}], {state: line});
+    }
 }

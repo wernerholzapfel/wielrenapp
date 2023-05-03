@@ -26,23 +26,24 @@ export class StandPage implements OnInit, OnDestroy {
     }
 
     @ViewChild('selectsort') selectsortRef: IonSelect;
-
-    showDetail = false;
-    participantstable: ITotaalStand[];
-    lastUpdated$: Observable<any>;
-    lastUpdated: string;
-    selectedSort = 'totaalpunten';
-    activeStand = 'Totaalstand';
-    unsubscribe = new Subject<void>();
-
     standOmschrijving = {
-        totalPoints: 'Totaalstand',
+        totalPoints: 'Stand',
         totalMountainPoints: 'Bergstand',
         totalPointsPoints: 'Puntenstand',
         totalYouthPoints: 'Jongerenstand',
         totalStagePoints: 'Etappestand',
         deltaTotalStagePoints: 'Delta'
     };
+    
+    showDetail = false;
+    participantstable: ITotaalStand[];
+    lastUpdated$: Observable<any>;
+    lastUpdated: string;
+    selectedSort = 'totaalpunten';
+    activeStand = this.standOmschrijving.totalPoints;
+    unsubscribe = new Subject<void>();
+
+   
 
     ngOnInit() {
         this.store.dispatch(new fromParticipanttable.FetchParticipanttable(this.uiService.selectedTour.id));
