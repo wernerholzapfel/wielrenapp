@@ -109,8 +109,6 @@ export class SubscribePage implements OnInit, OnDestroy {
                     return {
                         ...team,
                         tourRiders: [...team.tourRiders]
-                            .filter(tr => !tr.isSelected)
-                            // .sort((a, b) => a.rider.surName.localeCompare(b.rider.surName))
                         .sort((a, b) => b.waarde - a.waarde)
                     };
                 }).sort((a,b) => {
