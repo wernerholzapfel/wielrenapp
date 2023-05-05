@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, Effect, createEffect, ofType} from '@ngrx/effects';
 import * as etappe from './etappe.actions';
 import {EtappeService} from '../../services/etappe.service';
 import {catchError, switchMap} from 'rxjs/operators';
@@ -13,7 +13,7 @@ export class EtappeEffects {
               private uitslagenService: UitslagenService) {
   }
 
-  @Effect()
+  @createEffect()
   fetchEtappeList$ = this.actions$
     .pipe(ofType<etappe.FetchEtappeList>(etappe.FETCH_ETAPPELIST),
       switchMap(action => {
