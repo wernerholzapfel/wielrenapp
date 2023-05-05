@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ParticipantService} from '../../services/participant.service';
 import {IAppState} from '../../store/store';
 import * as fromParticipantForm from '../../store/participantform/participantform.actions';
@@ -34,19 +34,19 @@ export class LoginComponent implements OnInit, OnDestroy {
                 private store: Store<IAppState>) {
     }
 
-    userForm = new FormGroup({
-        emailFormControl: new FormControl('', [
+    userForm = new UntypedFormGroup({
+        emailFormControl: new UntypedFormControl('', [
             Validators.required,
             Validators.email,
         ]),
-        displayName: new FormControl('', [
+        displayName: new UntypedFormControl('', [
             Validators.required,
         ]),
-        teamName: new FormControl('', [
+        teamName: new UntypedFormControl('', [
             Validators.required,
             Validators.maxLength(25)
         ]),
-        passwordFormControl: new FormControl('', [
+        passwordFormControl: new UntypedFormControl('', [
             Validators.required,
             Validators.minLength(8),
         ])
