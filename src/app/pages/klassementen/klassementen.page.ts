@@ -1,10 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IAppState} from '../../store/store';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {ClassificationsService} from '../../services/stageclassifications.service';
 import {getTour} from '../../store/tour/tour.reducer';
 import {of, Subject, switchMap, takeUntil} from 'rxjs';
 import {ALGEMEENKLASSEMENT, BERGKLASSEMENT, JONGERENKLASSEMENT, PUNTENKLASSEMENT} from '../../models/constants';
+import {getParticipanttable} from '../../store/participanttable/participanttable.reducer';
+import {IParticipanttable} from '../../models/participanttable.model';
+import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
+import {ModalController} from '@ionic/angular';
+import {ITotaalStand} from '../../models/uitslagen.model';
 
 @Component({
     selector: 'app-klassementen',
@@ -14,13 +19,30 @@ import {ALGEMEENKLASSEMENT, BERGKLASSEMENT, JONGERENKLASSEMENT, PUNTENKLASSEMENT
 export class KlassementenPage implements OnInit, OnDestroy {
 
     constructor(private stageClassificationsService: ClassificationsService,
+                private modalCtrl: ModalController,
                 private store: Store<IAppState>) {
     }
+
+    sortValue = new Subject<string>();
+    mainValue: string;
     klassementsType = ALGEMEENKLASSEMENT;
+    participantstable: ITotaalStand[];
     uitslag: any[];
     unsubscribe = new Subject<void>();
 
     ngOnInit() {
+        this.store.pipe(select(getParticipanttable))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(pt => {
+                this.participantstable = pt;
+                this.sortValue.next('algemeenpunten');
+            });
+
+        this.sortValue.pipe(takeUntil(this.unsubscribe))
+            .subscribe(sortValue => {
+                this.mainValue = sortValue;
+                this.sorteerOpPunten(sortValue);
+            });
         this.fetchTourClassification();
     }
 
@@ -82,6 +104,12 @@ export class KlassementenPage implements OnInit, OnDestroy {
         });
     }
 
+    private sorteerOpPunten(sortValue) {
+        this.participantstable = this.participantstable.slice().sort((a, b) => {
+            return b[sortValue] - a[sortValue];
+        });
+    }
+
     private fetchPointsClassification() {
         this.store.select(getTour).pipe(switchMap(tour => {
             if (tour && tour.id) {
@@ -96,7 +124,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
                         ...rider,
                         punten: POINTSFACTOR * eval('PUNTEN_POSITIE' + rider.position)
                     };
-                });;
+                });
             }
         });
     }
@@ -104,23 +132,44 @@ export class KlassementenPage implements OnInit, OnDestroy {
     setKlassement(event) {
         switch (event.detail.value) {
             case BERGKLASSEMENT:
+                this.sortValue.next('bergpunten');
                 this.fetchMountainClassification();
                 break;
             case JONGERENKLASSEMENT:
+                this.sortValue.next('jongerenpunten');
                 this.fetchYouthClassification();
                 break;
             case ALGEMEENKLASSEMENT:
+                this.sortValue.next('algemeenpunten');
                 this.fetchTourClassification();
                 break;
             case PUNTENKLASSEMENT:
-                this.fetchPointsClassification();
+                this.sortValue.next('puntenpunten');
 
+                this.fetchPointsClassification();
                 break;
             default:
                 console.log('default');
         }
     }
 
+    async openDeelnemer(line) {
+        const modal = await this.modalCtrl.create({
+            component: EtappeUitslagComponent,
+            componentProps: {
+                uitslag: this.uitslag,
+                participant: line,
+                mainValue: this.mainValue
+            },
+            swipeToClose: true,
+            // initialBreakpoint: 0.9,
+            // breakpoints: [0]
+        });
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+
+    }
     ngOnDestroy() {
         this.unsubscribe.next();
         this.unsubscribe.complete();

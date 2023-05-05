@@ -25,7 +25,7 @@
                     <ion-input required type="password" name="password" [(ngModel)]="user.password"></ion-input>
                 </ion-item>
                 <div class="button-container">
-                    <ion-button [disabled]="!loginForm.valid" color="primary" expand="full" type="submit">
+                    <ion-button (click)="signInWithEmail" color="primary" expand="full" type="submit">
                         Inloggen
                     </ion-button>
                 </div>

@@ -13,7 +13,7 @@ import * as fromParticipanttable from './store/participanttable/participanttable
 import {Router} from '@angular/router';
 import {
     ActionPerformed,
-    PushNotifications,
+    PushNotifications, PushNotificationSchema,
     Token,
 } from '@capacitor/push-notifications';
 import * as dayjs from 'dayjs';
@@ -44,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.store.dispatch(new fromTour.FetchTourList());
         this.store.dispatch(new fromTour.FetchTour());
-        // this.store.dispatch(new fromTour.FetchTourById('ad756953-cb34-48bb-bbea-4dd52b993598')); // todo weghalen
 
         this.tour$ = this.store.pipe(select(getTour));
         this.tour$.pipe(takeUntil(this.unsubscribe)).subscribe(tour => {
@@ -96,29 +95,30 @@ export class AppComponent implements OnInit, OnDestroy {
         // On success, we should be able to receive notifications
         PushNotifications.addListener('registration',
             (token: Token) => {
+            console.log(token);
                 // todo send token to backend
-                // alert('Push registration success, token: ' + token.value);
+            // alert('Push registration success, token: ' + token.value);
             }
         );
 
         // Some issue with our setup and push will not work
-        // PushNotifications.addListener('registrationError',
-        //     (error: any) => {
-        // alert('Error on registration: ' + JSON.stringify(error));
-        // }
-        // );
+        PushNotifications.addListener('registrationError',
+            (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+        });
 
         // Show us the notification payload if the app is open on our device
-        // PushNotifications.addListener('pushNotificationReceived',
-        //     (notification: PushNotification) => {
-        // alert('Push received: ' + JSON.stringify(notification));
-        // }
-        // );
+        PushNotifications.addListener(
+            'pushNotificationReceived',
+            (notification: PushNotificationSchema) => {
+                // alert('Push received: ' + JSON.stringify(notification));
+            },
+        );
 
         // Method called when tapping on a notification
         PushNotifications.addListener('pushNotificationActionPerformed',
             (notification: ActionPerformed) => {
-                this.router.navigate(['tabs/stand']);
+                // this.router.navigate(['tabs/stand']);
             }
         );
 

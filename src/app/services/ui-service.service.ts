@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {ETAPPE, KLASSEMENT} from '../models/constants';
-import {ToastController} from '@ionic/angular';
-import {ITour} from '../models/tour.model';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ETAPPE, KLASSEMENT } from '../models/constants';
+import { ToastController } from '@ionic/angular';
+import { ITour } from '../models/tour.model';
 
 @Injectable({
     providedIn: 'root'
@@ -39,43 +39,50 @@ export class UiServiceService {
         if (line) {
             switch (mainValue) {
                 case 'totalStagePoints':
-                    return line.totalStagePoints;
+                    return line.etappepunten;
                 case 'totalMountainPoints':
-                    return line.totalMountainPoints;
+                    return line.bergpunten;
                 case 'totalPointsPoints':
-                    return line.totalPointsPoints;
+                    return line.puntenpunten;
                 case 'totalTourPoints':
-                    return line.totalTourPoints;
+                    return line.algemeenpunten;
                 case 'totalYouthPoints':
-                    return line.totalYouthPoints;
+                    return line.jongerenpunten;
                 case 'deltaTotalStagePoints':
-                    return line.deltaTotalStagePoints;
+                    return line.deltaEtappepunten;
                 case 'totalPoints':
-                    return line.totalPoints;
-                    case 'gekozen':
+                    return line.totaalpunten;
+                case 'gekozen':
                     return line.gekozen;
                 default:
-                    return line.totalPoints;
+                    return line.totaalpunten;
             }
         }
     }
 
     determineImageUrl(mainValue: string) {
         switch (mainValue) {
+            case 'etappepunten':
             case 'totalStagePoints':
                 return '/assets/etappes_donker.png';
+            case 'totaalpunten':
+                return '/assets/rider_icon.png';
             case 'totalMountainPoints':
+            case 'bergpunten':
                 return '/assets/shirt_berg.png';
             case 'totalPointsPoints':
+            case 'puntenpunten':
                 return '/assets/shirt_punten.png';
             case 'totalTourPoints':
+            case 'algemeenpunten':
                 return '/assets/shirt_algemeen.png';
             case 'totalYouthPoints':
+            case 'jongerenpunten':
                 return '/assets/shirt_jongeren.png';
             case 'deltaTotalStagePoints':
-                return '/assets/rider_tour.png';
+                return '/assets/rider_icon.png';
             default:
-                return '/assets/rider_tour.png';
+                return '/assets/rider_icon.png';
 
         }
     }

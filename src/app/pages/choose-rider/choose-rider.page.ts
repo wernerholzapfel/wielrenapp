@@ -20,6 +20,7 @@ import {UiServiceService} from '../../services/ui-service.service';
 })
 export class ChooseRiderPage implements OnInit {
 
+    @Input() informationText: string;
     @Input() ridersWaardeList: any[];
     @Input() teams: ITeam[];
     @Input() predictionType: string;
@@ -67,7 +68,6 @@ export class ChooseRiderPage implements OnInit {
     }
 
     segmentChanged(ev: string) {
-        console.log('Segment changed', ev);
         this.selectedSegment = ev;
     }
 

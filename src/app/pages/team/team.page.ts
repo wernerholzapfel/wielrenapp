@@ -6,13 +6,14 @@ import {ITour} from '../../models/tour.model';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ParticipantService} from '../../services/participant.service';
-import {getParticipantPredictions} from '../../store/participanttable/participanttable.reducer';
+import {getParticipantTotaalStandRecord} from '../../store/participanttable/participanttable.reducer';
 import {IParticipanttable, Prediction} from '../../models/participanttable.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
 import {IonSelect, LoadingController} from '@ionic/angular';
 import {IParticipant} from '../../models/participant.model';
 import {UiServiceService} from '../../services/ui-service.service';
 import {PredictionService} from '../../services/prediction.service';
+import {ITeamScore} from '../../models/teamscore.model';
 
 @Component({
     selector: 'app-team',
@@ -36,7 +37,7 @@ export class TeamPage implements OnInit {
     participantLine: any; // todo
     totalPoints: number;
     position: number;
-    mijnTeam: IRennerTableSummary[];
+    mijnTeam: ITeamScore[];
     tour: ITour;
     selectedSort = 'totalPoints';
     showDetail: boolean;
@@ -53,67 +54,53 @@ export class TeamPage implements OnInit {
             this.tour = tour;
             return this.route.params.pipe(switchMap(routeParams => {
                 if (routeParams.id) {
-                    return this.store.select(getParticipantPredictions(routeParams.id));
+                    return this.predictionService.getTeamWithScoreForUser(tour.id, routeParams.id);
                 } else {
                     return this.participantService.getParticipant()
                         .pipe(switchMap(user => {
-                            return this.store.select(getParticipantPredictions(user.id));
+                            return this.predictionService.getTeamWithScoreForUser(tour.id, user.id);
                         }));
                 }
             }));
         }))
-            .subscribe(participanttable => {
-                if (participanttable) {
-                    this.participantLine = participanttable;
-                    this.mijnTeam = participanttable.predictions.map(prediction => this.mapToRennerTableSummary(prediction));
+            .subscribe(teamscore => {
+                if (teamscore) {
+                    this.mijnTeam = teamscore.map(line => {
+                        return {
+                            ...line,
+                            tourrider_isJongeren: (new Date(this.uiService.tourStartDate).getFullYear() -
+                                new Date(line.rider_dateOfBirth).getFullYear()) < 26
+                        };
+                    });
                     this.sortRenners(this.selectedSort);
                     this.loadingDone = true;
                     loading.dismiss();
                 }
             });
 
-        // this.predictionService.getPredictionSummaryForUser(this.tour.id).subscribe(result => {
-        //     console.log(result);
-        // })
-    }
-
-    private mapToRennerTableSummary(line: Prediction): IRennerTableSummary {
-        console.log('mapToRennerTableSummary: ');
-        console.log(line);
-        return {
-            id: line.id,
-            rider: {
-                id: line.rider.id,
-                firstName: line.rider.rider.firstName,
-                surName: line.rider.rider.surName,
-                surNameShort: line.rider.rider.surNameShort,
-                initials: line.rider.rider.initials,
-                isOut: line.rider.isOut,
-                nationality: line.rider.rider.nationality,
-                isBeschermdeRenner: line.isBeschermdeRenner,
-                isLinkebal: line.isLinkebal,
-                isMeesterknecht: line.isMeesterknecht,
-                isRider: line.isRider,
-                isWaterdrager: line.isWaterdrager,
-                waarde: line.rider.waarde,
-                isYoungster: (new Date(this.uiService.tourStartDate).getFullYear() -
-                    new Date(line.rider.rider.dateOfBirth).getFullYear()) < 26,
-            },
-            latestEtappe: line.rider.latestEtappe,
-            points: {
-                totalPoints: this.determineTotaalpunten(line),
-                totalTourPoints: line.tourPoints ? line.tourPoints : 0,
-                totalMountainPoints: line.mountainPoints ? line.mountainPoints : 0,
-                totalPointsPoints: line.pointsPoints ? line.pointsPoints : 0,
-                totalYouthPoints: line.youthPoints ? line.youthPoints : 0,
-                totalStagePoints: line.totalStagePoints ? line.totalStagePoints : 0,
-                deltaTotalStagePoints: line.deltaStagePoints,
-            },
-        };
+        this.store.select(getTour).pipe(switchMap(tour => {
+            this.tour = tour;
+            return this.route.params.pipe(switchMap(routeParams => {
+                if (routeParams.id) {
+                    return this.predictionService.getTotaalStandForParticipant(tour.id, routeParams.id);
+                } else {
+                    return this.participantService.getParticipant()
+                        .pipe(switchMap(user => {
+                            return this.predictionService.getTotaalStandForParticipant(tour.id, user.id);
+                        }));
+                }
+            }));
+        }))
+            .subscribe(participantLine => {
+                if (participantLine) {
+                    this.participantLine = participantLine;
+                    this.loadingDone = true;
+                    loading.dismiss();
+                }
+            });
     }
 
     determineTotaalpunten(line: Prediction): number {
-        console.log('determineTotaalpunten: ' + line.id);
         if (this.tour.hasEnded) {
             return ((line.totalStagePoints ? line.totalStagePoints : 0) +
                 (line.youthPoints ? line.youthPoints : 0) +
@@ -135,23 +122,26 @@ export class TeamPage implements OnInit {
         this.mijnTeam = this.mijnTeam.slice().sort((a, b) => {
             switch (sort) {
                 case 'totalPoints':
-                    return b.points.totalPoints - a.points.totalPoints;
+                    return b.totaalpunten - a.totaalpunten;
                 case 'totalTourPoints':
-                    return b.points.totalTourPoints - a.points.totalTourPoints;
+                    return b.algemeenpunten - a.algemeenpunten;
                 case 'waarde':
-                    return b.rider.waarde - a.rider.waarde;
+                    return b.tourrider_waarde - a.tourrider_waarde;
                 case 'totalMountainPoints':
-                    return b.points.totalMountainPoints - a.points.totalMountainPoints;
+                    return b.bergpunten - a.bergpunten;
                 case 'totalPointsPoints':
-                    return b.points.totalPointsPoints - a.points.totalPointsPoints;
+                    return b.puntenpunten - a.puntenpunten;
                 case 'totalYouthPoints':
-                    return b.points.totalYouthPoints - a.points.totalYouthPoints;
+                    return b.jongerenpunten - a.jongerenpunten;
                 case 'totalStagePoints':
-                    return b.points.totalStagePoints - a.points.totalStagePoints;
+                    return b.etappepunten - a.etappepunten;
                 case 'deltaTotalStagePoints':
-                    return b.points.deltaTotalStagePoints - a.points.deltaTotalStagePoints;
+                    return; // todo toevoegen in backend
             }
         });
     }
 
+    openDeelnemer(line) {
+        this.router.navigate(['/tabs/team', {id: line.id}], {state: line});
+    }
 }

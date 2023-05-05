@@ -4,7 +4,7 @@
         <img src="/assets/header_white3.png" height="36px;">
         </ion-title>
     </ion-toolbar>
-    <app-renner-table-summary [riderId]="rennerTableSummary.id" [line]="rennerTableSummary" [showDetail]="true"
+    <app-renner-table-summary [line]="rennerTableSummary" [showDetail]="true"
                               lineType="none"
                               [mainValue]="'totalPoints'"></app-renner-table-summary>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
@@ -40,25 +40,21 @@
             Gekozen als {{headerDisplayname}} door:
         </ion-item-divider>
         <ion-item *ngIf="chosenRiderStats?.length === 0">Niemand heeft deze renner gekozen</ion-item>
-        <ng-container *ngFor="let prediction of activePredictions">
-            <ion-item lines="full" (click)="openDeelnemer(prediction?.participant)">
-                 <ion-icon
-                        slot="start"
-                        [src]="prediction.isRider ?
-                'assets/rider.svg' : prediction.isLinkebal ?
-                'assets/joker.svg' : prediction.isBeschermdeRenner ?
-                'assets/beschermde_renner.svg' : prediction.isWaterdrager ?
-                'assets/waterdrager.svg' : prediction.isMeesterknecht ?
-                'assets/meesterknecht.svg' : 'assets/rider.svg'"></ion-icon>
-                {{prediction.participant?.displayName}}
-            </ion-item>
+        <ng-container *ngFor="let line of activePredictions">
+            <app-deelnemer-table-summary
+                    (itemClickedEvent)="openDeelnemer($event)"
+                    [showDetail]="false"
+                    [line]="line"
+                    [mainValue]="'totaalpunten'"
+            [showImage]="true">
+            </app-deelnemer-table-summary>
         </ng-container>
     </ng-container>
     <ng-container *ngIf="activeSegment === 'etappes'">
         <ion-item *ngFor="let etappe of stageclassifications" lines="full">
             <ion-chip color="primary" slot="start">{{etappe.position}}<sup>e</sup></ion-chip>
             {{etappe.etappe.etappeName}}
-            <ion-chip color="secondary" slot="end">{{etappe.stagePoints}}pt</ion-chip>
+            <ion-chip color="secondary" slot="end">{{etappe.stagePoints}} pt</ion-chip>
         </ion-item>
     </ng-container>
 </ion-content>

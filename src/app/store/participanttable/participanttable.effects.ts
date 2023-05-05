@@ -6,10 +6,11 @@ import {of} from 'rxjs';
 import {IParticipanttable} from '../../models/participanttable.model';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
 import {ParticipantService} from '../../services/participant.service';
+import {UitslagenService} from '../../services/uitslagen.service';
 
 @Injectable()
 export class ParticipanttableEffects {
-  constructor(private actions$: Actions, private db: AngularFireDatabase, private participantService: ParticipantService) {
+  constructor(private actions$: Actions, private db: AngularFireDatabase, private uitslagenService: UitslagenService) {
   }
 
   @Effect()
@@ -17,7 +18,7 @@ export class ParticipanttableEffects {
     .pipe(
       ofType<participanttable.FetchParticipanttable>(participanttable.FETCH_PARTICIPANTTABLE),
       switchMap(action => {
-      return this.participantService.getStand(action.payload)
+      return this.uitslagenService.getTotaalStand(action.payload)
         .pipe(
           switchMap(participanttableResponse =>
             of(new participanttable.FetchParticipanttableSuccess(participanttableResponse))),

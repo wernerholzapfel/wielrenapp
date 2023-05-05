@@ -1,15 +1,16 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Subject} from 'rxjs';
-import {ITourriders} from '../../models/tourriders.model';
-import {IRider} from '../../models/rider.model';
-import {IAppState} from '../../store/store';
-import {RiderService} from '../../services/rider.service';
-import {select, Store} from '@ngrx/store';
-import {takeUntil} from 'rxjs/operators';
-import {IonSelect} from '@ionic/angular';
-import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
-import {getTour} from '../../store/tour/tour.reducer';
-import {ITour} from '../../models/tour.model';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { ITourriders } from '../../models/tourriders.model';
+import { IRider } from '../../models/rider.model';
+import { IAppState } from '../../store/store';
+import { RiderService } from '../../services/rider.service';
+import { select, Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs/operators';
+import { IonSelect } from '@ionic/angular';
+import { IRennerTableSummary } from '../../components/renner-table-summary/renner-table-summary.component';
+import { getTour } from '../../store/tour/tour.reducer';
+import { ITour } from '../../models/tour.model';
+import { ITeamScore } from 'src/app/models/teamscore.model';
 
 @Component({
     selector: 'app-renners',
@@ -19,15 +20,17 @@ import {ITour} from '../../models/tour.model';
 export class RennersPage implements OnInit, OnDestroy {
 
     @ViewChild('selectsort') selectsortRef: IonSelect;
+    @ViewChild('gekozensort') openGekozenSortRef: IonSelect;
 
     @Output() addPositionEvent: EventEmitter<IRider> = new EventEmitter<IRider>();
 
     selectedSort = 'totalPoints';
+    selectedGekozenRenner = 'gekozenRenner';
     showDetail = false;
     searchTerm: string;
     tour: ITour;
-    riders: IRennerTableSummary[];
-    uitgevallenRiders: IRennerTableSummary[];
+    riders: ITeamScore[];
+    uitgevallenRiders: ITeamScore[];
     unsubscribe = new Subject<void>();
     segmentView = 'punten';
 
@@ -46,10 +49,8 @@ export class RennersPage implements OnInit, OnDestroy {
                 this.tour = tour;
                 if (new Date(this.tour.deadline) < new Date()) {
                     // todo refactor for example  subscribe until
-                    // todo move to store?
                     this.riderService.getDetailTourriders(tour.id)
                         .subscribe(response => {
-                            console.log(response);
                             this.riders = response.map(rider => this.mapToRennerTableSummary(rider));
                             this.sortRenners(this.selectedSort);
                         });
@@ -67,34 +68,57 @@ export class RennersPage implements OnInit, OnDestroy {
     openSelectSort() {
         this.selectsortRef.open();
     }
+    openGekozenSort() {
+        this.openGekozenSortRef.open();
+    }
 
     sortRenners(sort: string) {
-        this.selectedSort = sort === 'gekozen' ? this.selectedSort : sort;
+        if (this.segmentView === 'gekozen') {
+            this.selectedGekozenRenner = sort
+        } else {
+            this.selectedSort = this.segmentView === 'uitgevallen' ? 'totalPoints' : sort
+        }
         this.riders = this.riders.slice().sort((a, b) => {
             switch (sort) {
                 case 'totalPoints':
-                    return b.points.totalPoints - a.points.totalPoints;
-                    case 'totalTourPoints':
-                    return b.points.totalTourPoints - a.points.totalTourPoints;
+                    return b.totaalpunten - a.totaalpunten;
+                case 'totalTourPoints':
+                    return b.algemeenpunten - a.algemeenpunten;
                 case 'totalMountainPoints':
-                    return b.points.totalMountainPoints - a.points.totalMountainPoints;
+                    return b.bergpunten - a.bergpunten;
                 case 'totalPointsPoints':
-                    return b.points.totalPointsPoints - a.points.totalPointsPoints;
+                    return b.puntenpunten - a.puntenpunten;
                 case 'totalYouthPoints':
-                    return b.points.totalYouthPoints - a.points.totalYouthPoints;
+                    return b.jongerenpunten - a.jongerenpunten;
                 case 'totalStagePoints':
-                    return b.points.totalStagePoints - a.points.totalStagePoints;
-                case 'deltaTotalStagePoints':
-                    return b.points.deltaTotalStagePoints - a.points.deltaTotalStagePoints;
-                case 'gekozen':
-                    return b.gekozen - a.gekozen;
+                    return b.etappepunten - a.etappepunten;
+                case 'waarde':
+                    return b.tourrider_waarde - a.tourrider_waarde;
+                case 'gekozenRenner':
+                    return b.gekozenRenner - a.gekozenRenner;
+                case 'gekozenBeschermderenner':
+                    return b.gekozenBeschermderenner - a.gekozenBeschermderenner;
+                case 'gekozenMeesterknecht':
+                    return b.gekozenMeesterknecht - a.gekozenMeesterknecht;
+                case 'gekozenWaterdrager':
+                    return b.gekozenWaterdrager - a.gekozenWaterdrager;
+                case 'gekozenLinkebal':
+                    return b.gekozenLinkebal - a.gekozenLinkebal;
+                case 'uitgevallen':
+                    // todo sorteren
+                    return;
+                default:
+                    console.log('default, check')
+                    break;
             }
         });
     }
 
     segmentChanged($event) {
         this.segmentView = $event.detail.value;
-        this.sortRenners($event.detail.value === 'gekozen' ? $event.detail.value : this.selectedSort);
+        this.sortRenners($event.detail.value === 'uitgevallen' ?
+            $event.detail.value : $event.detail.value === 'gekozen' ?
+                this.selectedGekozenRenner : this.selectedSort);
     }
 
     // addPosition(element: any) {
@@ -104,40 +128,52 @@ export class RennersPage implements OnInit, OnDestroy {
     //   }
     // }
 
-    search(event) {
-        console.log(event.detail.value);
-    }
 
-    mapToRennerTableSummary(rider: ITourriders): IRennerTableSummary {
+    mapToRennerTableSummary(rider: ITourriders): ITeamScore {
         return {
             id: rider.id,
-            rider: {
-                id: rider.rider.id,
-                firstName: rider.rider.firstName,
-                surName: rider.rider.surName,
-                isOut: rider.isOut,
-                initials: rider.rider.initials,
-                surNameShort: rider.rider.surNameShort,
-                nationality: rider.rider.nationality,
-                waarde: rider.waarde
-                // isBeschermdeRenner: line.isBeschermdeRenner,
-                // isLinkebal: line.isLinkebal,
-                // isMeesterknecht: line.isMeesterknecht,
-                // isRider: line.isRider,
-                // isWaterdrager: line.isWaterdrager,
-            },
-            latestEtappe: rider.latestEtappe,
-            points: {
-                totalPoints: this.determineTotaalpunten(rider),
-                totalTourPoints: rider.tourPoints ? rider.tourPoints : 0,
-                totalMountainPoints: rider.mountainPoints ? rider.mountainPoints : 0,
-                totalPointsPoints: rider.pointsPoints ? rider.pointsPoints : 0,
-                totalYouthPoints: rider.youthPoints ? rider.youthPoints : 0,
-                totalStagePoints: rider.totalStagePoints ? rider.totalStagePoints : 0,
-                deltaTotalStagePoints: 0, // todo
-            },
-            gekozen: rider.predictions ? rider.predictions.length : 0
-        };
+            displayName: 'displayname',
+            teamName: 'teamname',
+            prediction_id: '2',
+            prediction_isRider: true,
+            prediction_isWaterdrager: false,
+            prediction_isMeesterknecht: false,
+            prediction_isLinkebal: false,
+            prediction_isBeschermderenner: false,
+            prediction_isComplete: true,
+            prediction_riderId: '3',
+            prediction_tourId: null,
+            prediction_participantId: null,
+            tourrider_id: rider.id,
+            tourrider_waarde: rider.waarde,
+            tourrider_isOut: rider.isOut,
+            tourrider_latestEtappeId: rider.latestEtappe ? rider.latestEtappe.id : null,
+            tourrider_latestEtappeNumber: rider.latestEtappe ? rider.latestEtappe.etappeNumber : null,
+            tourrider_isJongeren: rider.isYoungster,
+            rider_firstName: rider.rider.firstName,
+            rider_firstNameShort: rider.rider.firstNameShort,
+            rider_initials: rider.rider.initials,
+            rider_surName: rider.rider.surName,
+            rider_nationality: rider.rider.nationality,
+            rider_surNameShort: rider.rider.surNameShort,
+            rider_dateOfBirth: rider.rider.dateOfBirth,
+            rider_isActive: true,
+            latestEtappeNumber: rider.latestEtappe ? rider.latestEtappe.etappeNumber : null,
+            etappepunten: rider.totalStagePoints ? rider.totalStagePoints : 0,
+            deltaEtappepunten: rider.deltaStagePoints ? rider.deltaStagePoints : 0,
+            algemeenpunten: rider.tourPoints ? rider.tourPoints : 0,
+            puntenpunten: rider.pointsPoints ? rider.pointsPoints : 0,
+            bergpunten: rider.mountainPoints ? rider.mountainPoints : 0,
+            jongerenpunten: rider.youthPoints ? rider.youthPoints : 0,
+            totaalpunten: this.determineTotaalpunten(rider),
+            gekozenTotaal: rider.predictions ? rider.predictions.length : 0,
+            gekozenRenner: rider.predictions ? rider.predictions.filter(p => p.isRider).length : 0,
+            gekozenLinkebal: rider.predictions ? rider.predictions.filter(p => p.isLinkebal).length : 0,
+            gekozenBeschermderenner: rider.predictions ? rider.predictions.filter(p => p.isBeschermdeRenner).length : 0,
+            gekozenWaterdrager: rider.predictions ? rider.predictions.filter(p => p.isWaterdrager).length : 0,
+            gekozenMeesterknecht: rider.predictions ? rider.predictions.filter(p => p.isMeesterknecht).length : 0,
+        }
+
     }
 
     determineTotaalpunten(line: ITourriders): number {

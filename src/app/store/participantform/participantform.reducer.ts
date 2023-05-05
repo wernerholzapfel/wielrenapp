@@ -38,8 +38,6 @@ export function participantformReducer(state = initalparticipantformState, actio
                 ...state,
                 rider: [...state.rider.map((r, i) => {
                     if (action.payload.index === i) {
-                        console.log(r);
-                        console.log(action.payload);
                         return {...action.payload};
                     } else {
                         return r;

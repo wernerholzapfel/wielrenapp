@@ -34,7 +34,6 @@ export class MenuPage implements OnInit {
     }
 
     fetchTour(tourId) {
-        // console.log(tourId);
         this.store.dispatch(new fromTour.FetchTourById(tourId));
     }
 

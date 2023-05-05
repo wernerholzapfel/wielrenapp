@@ -4,48 +4,43 @@
             <ion-back-button text="" defaultHref="/"></ion-back-button>
         </ion-buttons>
         <ion-title routerLink="/tabs/home">
-        <img src="/assets/header_white3.png" height="36px;">
+            <img src="/assets/header_white3.png" height="36px;">
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-item class="ion-padding-horizontal" lines="none"
-              [color]="calculatedWaardepunten > maxParticipantRidersPunten ? 'danger' : 'light'">
+        [color]="calculatedWaardepunten > maxParticipantRidersPunten ? 'danger' : 'light'">
         <h3>
-            Team {{isParticitantRidersComplete && calculatedWaardepunten <= maxParticipantRidersPunten ? 'compleet' : 'incompleet'}}
-            <ion-text slot="end">{{calculatedWaardepunten}}/{{maxParticipantRidersPunten}}</ion-text>
+            Team {{isParticitantRidersComplete && calculatedWaardepunten <= maxParticipantRidersPunten ? 'compleet'
+                : 'incompleet' }} <ion-text slot="end">
+                {{calculatedWaardepunten}}/{{maxParticipantRidersPunten}}</ion-text>
         </h3>
     </ion-item>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 
     <ion-list>
         <ng-container *ngFor="let rider of partipantRidersForm?.riders">
-        <app-choose-rider-item [rider]="rider"
-                               icon="rider_black"
-                               (openRiderEvent)="openRidersPopup($event, 'rider')"
-                               (deleteRiderEvent)="deleteRider($event)">
-        </app-choose-rider-item>
+            <app-choose-rider-item [rider]="rider" icon="rider_black"
+                (openRiderEvent)="openRidersPopup($event, 'rider')" (deleteRiderEvent)="deleteRider($event)">
+            </app-choose-rider-item>
         </ng-container>
-        <app-choose-rider-item [rider]="partipantRidersForm?.beschermdeRenner"
-                               icon="beschermderenner_black"
-                               (openRiderEvent)="openRidersPopup($event, 'beschermderenner')"
-                               (deleteRiderEvent)="deleteRider($event)">
+        <app-choose-rider-item [rider]="partipantRidersForm?.beschermdeRenner" icon="beschermderenner_black" 
+(openRiderEvent)="openRidersPopup($event, 'beschermderenner')"
+            (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
-        <app-choose-rider-item [rider]="partipantRidersForm?.meesterknecht"
-                               icon="meesterknecht_black"
-                               (openRiderEvent)="openRidersPopup($event, 'meesterknecht')"
-                               (deleteRiderEvent)="deleteRider($event)">
+        <app-choose-rider-item [rider]="partipantRidersForm?.meesterknecht" icon="meesterknecht_black"
+           
+            (openRiderEvent)="openRidersPopup($event, 'meesterknecht')" (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
-        <app-choose-rider-item [rider]="partipantRidersForm?.waterdrager"
-                               icon="waterdrager_black"
-                               (openRiderEvent)="openRidersPopup($event, 'waterdrager')"
-                               (deleteRiderEvent)="deleteRider($event)">
+        <app-choose-rider-item [rider]="partipantRidersForm?.waterdrager" icon="waterdrager_black"
+            
+            (openRiderEvent)="openRidersPopup($event, 'waterdrager')" (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
-        <app-choose-rider-item [rider]="partipantRidersForm?.linkebal"
-                               icon="joker_black"
-                               (openRiderEvent)="openRidersPopup($event, 'linkebal')"
-                               (deleteRiderEvent)="deleteRider($event)">
+        <app-choose-rider-item [rider]="partipantRidersForm?.linkebal" icon="joker_black" 
+             (openRiderEvent)="openRidersPopup($event, 'linkebal')"
+            (deleteRiderEvent)="deleteRider($event)">
         </app-choose-rider-item>
     </ion-list>
 </ion-content>

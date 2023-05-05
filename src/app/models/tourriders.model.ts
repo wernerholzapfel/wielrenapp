@@ -19,6 +19,7 @@ export interface ITourriders {
   pointsPoints?: number;
   youthPoints?: number;
   totalStagePoints?: number;
+  deltaStagePoints?: number;
   predictions: IPrediction[];
   isSelected?: boolean;
   isYoungster?: boolean;

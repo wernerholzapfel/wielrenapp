@@ -11,6 +11,8 @@ import {UiServiceService} from '../../services/ui-service.service';
 export class ChooseRiderItemComponent implements OnInit {
 
     @Input() rider: IPrediction;
+    @Input() showInformation = false;
+    @Input() informationText = '';
     @Input() icon = 'bicycle';
     @Input() title = 'Kies renner';
     @Input() tour: ITour;

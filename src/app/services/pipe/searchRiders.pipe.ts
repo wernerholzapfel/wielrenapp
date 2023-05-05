@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { ITeamScore } from 'src/app/models/teamscore.model';
 import {IRennerTableSummary} from '../../components/renner-table-summary/renner-table-summary.component';
 
 @Pipe({
@@ -6,13 +7,13 @@ import {IRennerTableSummary} from '../../components/renner-table-summary/renner-
 })
 export class SearchRidersPipe implements PipeTransform {
 
-  transform(riders: IRennerTableSummary[], searchTerm: string): unknown {
+  transform(riders: ITeamScore[], searchTerm: string): unknown {
       if ((searchTerm === undefined || searchTerm.length < 2)) {
         return riders;
       } else {
         searchTerm = searchTerm.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         return riders.filter(rider => {
-              const searchableWords: string[] = (`${rider.rider.firstName} ${rider?.rider.surName}`)
+              const searchableWords: string[] = (`${rider.rider_firstName} ${rider?.rider_surName}`)
                   .toLowerCase()
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')

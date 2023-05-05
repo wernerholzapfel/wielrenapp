@@ -1,6 +1,7 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
+
 
 ion-content {
   --background: var(--ion-color-light);
@@ -72,8 +73,24 @@ ion-content {
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-font-family: #{'Montserrat'};
+  --ion-font-family: #{'Quicksand'};
 
+
+  --ion-color-selected: #CDE7EF;
+  --ion-color-selected-rgb: 205,231,239;
+  --ion-color-selected-contrast: #000000;
+  --ion-color-selected-contrast-rgb: 0,0,0;
+  --ion-color-selected-shade: #b4cbd2;
+  --ion-color-selected-tint: #d2e9f1;
+  
+  .ion-color-selected {
+    --ion-color-base: var(--ion-color-selected) !important;
+    --ion-color-base-rgb: var(--ion-color-selected-rgb) !important;
+    --ion-color-contrast: var(--ion-color-selected-contrast) !important;
+    --ion-color-contrast-rgb: var(--ion-color-selected-contrast-rgb) !important;
+    --ion-color-shade: var(--ion-color-selected-shade) !important;
+    --ion-color-tint: var(--ion-color-selected-tint) !important;
+  }
 }
 
 //@media (prefers-color-scheme: dark) {

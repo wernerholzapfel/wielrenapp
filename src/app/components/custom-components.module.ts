@@ -12,6 +12,7 @@ import {PuntenColComponent} from './punten-col/punten-col.component';
 import {IconWithPointsComponent} from './icon-with-points/icon-with-points.component';
 import {HeadlinesComponent} from './headlines/headlines.component';
 import {SearchRidersPipe} from '../services/pipe/searchRiders.pipe';
+import {EtappeUitslagComponent} from './etappe-uitslag/etappe-uitslag.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {SearchRidersPipe} from '../services/pipe/searchRiders.pipe';
         PuntenColComponent,
         HeadlinesComponent,
         IconWithPointsComponent,
+        EtappeUitslagComponent,
         FilterIsOutPipe,
         SearchRidersPipe,
     ],
@@ -41,6 +43,7 @@ import {SearchRidersPipe} from '../services/pipe/searchRiders.pipe';
         PuntenColComponent,
         HeadlinesComponent,
         IconWithPointsComponent,
+        EtappeUitslagComponent,
         FilterIsOutPipe,
         SearchRidersPipe,
     ],

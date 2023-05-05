@@ -7,6 +7,7 @@ import {IRider} from '../models/rider.model';
 import {IEtappe} from '../models/etappe.model';
 import {IPrediction} from '../models/participant.model';
 import {map} from 'rxjs/operators';
+import {ITeamScore} from '../models/teamscore.model';
 
 @Injectable()
 export class PredictionService {
@@ -24,6 +25,18 @@ export class PredictionService {
 
     getPredictionSummaryForUser(tourId: string): Observable<IPrediction[]> {
         return this.http.get<IPrediction[]>(`${environment.apiBaseUrl}/predictions/user/summary/` + tourId);
+    }
+
+    getTeamWithScoreForUser(tourId: string, participantId): Observable<ITeamScore[]> {
+        return this.http.get<ITeamScore[]>(`${environment.apiBaseUrl}/prediction-score/${tourId}/participant/${participantId}`);
+    }
+
+    getTotaalStandForParticipant(tourId: string, participantId): Observable<ITeamScore[]> {
+        return this.http.get<ITeamScore[]>(`${environment.apiBaseUrl}/prediction-score/totaal/${tourId}/participant/${participantId}`);
+    }
+
+    getStandForEtappe(etappeId: string): Observable<any[]> {
+        return this.http.get<ITeamScore[]>(`${environment.apiBaseUrl}/prediction-score/etappe/${etappeId}`);
     }
 
     deletePrediction(predictionId: string): Observable<any> {

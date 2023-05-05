@@ -22,9 +22,10 @@
         </ion-buttons>
     </ion-toolbar>
         <app-deelnemer-table-summary
+                (itemClickedEvent)="openDeelnemer($event)"
                 [showDetail]="showDetail"
                 [line]="participantLine"
-                [mainValue]="'totalPoints'">
+                [mainValue]="'totaalpunten'">
         </app-deelnemer-table-summary>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
 </ion-header>
@@ -35,7 +36,6 @@
                               [showDetail]="showDetail"
                               [showDelta]="true"
                               [line]="line"
-                              [riderId]="line.rider.id"
     >
     </app-renner-table-summary>
     </ng-container>

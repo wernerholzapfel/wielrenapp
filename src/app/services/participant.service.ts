@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {IParticipant} from '../models/participant.model';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Injectable()
 export class ParticipantService {
@@ -23,9 +24,5 @@ export class ParticipantService {
   postParticipant(body: IParticipant): Observable<IParticipant> {
     return this.http.post<IParticipant>(`${environment.apiBaseUrl}/participants`, body)
       .pipe(map(res => <IParticipant>res));
-  }
-
-  getStand(tourId): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/participants/table/${tourId}`);
   }
 }
