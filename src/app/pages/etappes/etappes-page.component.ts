@@ -17,14 +17,14 @@ import {IParticipanttable} from '../../models/participanttable.model';
 import {IonRouterOutlet, ModalController} from '@ionic/angular';
 import {TableSettingsComponent} from '../../components/table-settings/table-settings.component';
 import {IAppState} from '../../store/store';
-import SwiperCore, {SwiperOptions, A11y} from 'swiper';
-import {SwiperSlide} from 'swiper/svelte/swiper-svelte';
-import {SwiperComponent} from 'swiper/angular';
+// import SwiperCore, {SwiperOptions, A11y} from 'swiper';
+// import {SwiperSlide} from 'swiper/svelte/swiper-svelte';
+// import {SwiperComponent} from 'swiper/angular';
 import {Router} from '@angular/router';
 import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
 import { PredictionService } from 'src/app/services/prediction.service';
 
-SwiperCore.use([A11y]);
+// SwiperCore.use([A11y]);
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
@@ -38,8 +38,8 @@ dayjs.extend(isoWeek);
     styleUrls: ['etappes-page.component.scss']
 })
 export class EtappesPage implements OnInit, OnDestroy {
-    @ViewChild('etappeSlides', { static: false }) swiper?: SwiperComponent;
-    s: SwiperCore;
+    // @ViewChild('etappeSlides', { static: false }) swiper?: SwiperComponent;
+    // s: SwiperCore;
     public activeSegment = 'stand';
     public activeEtappe: IEtappe;
     public etappeIndex: number;
@@ -60,20 +60,20 @@ export class EtappesPage implements OnInit, OnDestroy {
                 private routerOutlet: IonRouterOutlet) {
     }
 
-    config: SwiperOptions = {
-        // a11y: true,
-        direction: 'horizontal',
-        slidesPerView: 7,
-        centeredSlides: true,
-        // slideToClickedSlide: true,
-        // mousewheel: true,
-        // scrollbar: false,
-        watchSlidesProgress: true,
-        // pagination: false,
-        loop: false,
-        // roundLengths: true,
-        // initialSlide: 0
-    };
+    // config: SwiperOptions = {
+    //     // a11y: true,
+    //     direction: 'horizontal',
+    //     slidesPerView: 7,
+    //     centeredSlides: true,
+    //     // slideToClickedSlide: true,
+    //     // mousewheel: true,
+    //     // scrollbar: false,
+    //     watchSlidesProgress: true,
+    //     // pagination: false,
+    //     loop: false,
+    //     // roundLengths: true,
+    //     // initialSlide: 0
+    // };
 
     ngOnInit() {
 
@@ -109,7 +109,7 @@ export class EtappesPage implements OnInit, OnDestroy {
         this.etappeIndex = index;
         this.classificationsService.getStageClassifications(etappe.id)
             .subscribe(response => {
-                this.swiper.swiperRef.slideTo(this.etappeIndex);
+                // this.swiper.swiperRef.slideTo(this.etappeIndex);
                 this.uitslag = response.map(item => {
                     return {
                         ...item,

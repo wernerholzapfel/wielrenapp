@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as participanttable from './participanttable.actions';
 import {catchError, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
@@ -13,8 +13,7 @@ export class ParticipanttableEffects {
   constructor(private actions$: Actions, private db: AngularFireDatabase, private uitslagenService: UitslagenService) {
   }
 
-  @Effect()
-  fetchParticipanttable$ = this.actions$
+  fetchParticipanttable$ = createEffect(() => this.actions$
     .pipe(
       ofType<participanttable.FetchParticipanttable>(participanttable.FETCH_PARTICIPANTTABLE),
       switchMap(action => {
@@ -23,15 +22,14 @@ export class ParticipanttableEffects {
           switchMap(participanttableResponse =>
             of(new participanttable.FetchParticipanttableSuccess(participanttableResponse))),
           catchError(err => of(new participanttable.FetchParticipanttableFailure(err))));
-    }));
+    })));
 
-  @Effect()
-  fetchLastupdated$ = this.actions$
+  fetchLastupdated$ = createEffect(() => this.actions$
     .pipe(ofType<participanttable.FetchLastUpdated>(participanttable.FETCH_LASTUPDATED),
       switchMap(action => {
       return this.db.object<IParticipanttable[]>(action.payload + '/lastUpdated/').valueChanges()
         .pipe(switchMap(response =>
             of(new participanttable.FetchLastUpdatedSuccess(response))),
           catchError(err => of(new participanttable.FetchLastUpdatedFailure(err))));
-    }));
+    })));
 }

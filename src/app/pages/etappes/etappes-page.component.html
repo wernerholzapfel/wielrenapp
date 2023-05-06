@@ -6,6 +6,35 @@
     </ion-toolbar>
 </ion-header>
 <ion-header>
+    <ion-item>
+        <swiper-container [options]="{ slidesPerView: 7, loop: false }">
+            <swiper-slide *ngFor="let etappe of etappes; let index = index">
+                <div>
+                    <ion-grid>
+                        <ion-row class="ion-justify-content-center">
+                            <ion-col class="ion-text-center">
+                                <ion-chip [color]="etappe?.id === activeEtappe?.id ? 'secondary' : 'primary'"
+                                          (click)="setEtappe(etappe, index)">
+                                    {{etappe.etappeNumber}}
+                                </ion-chip>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </swiper-slide>
+          </swiper-container>
+    </ion-item>
+    <ion-grid>
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <h5>{{activeEtappe?.etappeName}}</h5>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+</ion-header>
+
+<!-- <ion-header>
     <ion-item lines="none">
         <swiper [config]="config"
                 [initialSlide]="etappeIndex" #etappeSlides>
@@ -33,7 +62,7 @@
         </ion-row>
     </ion-grid>
     <ion-progress-bar value="1" color="primary"></ion-progress-bar>
-</ion-header>
+</ion-header> -->
 <ion-content [fullscreen]="true">
     <ng-container *ngIf="activeSegment === 'stand'">
         <ion-list>

@@ -19,9 +19,10 @@ import {
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nl';
 import {UiServiceService} from './services/ui-service.service';
+import { register } from 'swiper/element/bundle';
 
 dayjs.locale('nl');
-
+register();
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',

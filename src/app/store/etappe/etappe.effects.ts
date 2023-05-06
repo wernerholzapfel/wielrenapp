@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, createEffect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as etappe from './etappe.actions';
 import {EtappeService} from '../../services/etappe.service';
 import {catchError, switchMap} from 'rxjs/operators';
@@ -13,8 +13,7 @@ export class EtappeEffects {
               private uitslagenService: UitslagenService) {
   }
 
-  @createEffect()
-  fetchEtappeList$ = this.actions$
+  fetchEtappeList$ = createEffect(() => this.actions$
     .pipe(ofType<etappe.FetchEtappeList>(etappe.FETCH_ETAPPELIST),
       switchMap(action => {
         return this.etappeService
@@ -22,10 +21,9 @@ export class EtappeEffects {
           .pipe(switchMap(etappeResponse =>
               of(new etappe.FetchEtappeListSuccess(etappeResponse.sort((a, b) => a.etappeNumber - b.etappeNumber)))),
             catchError(err => of(new etappe.FetchEtappeListFailure(err))));
-      }));
+      })));
 
-  @Effect()
-  fetchLatestEtappe$ = this.actions$
+  fetchLatestEtappe$ = createEffect(() => this.actions$
     .pipe(ofType<etappe.FetchLatestEtappe>(etappe.FETCH_LATESTETAPPE),
       switchMap(action => {
         return this.uitslagenService
@@ -33,5 +31,5 @@ export class EtappeEffects {
           .pipe(switchMap(etappeResponse =>
               of(new etappe.FetchLatestEtappeSuccess(etappeResponse))),
             catchError(err => of(new etappe.FetchLatestEtappeFailure(err))));
-      }));
+      })));
 }

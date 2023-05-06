@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as team from './team.actions';
 
 import {TeamService} from '../../services/teams.service';
@@ -12,8 +12,7 @@ export class TeamEffects {
               private teamService: TeamService) {
   }
 
-  @Effect()
-  fetchRider$ = this.actions$
+  fetchRider$ = createEffect(() => this.actions$
     .pipe(ofType<team.FetchTeams>(team.FETCH_TEAMS),
       switchMap(action => {
       return this.teamService.getTeams()
@@ -21,5 +20,5 @@ export class TeamEffects {
             of(new team.FetchTeamsSuccess(teamResponse))
           ),
           catchError(err => of(new team.FetchTeamsFailure(err))));
-    }));
+    })));
 }

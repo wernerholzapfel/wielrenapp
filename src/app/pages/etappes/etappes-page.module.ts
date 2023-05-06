@@ -1,12 +1,11 @@
 import {IonicModule} from '@ionic/angular';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {EtappesPage} from './etappes-page.component';
 
 import {EtappesPagePageRoutingModule} from './etappes-page-routing.module';
 import {CustomComponentModule} from '../../components/custom-components.module';
-import {SwiperModule} from 'swiper/angular';
 
 @NgModule({
     imports: [
@@ -15,11 +14,12 @@ import {SwiperModule} from 'swiper/angular';
         FormsModule,
         EtappesPagePageRoutingModule,
         CustomComponentModule,
-        SwiperModule
+        // SwiperModule
     ],
     declarations: [
         EtappesPage
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EtappesPageModule {
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as rider from './rider.actions';
 import {RiderService} from '../../services/rider.service';
 import {catchError, switchMap} from 'rxjs/operators';
@@ -12,8 +12,7 @@ export class RiderEffects {
               private riderService: RiderService) {
   }
 
-  @Effect()
-  fetchRider$ = this.actions$
+  fetchRider$ = createEffect(() => this.actions$
     .pipe(ofType<rider.FetchRiders>(rider.FETCH_RIDERS),
       switchMap(action => {
       return this.riderService
@@ -21,5 +20,5 @@ export class RiderEffects {
         .pipe(switchMap(riderResponse =>
             of(new rider.FetchRidersSuccess(riderResponse))),
           catchError(err => of(new rider.FetchRidersFailure(err))));
-    }));
+    })));
 }
