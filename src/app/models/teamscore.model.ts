@@ -7,7 +7,7 @@ export interface ITeamScore {
     prediction_isWaterdrager: boolean;
     prediction_isMeesterknecht: boolean;
     prediction_isLinkebal: boolean;
-    prediction_isBeschermderenner: boolean;
+    prediction_isBeschermdeRenner: boolean;
     prediction_isComplete: boolean;
     prediction_riderId: string;
     prediction_tourId: string;
