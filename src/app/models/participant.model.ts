@@ -22,6 +22,8 @@ export interface ITourrider {
   isWaterdrager?: boolean;
   isRider?: boolean;
   isSelected?: boolean;
+  isOut?: boolean;
+  latestEtappe?: IEtappe;
   waarde?: number;
   position?: number;
   stageclassifications?: IStageclassifications[];

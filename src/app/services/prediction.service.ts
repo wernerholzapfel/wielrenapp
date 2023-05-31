@@ -8,6 +8,7 @@ import {IEtappe} from '../models/etappe.model';
 import {IPrediction} from '../models/participant.model';
 import {map} from 'rxjs/operators';
 import {ITeamScore} from '../models/teamscore.model';
+import { IPredictionScoreForParticipant, PredictionTypeEnum } from '../models/predictionScoreForParticipant';
 
 @Injectable()
 export class PredictionService {
@@ -21,6 +22,14 @@ export class PredictionService {
 
     getPredictionsForUser(tourId: string): Observable<IPrediction[]> {
         return this.http.get<IPrediction[]>(`${environment.apiBaseUrl}/predictions/user/` + tourId);
+    }
+    
+    getPredictionScoreByParticipantId(etappeId, participantId, tourId: string): Observable<IPredictionScoreForParticipant[]> {
+        return this.http.get<IPredictionScoreForParticipant[]>(`${environment.apiBaseUrl}/prediction-score/etappe/`+ etappeId +`/participant/`+ participantId + `/tour/` + tourId);
+    }
+    
+    getPredictionScoresPointsForParticipant(predictionType: PredictionTypeEnum, participantId, tourId: string): Observable<IPredictionScoreForParticipant[]> {
+        return this.http.get<IPredictionScoreForParticipant[]>(`${environment.apiBaseUrl}/prediction-score/`+ predictionType +`/participant/`+ participantId + `/tour/` + tourId);
     }
 
     getPredictionSummaryForUser(tourId: string): Observable<IPrediction[]> {

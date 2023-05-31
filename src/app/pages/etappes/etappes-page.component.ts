@@ -77,8 +77,8 @@ export class EtappesPage implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        combineLatest(this.store.pipe(select(getTour)),
-            this.store.select(getEtappes))
+        combineLatest([this.store.pipe(select(getTour)),
+            this.store.select(getEtappes)])
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(([tour, etappes]) => {
                 if (etappes && etappes.length > 0) {
