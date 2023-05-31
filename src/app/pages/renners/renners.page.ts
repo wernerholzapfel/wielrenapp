@@ -139,7 +139,7 @@ export class RennersPage implements OnInit, OnDestroy {
             prediction_isWaterdrager: false,
             prediction_isMeesterknecht: false,
             prediction_isLinkebal: false,
-            prediction_isBeschermderenner: false,
+            prediction_isBeschermdeRenner: false,
             prediction_isComplete: true,
             prediction_riderId: '3',
             prediction_tourId: null,
