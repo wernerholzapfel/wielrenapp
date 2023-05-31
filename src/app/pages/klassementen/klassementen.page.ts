@@ -10,6 +10,7 @@ import {IParticipanttable} from '../../models/participanttable.model';
 import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
 import {ModalController} from '@ionic/angular';
 import {ITotaalStand} from '../../models/uitslagen.model';
+import { PredictionTypeEnum } from 'src/app/models/predictionScoreForParticipant';
 
 @Component({
     selector: 'app-klassementen',
@@ -29,6 +30,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
     participantstable: ITotaalStand[];
     uitslag: any[];
     unsubscribe = new Subject<void>();
+    predictionType: PredictionTypeEnum = PredictionTypeEnum.ALGEMEEN
 
     ngOnInit() {
         this.store.pipe(select(getParticipanttable))
@@ -133,19 +135,22 @@ export class KlassementenPage implements OnInit, OnDestroy {
         switch (event.detail.value) {
             case BERGKLASSEMENT:
                 this.sortValue.next('bergpunten');
+                this.predictionType = PredictionTypeEnum.BERG
                 this.fetchMountainClassification();
                 break;
             case JONGERENKLASSEMENT:
                 this.sortValue.next('jongerenpunten');
+                this.predictionType = PredictionTypeEnum.JONGEREN
                 this.fetchYouthClassification();
                 break;
             case ALGEMEENKLASSEMENT:
                 this.sortValue.next('algemeenpunten');
+                this.predictionType = PredictionTypeEnum.ALGEMEEN
                 this.fetchTourClassification();
                 break;
             case PUNTENKLASSEMENT:
                 this.sortValue.next('puntenpunten');
-
+                this.predictionType = PredictionTypeEnum.PUNTEN
                 this.fetchPointsClassification();
                 break;
             default:
@@ -154,12 +159,14 @@ export class KlassementenPage implements OnInit, OnDestroy {
     }
 
     async openDeelnemer(line) {
+      
         const modal = await this.modalCtrl.create({
             component: EtappeUitslagComponent,
             componentProps: {
                 uitslag: this.uitslag,
                 participant: line,
-                mainValue: this.mainValue
+                mainValue: this.mainValue,
+                predictionType: this.predictionType
             },
             swipeToClose: true,
             // initialBreakpoint: 0.9,

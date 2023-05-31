@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "669762794705",
+    "project_id": "hetwielerspel",
+    "storage_bucket": "hetwielerspel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669762794705:android:2895414d4a86956bfc41f0",
+        "android_client_info": {
+          "package_name": "com.wernerholzapfel.hetwielerspel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669762794705-mlfh6j42elqnvjkpmor6hkumnn0i9tth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyCeNTUnQvLV_qmTZ_p_xYMM7xQ479OAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669762794705-mlfh6j42elqnvjkpmor6hkumnn0i9tth.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
