@@ -8,6 +8,7 @@ import { ITour } from '../models/tour.model';
     providedIn: 'root'
 })
 export class UiServiceService {
+    pushToken$: BehaviorSubject<string> = new BehaviorSubject(null);
 
     constructor(private toastCtrl: ToastController) {
     }

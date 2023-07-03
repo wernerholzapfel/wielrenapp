@@ -82,8 +82,6 @@ export class Top5Component implements OnInit, OnDestroy {
             }
         });
 
-
-
         this.store.select(getParticipant)
             .pipe(takeUntil(this.unsubscribe), switchMap(participant => {
                 return participant ? of(participant.id) : of(null);

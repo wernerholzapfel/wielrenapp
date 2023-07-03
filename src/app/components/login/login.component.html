@@ -37,13 +37,13 @@
                 <ion-item lines="full">
                     <ion-text class="ion-text-wrap">Vul je gegevens in om in te schrijven. Al eerder mee gedaan? Log dan in</ion-text>
                 </ion-item>
-                <ion-item lines="full">
+                <ion-item lines="full" counter="true">
                     <ion-label position="floating">Naam</ion-label>
-                    <ion-input required type="text" name="displayName" [(ngModel)]="user.displayName"></ion-input>
+                    <ion-input required type="text" maxlength="30" name="displayName" [(ngModel)]="user.displayName"></ion-input>
                 </ion-item>
-                <ion-item lines="full">
-                    <ion-label position="floating">Team naam</ion-label>
-                    <ion-input required type="text" name="teamName"  [(ngModel)]="user.teamName"></ion-input>
+                <ion-item lines="full" counter="true">
+                    <ion-label position="floating">Teamnaam</ion-label>
+                    <ion-input required type="text" maxlength="30" name="teamName"  [(ngModel)]="user.teamName"></ion-input>
                 </ion-item>
 
                 <ion-item lines="full">

@@ -17,16 +17,12 @@ import { IParticipanttable } from '../../models/participanttable.model';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { TableSettingsComponent } from '../../components/table-settings/table-settings.component';
 import { IAppState } from '../../store/store';
-// import SwiperCore, {SwiperOptions, A11y} from 'swiper';
-// import {SwiperSlide} from 'swiper/svelte/swiper-svelte';
-// import {SwiperComponent} from 'swiper/angular';
 import { Router } from '@angular/router';
 import { EtappeUitslagComponent } from '../../components/etappe-uitslag/etappe-uitslag.component';
 import { PredictionService } from 'src/app/services/prediction.service';
 import { IonicSlides } from '@ionic/angular';
 import Swiper from 'swiper';
 
-// SwiperCore.use([A11y]);
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title routerLink="/tabs/home">
+      <img src="/assets/header_white3.png" height="36px;">
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-no-padding">
+        <ion-col>
+          <h5>Profiel</h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="updateProfile()" #signupForm="ngForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Wijzig hier je naam en teamnaam.
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item lines="full" [counter]="true">
+          <ion-label position="floating">Naam</ion-label>
+          <ion-input maxlength="30" required type="text" name="displayName"
+            [(ngModel)]="profile.displayName"></ion-input>
+        </ion-item>
+        <ion-item lines="full" [counter]="true">
+          <ion-label position="floating">Teamnaam</ion-label>
+          <ion-input maxlength="30" required type="text" name="teamName" [(ngModel)]="profile.teamName"></ion-input>
+        </ion-item>
+        <div class="button-container">
+          <ion-button [disabled]="!signupForm.valid" color="secondary" expand="block" type="submit">
+            Opslaan
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </form>
+</ion-content>

@@ -64,6 +64,10 @@ const routes: Routes = [
             loadChildren: () => import('../pages/klassementen/klassementen.module').then( m => m.KlassementenPageModule)
         },
         {
+          path: 'profile',
+          loadChildren: () => import('../pages/profile/profile.module').then( m => m.ProfilePageModule)
+        },
+        {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

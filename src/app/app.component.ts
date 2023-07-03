@@ -6,8 +6,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { select, Store } from '@ngrx/store';
 import * as fromTour from './store/tour/tour.actions';
 import { getTour } from './store/tour/tour.reducer';
-import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ITour } from './models/tour.model';
 import * as fromParticipanttable from './store/participanttable/participanttable.actions';
 import { Router } from '@angular/router';
@@ -20,6 +19,8 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/nl';
 import { UiServiceService } from './services/ui-service.service';
 import { register } from 'swiper/element/bundle';
+import { ParticipantService } from './services/participant.service';
+import { getParticipant } from './store/participant/participant.reducer';
 
 dayjs.locale('nl');
 @Component({
@@ -31,8 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(
         private platform: Platform,
         private store: Store,
-        private router: Router,
-        private uiService: UiServiceService
+        private uiService: UiServiceService,
+        private participantService: ParticipantService
     ) {
         this.initializeApp();
     }
@@ -73,7 +74,9 @@ export class AppComponent implements OnInit, OnDestroy {
                 // todo make async await?
                 StatusBar.setStyle({ style: Style.Default });
                 SplashScreen.hide();
+                this.registerToken();
                 this.setupPush();
+
             }
         });
     }
@@ -100,6 +103,8 @@ export class AppComponent implements OnInit, OnDestroy {
         PushNotifications.addListener('registration',
             (token: Token) => {
                 console.log(token);
+                this.uiService.pushToken$.next(token.value)
+
                 // todo send token to backend
                 // alert('Push registration success, token: ' + token.value);
             }
@@ -127,8 +132,21 @@ export class AppComponent implements OnInit, OnDestroy {
         );
 
     }
-}
-function ngAfterViewInit() {
-    throw new Error('Function not implemented.');
-}
+    registerToken() {
+        combineLatest([this.store.select(getParticipant), this.uiService.pushToken$])
+            .pipe(switchMap(([participant, pushtoken]) => {
+                if (participant && pushtoken) {
+                    return this.participantService.putPushToken({ pushtoken: pushtoken })
+                } else {
+                    return of(null)
+                }
+            }))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(token => {
+                if (token) {
+                }
+            })
 
+    }
+
+}
