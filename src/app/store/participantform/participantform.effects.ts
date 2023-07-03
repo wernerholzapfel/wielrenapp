@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as participantform from './participantform.actions';
 import {Observable} from 'rxjs';
 import {PredictionService} from '../../services/prediction.service';
@@ -12,8 +12,7 @@ export class ParticipantformEffects {
               private predictionService: PredictionService) {
   }
 
-  @Effect()
-  fetchParticipantform$ = this.actions$
+  fetchParticipantform$ = createEffect(() => this.actions$
     .pipe(
       ofType<participantform.FetchParticipantform>(participantform.FETCH_PARTICIPANTFORM),
       switchMap(action => {
@@ -21,5 +20,5 @@ export class ParticipantformEffects {
         .pipe(switchMap(participantformResponse =>
             of(new participantform.FetchParticipantformSuccess(participantformResponse))),
           catchError(err => of(new participantform.FetchParticipantformFailure(err))));
-    }));
+    })));
 }

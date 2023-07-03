@@ -25,9 +25,20 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '~swiper/scss';
-@import '~@ionic/angular/css/ionic-swiper';
+ // import Swiper JS
+// @import Swiper from 'swiper';
+ // import Swiper styles
+// @import 'swiper/css';
 
+// @import 'swiper/scss';
+
+// @import '~@ionic/angular/css/ionic-swiper';
+// core version + navigation, pagination modules:
+// @import Swiper, { Navigation, Pagination } from 'swiper';
+// import Swiper and modules styles
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
 :root {
   font-size: 12px;

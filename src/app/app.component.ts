@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import {IonRouterOutlet, Platform} from '@ionic/angular';
-import {SplashScreen} from '@capacitor/splash-screen';
-import {StatusBar, Style} from '@capacitor/status-bar';
-import {select, Store} from '@ngrx/store';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { select, Store } from '@ngrx/store';
 import * as fromTour from './store/tour/tour.actions';
-import {getTour} from './store/tour/tour.reducer';
-import {takeUntil} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
-import {ITour} from './models/tour.model';
+import { getTour } from './store/tour/tour.reducer';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { ITour } from './models/tour.model';
 import * as fromParticipanttable from './store/participanttable/participanttable.actions';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import {
     ActionPerformed,
     PushNotifications, PushNotificationSchema,
@@ -18,10 +18,10 @@ import {
 } from '@capacitor/push-notifications';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nl';
-import {UiServiceService} from './services/ui-service.service';
+import { UiServiceService } from './services/ui-service.service';
+import { register } from 'swiper/element/bundle';
 
 dayjs.locale('nl');
-
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -40,6 +40,10 @@ export class AppComponent implements OnInit, OnDestroy {
     tour$: Observable<ITour>;
     selectedTour: ITour;
     unsubscribe = new Subject<void>();
+
+    ngAfterViewInit(): void {
+        register();
+    }
 
     ngOnInit() {
         this.store.dispatch(new fromTour.FetchTourList());
@@ -67,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.platform.ready().then(() => {
             if (this.platform.is('cordova')) {
                 // todo make async await?
-                StatusBar.setStyle({style: Style.Default});
+                StatusBar.setStyle({ style: Style.Default });
                 SplashScreen.hide();
                 this.setupPush();
             }
@@ -95,17 +99,17 @@ export class AppComponent implements OnInit, OnDestroy {
         // On success, we should be able to receive notifications
         PushNotifications.addListener('registration',
             (token: Token) => {
-            console.log(token);
+                console.log(token);
                 // todo send token to backend
-            // alert('Push registration success, token: ' + token.value);
+                // alert('Push registration success, token: ' + token.value);
             }
         );
 
         // Some issue with our setup and push will not work
         PushNotifications.addListener('registrationError',
             (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
-        });
+                alert('Error on registration: ' + JSON.stringify(error));
+            });
 
         // Show us the notification payload if the app is open on our device
         PushNotifications.addListener(
@@ -124,3 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     }
 }
+function ngAfterViewInit() {
+    throw new Error('Function not implemented.');
+}
+

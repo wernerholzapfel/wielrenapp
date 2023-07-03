@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as participant from './participant.actions';
 
 import {ParticipantService} from '../../services/participant.service';
@@ -12,8 +12,7 @@ export class ParticipantEffects {
               private participantService: ParticipantService) {
   }
 
-  @Effect()
-  fetchParticipant$ = this.actions$
+  fetchParticipant$ = createEffect(() => this.actions$
     .pipe(
       ofType<participant.FetchParticipant>(participant.FETCH_PARTICIPANT),
       switchMap(action => {
@@ -22,7 +21,7 @@ export class ParticipantEffects {
           .pipe(switchMap(participantResponse =>
               of(new participant.FetchParticipantSuccess(participantResponse))),
             catchError(err => of(new participant.FetchParticipantFailure(err))));
-      }));
+      })));
 
   // @Effect()
   // updateTour$ = this.actions$
