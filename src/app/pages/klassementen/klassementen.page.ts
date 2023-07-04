@@ -1,16 +1,17 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IAppState} from '../../store/store';
-import {select, Store} from '@ngrx/store';
-import {ClassificationsService} from '../../services/stageclassifications.service';
-import {getTour} from '../../store/tour/tour.reducer';
-import {of, Subject, switchMap, takeUntil} from 'rxjs';
-import {ALGEMEENKLASSEMENT, BERGKLASSEMENT, JONGERENKLASSEMENT, PUNTENKLASSEMENT} from '../../models/constants';
-import {getParticipanttable} from '../../store/participanttable/participanttable.reducer';
-import {IParticipanttable} from '../../models/participanttable.model';
-import {EtappeUitslagComponent} from '../../components/etappe-uitslag/etappe-uitslag.component';
-import {ModalController} from '@ionic/angular';
-import {ITotaalStand} from '../../models/uitslagen.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IAppState } from '../../store/store';
+import { select, Store } from '@ngrx/store';
+import { ClassificationsService } from '../../services/stageclassifications.service';
+import { getTour } from '../../store/tour/tour.reducer';
+import { combineLatest, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { ALGEMEENKLASSEMENT, BERGKLASSEMENT, JONGERENKLASSEMENT, PUNTENKLASSEMENT } from '../../models/constants';
+import { getParticipanttable } from '../../store/participanttable/participanttable.reducer';
+import { IParticipanttable } from '../../models/participanttable.model';
+import { EtappeUitslagComponent } from '../../components/etappe-uitslag/etappe-uitslag.component';
+import { ModalController } from '@ionic/angular';
+import { ITotaalStand } from '../../models/uitslagen.model';
 import { PredictionTypeEnum } from 'src/app/models/predictionScoreForParticipant';
+import { getParticipant } from 'src/app/store/participant/participant.reducer';
 
 @Component({
     selector: 'app-klassementen',
@@ -20,8 +21,8 @@ import { PredictionTypeEnum } from 'src/app/models/predictionScoreForParticipant
 export class KlassementenPage implements OnInit, OnDestroy {
 
     constructor(private stageClassificationsService: ClassificationsService,
-                private modalCtrl: ModalController,
-                private store: Store<IAppState>) {
+        private modalCtrl: ModalController,
+        private store: Store<IAppState>) {
     }
 
     sortValue = new Subject<string>();
@@ -33,13 +34,20 @@ export class KlassementenPage implements OnInit, OnDestroy {
     predictionType: PredictionTypeEnum = PredictionTypeEnum.ALGEMEEN
 
     ngOnInit() {
-        this.store.pipe(select(getParticipanttable))
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(pt => {
-                this.participantstable = pt;
+
+        combineLatest([this.store.pipe(select(getParticipanttable)), this.store.pipe(select(getParticipant))])
+            .subscribe(([participantTable, participant]) => {
+                if (participantTable) {
+                    this.participantstable = participant ? participantTable.map(p => {
+                        return {
+                            ...p,
+                            eigenvoorspelling: p.id === participant.id
+                        };
+                    }) : participantTable;
+                }
                 this.sortValue.next('algemeenpunten');
             });
-
+            
         this.sortValue.pipe(takeUntil(this.unsubscribe))
             .subscribe(sortValue => {
                 this.mainValue = sortValue;
@@ -159,7 +167,7 @@ export class KlassementenPage implements OnInit, OnDestroy {
     }
 
     async openDeelnemer(line) {
-      
+
         const modal = await this.modalCtrl.create({
             component: EtappeUitslagComponent,
             componentProps: {

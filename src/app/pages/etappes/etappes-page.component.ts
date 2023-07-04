@@ -22,6 +22,7 @@ import { EtappeUitslagComponent } from '../../components/etappe-uitslag/etappe-u
 import { PredictionService } from 'src/app/services/prediction.service';
 import { IonicSlides } from '@ionic/angular';
 import Swiper from 'swiper';
+import { getParticipant } from 'src/app/store/participant/participant.reducer';
 
 
 dayjs.extend(weekOfYear);
@@ -99,10 +100,17 @@ export class EtappesPage implements OnInit, OnDestroy {
                 });
             });
 
-        this.predictionService.getStandForEtappe(this.activeEtappe.id)
-            .subscribe(response => {
-                this.stand = response
-            });
+            combineLatest([this.predictionService.getStandForEtappe(this.activeEtappe.id), this.store.pipe(select(getParticipant))])
+            .subscribe(([participantTable, participant]) => {
+                if (participantTable) {
+                    this.stand = participant ? participantTable.map(p => {
+                        return {
+                            ...p,
+                            eigenvoorspelling: p.id === participant.id
+                        };
+                    }) : participantTable;
+                }
+        });
     }
 
     segmentChanged($event) {
